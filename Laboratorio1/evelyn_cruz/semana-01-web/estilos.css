@@ -189,3 +189,10 @@ a {
         scroll-behavior: auto;
     }
 }
+
+.tema-oscuro {
+    --blanco: #101820;
+    --texto: #eef5f8;
+    --borde: #3d5360;
+    --celeste-100: #172832;
+}

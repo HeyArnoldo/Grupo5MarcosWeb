@@ -9,3 +9,9 @@ if (botonConsejo && consejo) {
         botonConsejo.textContent = seMostrara ? "Ocultar consejo" : "Mostrar consejo";
     });
 }
+
+const botonTema = document.querySelector("#boton-tema");
+botonTema?.addEventListener("click", () => {
+    const temaOscuroActivo = document.body.classList.toggle("tema-oscuro");
+    botonTema.setAttribute("aria-pressed", String(temaOscuroActivo));
+});
