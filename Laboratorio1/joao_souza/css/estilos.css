@@ -1,44 +1,253 @@
+/* ============================================================
+   Ruta Dev · Semana 1
+   1. Paleta      → colores base, no cambian nunca
+   2. Roles       → qué papel cumple cada color; esto es lo que cambia con el tema
+   3. Base        → reglas globales
+   4. Componentes → encabezado, hero, tarjetas, pie
+   5. Adaptación  → media queries (mobile-first)
+   ============================================================ */
+
+/* 1 y 2. Paleta y roles ------------------------------------- */
 :root {
---azul-900: #0b2545; --azul-700: #174f78; --celeste-100: #eaf4f8;
---blanco: #ffffff; --texto: #23313f; --borde: #d5e1e8;
---sombra: 0 10px 25px rgb(11 37 69 / 12%);
+  /* Paleta */
+  --azul-900: #0b2545;
+  --azul-700: #174f78;
+  --celeste-100: #eaf4f8;
+  --blanco: #ffffff;
+  --texto: #23313f;
+  --borde: #d5e1e8;
+  --foco: #ffcc4d;
+
+  /* Roles */
+  --fondo: var(--blanco);
+  --superficie: var(--blanco);
+  --texto-principal: var(--texto);
+  --titulo: var(--azul-900);
+  --franja-fondo: var(--azul-900);
+  --franja-texto: var(--blanco);
+  --hero-inicio: var(--azul-900);
+  --hero-fin: var(--azul-700);
+  --sombra: 0 10px 25px rgb(11 37 69 / 12%);
 }
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body { margin: 0; color: var(--texto); background: var(--blanco); font-family: system-ui, -apple-
-system, "Segoe UI", sans-serif; line-height: 1.6; }
-a { color: inherit; }
-.contenedor { width: min(100% - 2rem, 70rem); margin-inline: auto; }
-.salto-contenido { position: fixed; inset: .5rem auto auto .5rem; z-index: 10; padding: .7rem 1rem;
-background: var(--blanco); color: var(--azul-900); transform: translateY(-150%); }
-.salto-contenido:focus { transform: translateY(0); }
-.encabezado { position: sticky; top: 0; z-index: 5; color: var(--blanco); background: var(--azul-900);
+
+/* Tema oscuro: solo se reasignan los roles, la paleta queda intacta */
+.tema-oscuro {
+  --celeste-100: #172832;
+  --borde: #3d5360;
+
+  --fondo: #101820;
+  --superficie: #16212b;
+  --texto-principal: #eef5f8;
+  --titulo: #8fd0ee;
+  --franja-fondo: #0a1219;
+  --franja-texto: #eef5f8;
+  --hero-inicio: #0a1219;
+  --hero-fin: #16304a;
+  --sombra: 0 10px 25px rgb(0 0 0 / 45%);
 }
-.barra-navegacion { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-
-between; gap: .75rem; padding-block: .9rem; }
-.marca { font-weight: 800; text-decoration: none; }
-.menu { display: flex; flex-wrap: wrap; gap: 1rem; margin: 0; padding: 0; list-style: none; }
-.menu a { text-underline-offset: .25rem; }
-.hero { padding-block: clamp(3rem, 8vw, 6rem); color: var(--blanco); background: linear-
-gradient(135deg, var(--azul-900), var(--azul-700)); }
-.hero h1 { max-width: 18ch; margin-block: .4rem 1rem; font-size: clamp(2rem, 6vw, 4rem); line-height:
-1.08; }
-.eyebrow { margin: 0; font-size: .85rem; font-weight: 800; letter-spacing: .08em; }
-.introduccion { max-width: 62ch; font-size: 1.1rem; }
-.boton { border: 0; border-radius: .5rem; padding: .8rem 1rem; color: var(--azul-900); background:
-var(--blanco); font: inherit; font-weight: 750; cursor: pointer; }
-.boton:hover { background: var(--celeste-100); }
-:focus-visible { outline: .2rem solid #ffcc4d; outline-offset: .2rem; }
-.consejo { max-width: 65ch; padding: 1rem; border-left: .3rem solid #ffcc4d; background: rgb(255 255
-255 / 12%); }
-.seccion { padding-block: 3.5rem; }
-.seccion h2 { color: var(--azul-900); font-size: clamp(1.6rem, 4vw, 2.3rem); }
-.tarjetas { display: grid; gap: 1rem; }
-.tarjeta { padding: 1.3rem; border: 1px solid var(--borde); border-radius: .8rem; background: var(--
-blanco); box-shadow: var(--sombra); }
-.tarjeta h3 { margin-top: 0; color: var(--azul-700); }
-.seccion-alterna { background: var(--celeste-100); }
-.lista-practicas { padding-left: 1.2rem; }
-.pie { padding-block: 1.5rem; color: var(--blanco); background: var(--azul-900); text-align: center; }
-@media (min-width: 48rem) { .tarjetas { grid-template-columns: repeat(3, 1fr); } }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* 3. Base ---------------------------------------------------- */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: var(--texto-principal);
+  background: var(--fondo);
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  line-height: 1.6;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: .2rem solid var(--foco);
+  outline-offset: .2rem;
+}
+
+.contenedor {
+  width: min(100% - 2rem, 70rem);
+  margin-inline: auto;
+}
+
+.salto-contenido {
+  position: fixed;
+  inset: .5rem auto auto .5rem;
+  z-index: 10;
+  padding: .7rem 1rem;
+  color: var(--azul-900);
+  background: #ffffff;
+  transform: translateY(-150%);
+}
+
+.salto-contenido:focus {
+  transform: translateY(0);
+}
+
+/* 4. Componentes --------------------------------------------- */
+.encabezado {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  color: var(--franja-texto);
+  background: var(--franja-fondo);
+}
+
+.barra-navegacion {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  padding-block: .9rem;
+}
+
+.marca {
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.menu a {
+  text-underline-offset: .25rem;
+}
+
+.boton {
+  border: 0;
+  border-radius: .5rem;
+  padding: .8rem 1rem;
+  color: var(--azul-900);
+  background: var(--franja-texto);
+  font: inherit;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.boton:hover {
+  background: var(--celeste-100);
+  color: var(--titulo);
+}
+
+/* Variante discreta: vive dentro de una franja oscura */
+.boton-tema {
+  padding: .5rem .8rem;
+  border: 2px solid currentColor;
+  color: var(--franja-texto);
+  background: transparent;
+  font-weight: 600;
+}
+
+.boton-tema:hover {
+  color: var(--franja-fondo);
+  background: var(--franja-texto);
+}
+
+.hero {
+  padding-block: clamp(3rem, 8vw, 6rem);
+  color: var(--franja-texto);
+  background: linear-gradient(135deg, var(--hero-inicio), var(--hero-fin));
+}
+
+.hero h1 {
+  max-width: 18ch;
+  margin-block: .4rem 1rem;
+  font-size: clamp(2rem, 6vw, 4rem);
+  line-height: 1.08;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: .85rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+}
+
+.introduccion {
+  max-width: 62ch;
+  font-size: 1.1rem;
+}
+
+.consejo {
+  max-width: 65ch;
+  padding: 1rem;
+  border-left: .3rem solid var(--foco);
+  background: rgb(255 255 255 / 12%);
+}
+
+.seccion {
+  padding-block: 3.5rem;
+}
+
+.seccion h2 {
+  color: var(--titulo);
+  font-size: clamp(1.6rem, 4vw, 2.3rem);
+}
+
+.seccion-alterna {
+  background: var(--celeste-100);
+}
+
+.tarjetas {
+  display: grid;
+  gap: 1rem;
+}
+
+.tarjeta {
+  padding: 1.3rem;
+  border: 1px solid var(--borde);
+  border-radius: .8rem;
+  background: var(--superficie);
+  box-shadow: var(--sombra);
+}
+
+.tarjeta h3 {
+  margin-top: 0;
+  color: var(--titulo);
+}
+
+.lista-practicas {
+  padding-left: 1.2rem;
+}
+
+.pie {
+  padding-block: 1.5rem;
+  color: var(--franja-texto);
+  background: var(--franja-fondo);
+  text-align: center;
+}
+
+/* 5. Adaptación ---------------------------------------------- */
+/* Una columna en móvil, dos en tableta, cuatro en escritorio:
+   con cuatro tarjetas, repeat(3, 1fr) dejaría una suelta en la segunda fila. */
+@media (min-width: 48rem) {
+  .tarjetas {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 64rem) {
+  .tarjetas {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
