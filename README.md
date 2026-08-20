@@ -47,3 +47,4 @@ Repositorio del Grupo 5 para los trabajos y laboratorios del curso de desarrollo
 | ------ | ----------------- |
 | Adriano Joao Souza Reyna | HeyArnoldo |
 | Evelyn Crisherat Cruz Quispe | smilyng7 |
+| Yeira Nikole Chambi Rios | MushuIsHere |
