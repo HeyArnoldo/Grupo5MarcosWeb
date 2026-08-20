@@ -1,6 +1,1 @@
-turip
-ip
-ip
-turip
-ip
-ip
+Avance de la semana 2 sesión 2
