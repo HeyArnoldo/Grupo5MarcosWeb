@@ -1,0 +1,66 @@
+:root {
+    --marca: #145c56;
+    --marca-oscura: #0e423e;
+    --bs-primary: var(--marca);
+    --bs-primary-rgb: 20, 92, 86;
+    --tamano-icono: 3rem;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-width: 320px;
+}
+
+section[id],
+footer[id] {
+    scroll-margin-top: 4.5rem;
+}
+
+.icono-servicio {
+    display: inline-flex;
+    width: var(--tamano-icono);
+    height: var(--tamano-icono);
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: var(--marca);
+    background-color: rgba(var(--bs-primary-rgb), 0.12);
+    border-radius: 0.75rem;
+}
+
+.btn-primary {
+    --bs-btn-bg: var(--marca);
+    --bs-btn-border-color: var(--marca);
+    --bs-btn-hover-bg: var(--marca-oscura);
+    --bs-btn-hover-border-color: var(--marca-oscura);
+    --bs-btn-active-bg: var(--marca-oscura);
+    --bs-btn-active-border-color: var(--marca-oscura);
+    --bs-btn-disabled-bg: var(--marca);
+    --bs-btn-disabled-border-color: var(--marca);
+}
+
+.btn-outline-primary {
+    --bs-btn-color: var(--marca);
+    --bs-btn-border-color: var(--marca);
+    --bs-btn-hover-bg: var(--marca);
+    --bs-btn-hover-border-color: var(--marca);
+    --bs-btn-active-bg: var(--marca-oscura);
+    --bs-btn-active-border-color: var(--marca-oscura);
+    --bs-btn-disabled-color: var(--marca);
+    --bs-btn-disabled-border-color: var(--marca);
+}
+
+.navbar .nav-link:focus-visible,
+.btn:focus-visible {
+    outline: 3px solid var(--bs-warning);
+    outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+}
