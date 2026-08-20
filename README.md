@@ -45,4 +45,4 @@ Repositorio del Grupo 5 para los trabajos y laboratorios del curso de desarrollo
 
 | Nombre | Usuario de GitHub |
 | ------ | ----------------- |
-| _Pendiente_ | _Pendiente_ |
+| Adriano Joao Souza Reyna | HeyArnoldo |
