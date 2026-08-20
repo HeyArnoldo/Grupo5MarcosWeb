@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Catálogo de servicios para estudiantes: biblioteca, tutorías, empleabilidad y bienestar.">
+    <title>Campus Central | Servicios para estudiantes</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    >
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    >
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <a class="visually-hidden-focusable" href="#contenido-principal">
+      Saltar al contenido principal
+    </a>
+
+    <header>
+      <nav
+        class="navbar navbar-expand-lg bg-primary sticky-top"
+        data-bs-theme="dark"
+        aria-label="Navegación principal"
+      >
+        <div class="container">
+          <a class="navbar-brand fw-semibold" href="#inicio">
+            <i class="bi bi-mortarboard-fill me-2" aria-hidden="true"></i>Campus Central
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#menuPrincipal"
+            aria-controls="menuPrincipal"
+            aria-expanded="false"
+            aria-label="Mostrar u ocultar navegación"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="menuPrincipal">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#inicio">Inicio</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#servicios">Servicios</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#horarios">Horarios</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#contacto">Contacto</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main id="contenido-principal">
+      <section id="inicio" class="bg-body-tertiary py-5">
+        <div class="container">
+          <div class="row align-items-center g-5">
+            <div class="col-12 col-lg-6">
+              <p class="text-primary fw-semibold text-uppercase mb-2">
+                Todo el campus en un solo lugar
+              </p>
+              <h1 class="display-5 fw-bold">
+                Servicios pensados para tu semestre
+              </h1>
+              <p class="lead text-body-secondary">
+                Reserva una asesoría, encuentra un espacio de estudio o pide apoyo
+                de bienestar sin recorrer pabellones.
+              </p>
+              <a class="btn btn-primary btn-lg" href="#servicios">
+                Ver servicios
+                <i class="bi bi-arrow-down ms-2" aria-hidden="true"></i>
+              </a>
+            </div>
+            <div class="col-12 col-lg-6">
+              <div class="ratio ratio-4x3 rounded-4 shadow-sm overflow-hidden">
+                <img
+                  class="object-fit-cover"
+                  src="images.jpg"
+                  alt="Estudiantes trabajando en las mesas comunes de la biblioteca"
+                  width="1200"
+                  height="900"
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="servicios" class="py-5">
+        <div class="container">
+          <div class="row mb-4">
+            <div class="col-12 col-lg-8">
+              <h2 class="fw-bold">Servicios disponibles</h2>
+              <p class="text-body-secondary mb-0">
+                Cada servicio es gratuito para estudiantes con matrícula vigente.
+              </p>
+            </div>
+          </div>
+          <div class="row g-4">
+            <article class="col-12 col-md-6 col-xl-3">
+              <div class="h-100 p-4 border rounded-3 bg-body">
+                <span class="icono-servicio mb-3">
+                  <i class="bi bi-journals" aria-hidden="true"></i>
+                </span>
+                <h3 class="h5">Biblioteca digital</h3>
+                <p class="text-body-secondary mb-0">
+                  Bases de datos académicas, préstamo de libros y salas de estudio
+                  reservables por hora.
+                </p>
+              </div>
+            </article>
+            <article class="col-12 col-md-6 col-xl-3">
+              <div class="h-100 p-4 border rounded-3 bg-body">
+                <span class="icono-servicio mb-3">
+                  <i class="bi bi-people" aria-hidden="true"></i>
+                </span>
+                <h3 class="h5">Tutoría académica</h3>
+                <p class="text-body-secondary mb-0">
+                  Acompañamiento en cursos de ciencias básicas y programación con
+                  tutores de ciclos superiores.
+                </p>
+              </div>
+            </article>
+            <article class="col-12 col-md-6 col-xl-3">
+              <div class="h-100 p-4 border rounded-3 bg-body">
+                <span class="icono-servicio mb-3">
+                  <i class="bi bi-briefcase" aria-hidden="true"></i>
+                </span>
+                <h3 class="h5">Bolsa de trabajo</h3>
+                <p class="text-body-secondary mb-0">
+                  Prácticas preprofesionales, revisión de currículum y simulacros
+                  de entrevista técnica.
+                </p>
+              </div>
+            </article>
+            <article class="col-12 col-md-6 col-xl-3">
+              <div class="h-100 p-4 border rounded-3 bg-body">
+                <span class="icono-servicio mb-3">
+                  <i class="bi bi-heart-pulse" aria-hidden="true"></i>
+                </span>
+                <h3 class="h5">Bienestar estudiantil</h3>
+                <p class="text-body-secondary mb-0">
+                  Consejería psicológica, tópico de salud y talleres de manejo del
+                  estrés en época de exámenes.
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="horarios" class="py-5 bg-body-tertiary">
+        <div class="container">
+          <div class="row mb-4">
+            <div class="col-12 col-lg-8">
+              <h2 class="fw-bold">Horarios de atención</h2>
+              <p class="text-body-secondary mb-0">
+                Elige un horario para ver la confirmación de tu reserva.
+              </p>
+            </div>
+          </div>
+
+          <div class="table-responsive shadow-sm rounded-3">
+            <table class="table table-striped table-hover align-middle mb-0">
+              <caption class="caption-top">
+                Atención presencial durante el ciclo académico
+              </caption>
+              <thead class="table-light">
+                <tr>
+                  <th scope="col">Servicio</th>
+                  <th scope="col">Días</th>
+                  <th scope="col">Horario</th>
+                  <th scope="col">Lugar</th>
+                  <th scope="col">Reserva</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Biblioteca digital</th>
+                  <td>Lunes a sábado</td>
+                  <td>08:00 - 21:00</td>
+                  <td>Pabellón A, piso 2</td>
+                  <td>
+                    <button
+                      class="btn btn-outline-primary btn-sm"
+                      type="button"
+                      data-servicio="Biblioteca digital"
+                      data-horario="lunes a sábado de 08:00 a 21:00"
+                    >
+                      Reservar
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Tutoría de cálculo</th>
+                  <td>Lunes y miércoles</td>
+                  <td>15:00 - 18:00</td>
+                  <td>Pabellón C, aula 305</td>
+                  <td>
+                    <button
+                      class="btn btn-outline-primary btn-sm"
+                      type="button"
+                      data-servicio="Tutoría de cálculo"
+                      data-horario="lunes y miércoles de 15:00 a 18:00"
+                    >
+                      Reservar
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Laboratorio de cómputo</th>
+                  <td>Martes a viernes</td>
+                  <td>09:00 - 20:00</td>
+                  <td>Pabellón B, piso 4</td>
+                  <td>
+                    <button
+                      class="btn btn-outline-primary btn-sm"
+                      type="button"
+                      data-servicio="Laboratorio de cómputo"
+                      data-horario="martes a viernes de 09:00 a 20:00"
+                    >
+                      Reservar
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Revisión de currículum</th>
+                  <td>Jueves</td>
+                  <td>10:00 - 13:00</td>
+                  <td>Oficina de empleabilidad</td>
+                  <td>
+                    <button
+                      class="btn btn-outline-primary btn-sm"
+                      type="button"
+                      data-servicio="Revisión de currículum"
+                      data-horario="jueves de 10:00 a 13:00"
+                    >
+                      Reservar
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Consejería psicológica</th>
+                  <td>Lunes a viernes</td>
+                  <td>08:00 - 17:00</td>
+                  <td>Bienestar, módulo 2</td>
+                  <td>
+                    <button
+                      class="btn btn-outline-primary btn-sm"
+                      type="button"
+                      data-servicio="Consejería psicológica"
+                      data-horario="lunes a viernes de 08:00 a 17:00"
+                    >
+                      Reservar
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Club de idiomas</th>
+                  <td>Sábado</td>
+                  <td>09:00 - 12:00</td>
+                  <td>Pabellón D, aula 110</td>
+                  <td>
+                    <button
+                      class="btn btn-outline-primary btn-sm"
+                      type="button"
+                      data-servicio="Club de idiomas"
+                      data-horario="sábado de 09:00 a 12:00"
+                    >
+                      Reservar
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p
+            id="estado-reserva"
+            class="alert alert-info mt-3 mb-0 d-none"
+            role="status"
+            aria-live="polite"
+          ></p>
+        </div>
+      </section>
+    </main>
+
+    <footer id="contacto" class="bg-dark text-white py-4">
+      <div class="container">
+        <div class="row align-items-center gy-3">
+          <div class="col-12 col-md-8">
+            <p class="mb-1 fw-semibold">Campus Central</p>
+            <p class="mb-0 text-white-50">
+              Atención al estudiante · servicios@campuscentral.edu.pe
+            </p>
+          </div>
+          <div class="col-12 col-md-4 text-md-end">
+            <span>&copy; <span data-anio-actual></span> Campus Central</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+    <script src="script.js"></script>
+  </body>
+</html>
