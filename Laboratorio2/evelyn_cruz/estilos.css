@@ -1,0 +1,86 @@
+:root {
+  --app-icon-size: 3rem;
+
+  --bs-primary: #e83e8c;
+  --bs-primary-rgb: 232, 62, 140;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+}
+
+section[id],
+footer[id] {
+  scroll-margin-top: 4.5rem;
+}
+
+.hero-image {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+.btn-primary {
+  background-color: var(--bs-primary) !important;
+  border-color: var(--bs-primary) !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: #d63384 !important;
+  border-color: #d63384 !important;
+}
+
+.btn-outline-primary {
+  color: var(--bs-primary) !important;
+  border-color: var(--bs-primary) !important;
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--bs-primary) !important;
+  color: #fff !important;
+}
+
+.text-primary {
+  color: var(--bs-primary) !important;
+}
+
+.bg-primary {
+  background-color: var(--bs-primary) !important;
+}
+
+.table-primary {
+  --bs-table-bg: #f8d7da;
+  --bs-table-color: #842029;
+}
+
+.feature-icon {
+  display: inline-flex;
+  width: var(--app-icon-size);
+  height: var(--app-icon-size);
+  align-items: center;
+  justify-content: center;
+  color: var(--bs-primary);
+  font-size: 1.5rem;
+  background-color: rgba(var(--bs-primary-rgb), 0.15);
+  border-radius: 0.75rem;
+}
+
+.navbar .nav-link:focus-visible,
+.btn:focus-visible {
+  outline: 3px solid var(--bs-warning);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+.bg-primary {
+    background-color: pink !important;
+}
