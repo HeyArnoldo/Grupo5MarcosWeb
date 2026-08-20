@@ -46,3 +46,4 @@ Repositorio del Grupo 5 para los trabajos y laboratorios del curso de desarrollo
 | Nombre | Usuario de GitHub |
 | ------ | ----------------- |
 | Adriano Joao Souza Reyna | HeyArnoldo |
+| Evelyn Crisherat Cruz Quispe | smilyng7 |
