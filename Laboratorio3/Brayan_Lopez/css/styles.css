@@ -1,0 +1,136 @@
+/* =========================================================
+   Campus Activo — estilos propios
+   Regla de trabajo: no se edita bootstrap.min.css.
+   Aquí solo se ajustan variables públicas de Bootstrap 5.3
+   y se agregan clases nuevas con prefijo .campus / .cita.
+   ========================================================= */
+
+:root {
+  --campus-primario: #17505e;        /* petróleo institucional */
+  --campus-primario-oscuro: #0f3b46;
+  --campus-primario-rgb: 23, 80, 94;
+  --campus-primario-oscuro-rgb: 15, 59, 70;
+  --campus-acento: #a9761a;          /* ocre, solo para acentos */
+  --campus-transicion: 180ms ease;
+
+  /* Variables públicas de Bootstrap: afectan bg-primary,
+     text-primary, border-primary, text-bg-primary y enlaces. */
+  --bs-primary: var(--campus-primario);
+  --bs-primary-rgb: var(--campus-primario-rgb);
+  --bs-link-color-rgb: var(--campus-primario-rgb);
+  --bs-link-hover-color-rgb: var(--campus-primario-oscuro-rgb);
+  --bs-focus-ring-color: rgba(var(--campus-primario-rgb), 0.35);
+}
+
+/* Los botones de Bootstrap 5.3 se personalizan por sus
+   propias variables --bs-btn-*, no reescribiendo sus reglas. */
+.btn-primary {
+  --bs-btn-bg: var(--campus-primario);
+  --bs-btn-border-color: var(--campus-primario);
+  --bs-btn-hover-bg: var(--campus-primario-oscuro);
+  --bs-btn-hover-border-color: var(--campus-primario-oscuro);
+  --bs-btn-active-bg: var(--campus-primario-oscuro);
+  --bs-btn-active-border-color: var(--campus-primario-oscuro);
+  --bs-btn-disabled-bg: var(--campus-primario);
+  --bs-btn-disabled-border-color: var(--campus-primario);
+}
+
+.btn-outline-primary {
+  --bs-btn-color: var(--campus-primario);
+  --bs-btn-border-color: var(--campus-primario);
+  --bs-btn-hover-bg: var(--campus-primario);
+  --bs-btn-hover-border-color: var(--campus-primario);
+  --bs-btn-active-bg: var(--campus-primario-oscuro);
+  --bs-btn-active-border-color: var(--campus-primario-oscuro);
+  --bs-btn-disabled-color: var(--campus-primario);
+  --bs-btn-disabled-border-color: var(--campus-primario);
+}
+
+html { scroll-behavior: smooth; }
+body { min-width: 320px; }
+
+.hero {
+  min-height: 30rem;
+  display: flex;
+  align-items: center;
+}
+
+/* Cita del hero: el acento ocre aparece solo aquí. */
+.cita-campus {
+  border-left: 0.25rem solid var(--campus-acento);
+}
+
+/* Tarjetas: elevación discreta al apuntar y foco visible
+   cuando el teclado llega al botón interno. */
+.card {
+  border: 0;
+  transition: transform var(--campus-transicion),
+              box-shadow var(--campus-transicion);
+}
+
+.card:hover {
+  transform: translateY(-0.25rem);
+}
+
+.card:focus-within {
+  outline: 0.2rem solid rgba(var(--campus-primario-rgb), 0.45);
+  outline-offset: 0.15rem;
+}
+
+/* MEJORA CSS DEL RETO
+   Subrayado que crece desde el centro en la pestaña activa.
+   Es decorativo: la pestaña ya se distingue por color, borde
+   y por aria-selected, así que nadie depende de la animación. */
+.nav-tabs .nav-link {
+  position: relative;
+}
+
+.nav-tabs .nav-link::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  bottom: 0.15rem;
+  height: 0.15rem;
+  background-color: var(--campus-acento);
+  transition: left var(--campus-transicion), right var(--campus-transicion);
+}
+
+.nav-tabs .nav-link.active::after {
+  left: 1rem;
+  right: 1rem;
+}
+
+/* Anillo de foco coherente en todos los controles del formulario. */
+.form-control:focus,
+.form-select:focus,
+.form-check-input:focus {
+  border-color: rgba(var(--campus-primario-rgb), 0.6);
+  box-shadow: 0 0 0 0.25rem rgba(var(--campus-primario-rgb), 0.25);
+}
+
+/* El campo readonly debe verse distinto de uno editable. */
+.form-control[readonly] {
+  background-color: var(--bs-secondary-bg);
+  font-weight: 600;
+}
+
+/* ALTERNATIVA SIN MOVIMIENTO
+   Se anulan desplazamiento suave, elevación y subrayado animado.
+   El estado sigue comunicándose, pero sin transición. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  .card {
+    transition: none;
+  }
+
+  .card:hover {
+    transform: none;
+    box-shadow: 0 0 0 0.15rem rgba(var(--campus-primario-rgb), 0.35);
+  }
+
+  .nav-tabs .nav-link::after {
+    transition: none;
+  }
+}
