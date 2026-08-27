@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Catálogo de actividades universitarias con inscripción de demostración.">
+    <title>Campus Activo | Actividades universitarias</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    >
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    >
+    <link rel="stylesheet" href="css/styles.css">
+  </head>
+
+  <body>
+    <a class="visually-hidden-focusable" href="#contenido-principal">
+      Saltar al contenido principal
+    </a>
+
+    <header>
+      <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark"
+           aria-label="Navegación principal">
+        <div class="container">
+          <a class="navbar-brand fw-semibold" href="#inicio">
+            <i class="bi bi-calendar2-week-fill me-2" aria-hidden="true"></i>Campus Activo
+          </a>
+          <button class="navbar-toggler" type="button"
+                  data-bs-toggle="collapse" data-bs-target="#menuPrincipal"
+                  aria-controls="menuPrincipal" aria-expanded="false"
+                  aria-label="Mostrar u ocultar navegación">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="menuPrincipal">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item"><a class="nav-link active" aria-current="page" href="#inicio">Inicio</a></li>
+              <li class="nav-item"><a class="nav-link" href="#actividades">Actividades</a></li>
+              <li class="nav-item"><a class="nav-link" href="#participacion">Participación</a></li>
+              <li class="nav-item"><a class="nav-link" href="#preguntas">Preguntas</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main id="contenido-principal">
+      <!-- ============ HERO ============ -->
+      <section id="inicio" class="hero py-5 bg-body-tertiary">
+        <div class="container py-lg-4">
+          <div class="row align-items-center g-4">
+            <div class="col-12 col-lg-7">
+              <span class="badge text-bg-primary mb-3">Ciclo 2026-2 · Inscripciones abiertas</span>
+              <h1 class="display-4 fw-bold">Vive el campus fuera del aula</h1>
+              <p class="lead text-body-secondary">
+                Talleres, competencias, voluntariado y clubes abiertos a toda la comunidad.
+                Elige una actividad y registra tu interés en menos de un minuto.
+              </p>
+              <button class="btn btn-primary btn-lg" type="button"
+                      data-bs-toggle="modal" data-bs-target="#modalInscripcion"
+                      data-actividad="Orientación general">
+                Solicitar orientación
+              </button>
+            </div>
+            <div class="col-12 col-lg-5">
+              <blockquote class="blockquote cita-campus ps-4 mb-0">
+                <p>Lo que se aprende en un proyecto compartido no se olvida al terminar el ciclo.</p>
+                <footer class="blockquote-footer mb-0">Oficina de Vida Universitaria</footer>
+              </blockquote>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ AVISO FIJO + ESTADO DINÁMICO ============ -->
+      <div class="container mt-4">
+        <div class="alert alert-info d-flex align-items-start" role="alert">
+          <i class="bi bi-info-circle-fill me-2" aria-hidden="true"></i>
+          <div>
+            <strong>Inscripción de demostración:</strong>
+            esta práctica valida en el navegador y no envía datos a ningún servidor.
+          </div>
+        </div>
+
+        <div id="estadoGlobal" class="alert alert-success d-none" role="status" aria-live="polite"></div>
+      </div>
+
+      <!-- ============ CATÁLOGO DE ACTIVIDADES ============ -->
+      <section id="actividades" class="py-5">
+        <div class="container">
+          <div class="mb-4">
+            <p class="text-primary fw-semibold text-uppercase mb-1">Catálogo</p>
+            <h2 class="fw-bold">Actividades del ciclo</h2>
+            <p class="text-body-secondary mb-0">
+              Cuatro propuestas con información comparable: categoría, duración, sede y nivel de exigencia.
+            </p>
+          </div>
+
+          <div class="row g-4">
+            <!-- Actividad 1 -->
+            <article class="col-12 col-md-6 col-xl-3">
+              <div class="card h-100 shadow-sm">
+                <div class="card-body d-flex flex-column">
+                  <div class="d-flex justify-content-between align-items-start gap-2">
+                    <h3 class="card-title h5">Taller de Robótica</h3>
+                    <span class="badge text-bg-success">
+                      <span class="visually-hidden">Nivel de exigencia:</span> Inicial
+                    </span>
+                  </div>
+                  <p class="card-text text-body-secondary">
+                    Arma y programa un robot seguidor de línea con Arduino.
+                  </p>
+                  <ul class="list-group list-group-flush mb-3">
+                    <li class="list-group-item px-0">Categoría: taller</li>
+                    <li class="list-group-item px-0">6 sesiones · Laboratorio B-204</li>
+                    <li class="list-group-item px-0">Nivel inicial: no requiere experiencia</li>
+                  </ul>
+                  <button class="btn btn-outline-primary mt-auto" type="button"
+                          data-bs-toggle="modal" data-bs-target="#modalInscripcion"
+                          data-actividad="Taller de Robótica">Inscribirme</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- Actividad 2 -->
+            <article class="col-12 col-md-6 col-xl-3">
+              <div class="card h-100 shadow-sm">
+                <div class="card-body d-flex flex-column">
+                  <div class="d-flex justify-content-between align-items-start gap-2">
+                    <h3 class="card-title h5">Hackathon Interfacultades</h3>
+                    <span class="badge text-bg-danger">
+                      <span class="visually-hidden">Nivel de exigencia:</span> Avanzado
+                    </span>
+                  </div>
+                  <p class="card-text text-body-secondary">
+                    36 horas para resolver un reto real de una empresa aliada.
+                  </p>
+                  <ul class="list-group list-group-flush mb-3">
+                    <li class="list-group-item px-0">Categoría: competencia</li>
+                    <li class="list-group-item px-0">36 horas · Auditorio central</li>
+                    <li class="list-group-item px-0">Nivel avanzado: equipos de 3 a 5 personas</li>
+                  </ul>
+                  <button class="btn btn-outline-primary mt-auto" type="button"
+                          data-bs-toggle="modal" data-bs-target="#modalInscripcion"
+                          data-actividad="Hackathon Interfacultades">Inscribirme</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- Actividad 3 -->
+            <article class="col-12 col-md-6 col-xl-3">
+              <div class="card h-100 shadow-sm">
+                <div class="card-body d-flex flex-column">
+                  <div class="d-flex justify-content-between align-items-start gap-2">
+                    <h3 class="card-title h5">Voluntariado Ambiental</h3>
+                    <span class="badge text-bg-success">
+                      <span class="visually-hidden">Nivel de exigencia:</span> Inicial
+                    </span>
+                  </div>
+                  <p class="card-text text-body-secondary">
+                    Recuperación de áreas verdes y educación ambiental en colegios.
+                  </p>
+                  <ul class="list-group list-group-flush mb-3">
+                    <li class="list-group-item px-0">Categoría: voluntariado</li>
+                    <li class="list-group-item px-0">4 salidas · Distritos aliados</li>
+                    <li class="list-group-item px-0">Nivel inicial: abierto a todas las carreras</li>
+                  </ul>
+                  <button class="btn btn-outline-primary mt-auto" type="button"
+                          data-bs-toggle="modal" data-bs-target="#modalInscripcion"
+                          data-actividad="Voluntariado Ambiental">Inscribirme</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- Actividad 4 -->
+            <article class="col-12 col-md-6 col-xl-3">
+              <div class="card h-100 shadow-sm">
+                <div class="card-body d-flex flex-column">
+                  <div class="d-flex justify-content-between align-items-start gap-2">
+                    <h3 class="card-title h5">Club de Debate</h3>
+                    <span class="badge text-bg-warning">
+                      <span class="visually-hidden">Nivel de exigencia:</span> Intermedio
+                    </span>
+                  </div>
+                  <p class="card-text text-body-secondary">
+                    Argumentación, oratoria y torneos internos cada quincena.
+                  </p>
+                  <ul class="list-group list-group-flush mb-3">
+                    <li class="list-group-item px-0">Categoría: club</li>
+                    <li class="list-group-item px-0">Todo el ciclo · Sala C-101</li>
+                    <li class="list-group-item px-0">Nivel intermedio: exige práctica semanal</li>
+                  </ul>
+                  <button class="btn btn-outline-primary mt-auto" type="button"
+                          data-bs-toggle="modal" data-bs-target="#modalInscripcion"
+                          data-actividad="Club de Debate">Inscribirme</button>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ PESTAÑAS ============ -->
+      <section id="participacion" class="py-5 bg-body-tertiary">
+        <div class="container">
+          <h2 class="fw-bold mb-4">Cómo participar</h2>
+
+          <ul class="nav nav-tabs" id="tabsParticipacion" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="inscripcion-tab" data-bs-toggle="tab"
+                      data-bs-target="#inscripcion-panel" type="button" role="tab"
+                      aria-controls="inscripcion-panel" aria-selected="true">Inscripción</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="beneficios-tab" data-bs-toggle="tab"
+                      data-bs-target="#beneficios-panel" type="button" role="tab"
+                      aria-controls="beneficios-panel" aria-selected="false">Beneficios</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="certificacion-tab" data-bs-toggle="tab"
+                      data-bs-target="#certificacion-panel" type="button" role="tab"
+                      aria-controls="certificacion-panel" aria-selected="false">Certificación</button>
+            </li>
+          </ul>
+
+          <div class="tab-content border border-top-0 rounded-bottom p-4 bg-body" id="contenidoParticipacion">
+            <div class="tab-pane fade show active" id="inscripcion-panel" role="tabpanel"
+                 aria-labelledby="inscripcion-tab" tabindex="0">
+              <h3 class="h5">Un solo formulario</h3>
+              <p class="mb-0">
+                Registras tu interés desde la tarjeta de la actividad y el equipo confirma el cupo por correo.
+              </p>
+            </div>
+            <div class="tab-pane fade" id="beneficios-panel" role="tabpanel"
+                 aria-labelledby="beneficios-tab" tabindex="0">
+              <h3 class="h5">Créditos extracurriculares</h3>
+              <p class="mb-0">
+                Cada actividad suma horas al récord de vida universitaria y da acceso a materiales del campus.
+              </p>
+            </div>
+            <div class="tab-pane fade" id="certificacion-panel" role="tabpanel"
+                 aria-labelledby="certificacion-tab" tabindex="0">
+              <h3 class="h5">Constancia digital</h3>
+              <p class="mb-0">
+                Con 80 % de asistencia recibes una constancia verificable con código QR.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ ACORDEÓN ============ -->
+      <section id="preguntas" class="py-5">
+        <div class="container">
+          <h2 class="fw-bold mb-4">Preguntas frecuentes</h2>
+
+          <div class="accordion" id="acordeonPreguntas">
+            <div class="accordion-item">
+              <h3 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#respuestaUno" aria-expanded="true"
+                        aria-controls="respuestaUno">
+                  ¿Puedo inscribirme en más de una actividad?
+                </button>
+              </h3>
+              <div id="respuestaUno" class="accordion-collapse collapse show"
+                   data-bs-parent="#acordeonPreguntas">
+                <div class="accordion-body">
+                  Sí. Solo cuida que los horarios no se crucen con tus cursos matriculados.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h3 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#respuestaDos" aria-expanded="false"
+                        aria-controls="respuestaDos">
+                  ¿Tiene algún costo?
+                </button>
+              </h3>
+              <div id="respuestaDos" class="accordion-collapse collapse"
+                   data-bs-parent="#acordeonPreguntas">
+                <div class="accordion-body">
+                  No. Las actividades son gratuitas para estudiantes con matrícula vigente.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h3 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#respuestaTres" aria-expanded="false"
+                        aria-controls="respuestaTres">
+                  ¿Este formulario guarda mis datos?
+                </button>
+              </h3>
+              <div id="respuestaTres" class="accordion-collapse collapse"
+                   data-bs-parent="#acordeonPreguntas">
+                <div class="accordion-body">
+                  No. Esta versión solo demuestra validación del lado del cliente; no hay servidor detrás.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="py-4 bg-dark text-white-50">
+      <div class="container">
+        <small>© <span id="anioActual"></span> Campus Activo · Portal de actividades universitarias</small>
+      </div>
+    </footer>
+
+    <!-- ============ MODAL REUTILIZABLE ============ -->
+    <div class="modal fade" id="modalInscripcion" tabindex="-1"
+         aria-labelledby="tituloModalInscripcion" aria-describedby="descripcionModalInscripcion"
+         aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div>
+              <h2 class="modal-title fs-5" id="tituloModalInscripcion">Inscripción de interés</h2>
+              <p class="text-body-secondary small mb-0" id="descripcionModalInscripcion">
+                Completa los campos obligatorios. No se enviarán datos reales.
+              </p>
+            </div>
+            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+
+          <form id="formInscripcion" novalidate>
+            <div class="modal-body">
+              <div class="row g-3">
+                <div class="col-12">
+                  <label class="form-label" for="actividad">Actividad seleccionada</label>
+                  <input class="form-control" id="actividad" name="actividad" type="text" readonly>
+                </div>
+
+                <div class="col-12 col-md-6">
+                  <label class="form-label" for="nombre">Nombre completo</label>
+                  <input class="form-control" id="nombre" name="nombre" type="text"
+                         minlength="3" autocomplete="name" required aria-describedby="ayudaNombre">
+                  <div class="form-text" id="ayudaNombre">Escribe al menos tres caracteres.</div>
+                  <div class="invalid-feedback">Ingresa tu nombre completo (mínimo tres caracteres).</div>
+                </div>
+
+                <div class="col-12 col-md-6">
+                  <label class="form-label" for="correo">Correo institucional</label>
+                  <input class="form-control" id="correo" name="correo" type="email"
+                         autocomplete="email" required aria-describedby="ayudaCorreo">
+                  <div class="form-text" id="ayudaCorreo">Usaremos este correo para confirmar tu cupo.</div>
+                  <div class="invalid-feedback">Ingresa un correo válido, por ejemplo nombre@dominio.edu.pe.</div>
+                </div>
+
+                <div class="col-12 col-md-6">
+                  <label class="form-label" for="turno">Turno preferido</label>
+                  <select class="form-select" id="turno" name="turno" required>
+                    <option value="">Selecciona una opción</option>
+                    <option>Mañana</option>
+                    <option>Tarde</option>
+                    <option>Noche</option>
+                  </select>
+                  <div class="invalid-feedback">Selecciona un turno para continuar.</div>
+                </div>
+
+                <div class="col-12 col-md-6">
+                  <label class="form-label" for="telefono">
+                    Teléfono <span class="text-body-secondary">(opcional)</span>
+                  </label>
+                  <input class="form-control" id="telefono" name="telefono" type="tel"
+                         inputmode="tel" autocomplete="tel" pattern="[0-9 +()-]{7,20}"
+                         aria-describedby="ayudaTelefono">
+                  <div class="form-text" id="ayudaTelefono">Solo si prefieres coordinación por WhatsApp.</div>
+                  <div class="invalid-feedback">Usa entre 7 y 20 caracteres: números, espacios, +, ( ) o -.</div>
+                </div>
+
+                <div class="col-12">
+                  <div class="form-check">
+                    <input class="form-check-input" id="acepta" name="acepta" type="checkbox" required>
+                    <label class="form-check-label" for="acepta">
+                      Acepto el uso demostrativo de estos datos.
+                    </label>
+                    <div class="invalid-feedback">Debes aceptar para continuar.</div>
+                  </div>
+                </div>
+              </div>
+
+              <div id="estadoFormulario" class="alert alert-success mt-3 d-none" role="status" tabindex="-1"></div>
+            </div>
+
+            <div class="modal-footer">
+              <button class="btn btn-outline-secondary" type="button" data-bs-dismiss="modal">Cancelar</button>
+              <button class="btn btn-primary" type="submit">Registrar interés</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
