@@ -1,0 +1,31 @@
+/* Color Rojo Paway */
+.bg-paway-red {
+    background-color: #d31221 !important;
+}
+
+.text-paway-red {
+    color: #d31221 !important;
+}
+
+/* Efectos para Slides del Carrusel */
+.paway-slide1 {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+        url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+    min-height: 420px;
+}
+
+.paway-slide2 {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+        url('https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+    min-height: 420px;
+}
+
+/* Hover de tarjetas de servicios */
+.hover-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+}
