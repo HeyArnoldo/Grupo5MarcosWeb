@@ -1,0 +1,399 @@
+/* =====================================================
+   PERSONA 5 - JOAO SOUZA
+   MÓDULO: PANEL ADMINISTRATIVO
+   ===================================================== */
+
+
+/*
+    Hoja de estilos autocontenida.
+    Solo agrega el tema visual de Paway
+    sobre los componentes de Bootstrap 5.
+*/
+
+
+/* =====================================================
+   VARIABLES DE MARCA
+   ===================================================== */
+
+:root {
+
+    --paway-red: #b01116;
+
+    --paway-red-dark: #8a0d11;
+
+    --paway-red-light: #e8232a;
+
+    --paway-bg: #f5f6f8;
+
+    --paway-border: #e6e8ec;
+
+    --paway-text: #22252b;
+
+    --paway-muted: #6c757d;
+
+    --paway-radius: 14px;
+
+    --paway-shadow: 0 2px 12px rgba(20, 20, 30, .07);
+
+}
+
+
+/* =====================================================
+   BASE
+   ===================================================== */
+
+body {
+
+    background-color: var(--paway-bg);
+
+    color: var(--paway-text);
+
+    font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+
+}
+
+
+/* Utilidades de color de la marca */
+
+.bg-paway-red {
+
+    background-color: var(--paway-red) !important;
+
+}
+
+.text-paway-red {
+
+    color: var(--paway-red) !important;
+
+}
+
+.btn-paway {
+
+    background-color: var(--paway-red-light);
+
+    border-color: var(--paway-red-light);
+
+    color: #fff;
+
+    font-weight: 600;
+
+}
+
+.btn-paway:hover,
+.btn-paway:focus {
+
+    background-color: var(--paway-red);
+
+    border-color: var(--paway-red);
+
+    color: #fff;
+
+}
+
+.btn-outline-paway {
+
+    border-color: var(--paway-red);
+
+    color: var(--paway-red);
+
+    font-weight: 600;
+
+}
+
+.btn-outline-paway:hover {
+
+    background-color: var(--paway-red);
+
+    color: #fff;
+
+}
+
+
+/* =====================================================
+   NAVBAR
+   ===================================================== */
+
+.navbar-paway {
+
+    background-color: var(--paway-red);
+
+    border-bottom: 4px solid var(--paway-red-dark);
+
+}
+
+.navbar-paway .nav-link {
+
+    color: rgba(255, 255, 255, .85);
+
+}
+
+.navbar-paway .nav-link:hover,
+.navbar-paway .nav-link.active {
+
+    color: #fff;
+
+}
+
+
+/* =====================================================
+   SIDEBAR
+   ===================================================== */
+
+.sidebar-paway {
+
+    background-color: #fff;
+
+    border-right: 1px solid var(--paway-border);
+
+    min-height: calc(100vh - 66px);
+
+}
+
+.sidebar-paway .nav-link {
+
+    color: var(--paway-text);
+
+    border-radius: 10px;
+
+    font-weight: 500;
+
+    padding: .6rem .9rem;
+
+    margin-bottom: .25rem;
+
+}
+
+.sidebar-paway .nav-link:hover {
+
+    background-color: #f1f2f5;
+
+}
+
+.sidebar-paway .nav-link.active {
+
+    background-color: var(--paway-red);
+
+    color: #fff;
+
+}
+
+
+/* =====================================================
+   TARJETAS
+   ===================================================== */
+
+.card-paway {
+
+    background-color: #fff;
+
+    border: 1px solid var(--paway-border);
+
+    border-radius: var(--paway-radius);
+
+    box-shadow: var(--paway-shadow);
+
+}
+
+.kpi-icono {
+
+    width: 48px;
+
+    height: 48px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 12px;
+
+    font-size: 1.4rem;
+
+    background-color: rgba(176, 17, 22, .08);
+
+    color: var(--paway-red);
+
+}
+
+.kpi-valor {
+
+    font-size: 1.9rem;
+
+    font-weight: 700;
+
+    line-height: 1;
+
+}
+
+
+/* =====================================================
+   TABLA
+   ===================================================== */
+
+.tabla-paway thead th {
+
+    background-color: #fafafb;
+
+    color: var(--paway-muted);
+
+    font-size: .78rem;
+
+    letter-spacing: .04em;
+
+    text-transform: uppercase;
+
+    border-bottom: 1px solid var(--paway-border);
+
+}
+
+.tabla-paway td {
+
+    vertical-align: middle;
+
+}
+
+.guia-codigo {
+
+    font-family: "Consolas", "Courier New", monospace;
+
+    font-weight: 600;
+
+    color: var(--paway-red);
+
+}
+
+
+/* Estados de envío */
+
+.badge-estado {
+
+    font-weight: 600;
+
+    padding: .4em .7em;
+
+    border-radius: 999px;
+
+}
+
+.badge-registrado {
+
+    background-color: #e7ebf3;
+
+    color: #41506b;
+
+}
+
+.badge-transito {
+
+    background-color: #fff2d6;
+
+    color: #8a5b00;
+
+}
+
+.badge-entregado {
+
+    background-color: #dcf5e6;
+
+    color: #14663b;
+
+}
+
+.badge-incidencia {
+
+    background-color: #fbdcdd;
+
+    color: var(--paway-red);
+
+}
+
+
+/* =====================================================
+   LÍNEA DE TIEMPO DEL DETALLE
+   ===================================================== */
+
+.timeline {
+
+    list-style: none;
+
+    margin: 0;
+
+    padding-left: 1.6rem;
+
+    border-left: 2px dashed var(--paway-border);
+
+}
+
+.timeline li {
+
+    position: relative;
+
+    padding-bottom: 1.1rem;
+
+}
+
+.timeline li::before {
+
+    content: "";
+
+    position: absolute;
+
+    left: -2.05rem;
+
+    top: .2rem;
+
+    width: 14px;
+
+    height: 14px;
+
+    border-radius: 50%;
+
+    background-color: #fff;
+
+    border: 3px solid var(--paway-border);
+
+}
+
+.timeline li.completado::before {
+
+    background-color: var(--paway-red);
+
+    border-color: var(--paway-red);
+
+}
+
+.timeline li.alerta::before {
+
+    background-color: #ffc107;
+
+    border-color: #ffc107;
+
+}
+
+
+/* =====================================================
+   VARIOS
+   ===================================================== */
+
+.seccion-panel {
+
+    scroll-margin-top: 90px;
+
+}
+
+.tabla-vacia {
+
+    color: var(--paway-muted);
+
+    padding: 2.5rem 0;
+
+}
+
+footer.footer-paway {
+
+    background-color: var(--paway-red);
+
+    color: rgba(255, 255, 255, .85);
+
+}
