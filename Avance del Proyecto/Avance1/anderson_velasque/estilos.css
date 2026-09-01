@@ -1,0 +1,227 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f4f7f6;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Barra de Navegación de Ancho Completo */
+header {
+    background-color: #ffffff;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1.5rem 3rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    border-bottom: 4px solid #d90429;
+}
+
+/* Contenedor del Logo expandido */
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    flex: 1;
+}
+
+.logo-img {
+    height: 110px;
+    width: auto;
+    object-fit: contain;
+}
+
+.logo-text {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #d90429;
+    letter-spacing: 0.5px;
+}
+
+header nav {
+    display: flex;
+    gap: 25px;
+}
+
+header nav a {
+    color: #444;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.05rem;
+    transition: color 0.3s;
+}
+
+header nav a:hover, header nav a.active {
+    color: #d90429;
+}
+
+/* Contenedor Principal */
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.section {
+    display: none;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.section.active {
+    display: block;
+}
+
+/* Banner de Inicio */
+.hero-banner {
+    background: linear-gradient(135deg, #8b0000 0%, #d90429 100%);
+    border-radius: 12px;
+    padding: 3rem 2rem;
+    color: white;
+    text-align: center;
+    box-shadow: 0 6px 20px rgba(217, 4, 41, 0.2);
+    margin-bottom: 2rem;
+}
+
+.hero-content h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.tracking-box {
+    background: white;
+    padding: 8px;
+    border-radius: 8px;
+    display: inline-flex;
+    max-width: 450px;
+    width: 100%;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.tracking-box input {
+    flex: 1;
+    border: none;
+    padding: 0.75rem;
+    font-size: 1rem;
+    outline: none;
+}
+
+.tracking-box button {
+    background-color: #d90429;
+    color: white;
+    border: none;
+    padding: 0 1.5rem;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* Tarjetas de Servicios */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.service-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border-bottom: 4px solid #d90429;
+}
+
+.service-card .icon {
+    font-size: 2.2rem;
+    margin-bottom: 0.8rem;
+}
+
+.service-card h3 {
+    font-size: 1.1rem;
+    color: #111;
+    margin-bottom: 0.4rem;
+}
+
+.service-card p {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+/* Sección Login */
+.login-section {
+    max-width: 400px;
+    margin: 0 auto;
+    background: white;
+    padding: 2.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.login-section h1 {
+    color: #0d3b66;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 1.2rem;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #444;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    outline: none;
+}
+
+.btn {
+    display: inline-block;
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #0d3b66;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    margin-top: 10px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #fff;
+    color: #666;
+    font-size: 0.85rem;
+    border-top: 1px solid #ddd;
+}
