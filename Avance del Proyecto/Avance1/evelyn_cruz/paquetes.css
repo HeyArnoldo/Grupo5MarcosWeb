@@ -1,0 +1,8 @@
+/* Posicionamiento porcentual de la barra de progreso de seguimiento */
+.start-33 {
+    left: 33.333% !important;
+}
+
+.start-66 {
+    left: 66.666% !important;
+}
