@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paway - Envíos a todo el Perú</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+    <!-- Menú de Navegación Superior -->
+    <header>
+        <div class="logo-container">
+            <img src="logo.jpg.jpeg" alt="Logo Paway" class="logo-img">
+            <span class="logo-text">Haz tus envíos con Paway...pe</span>
+        </div>
+        <nav>
+            <a href="#" class="active" onclick="showSection('home')">Inicio</a>
+            <a href="#" onclick="alert('Sección Cotizador a cargo de tu compañero')">Cotizar</a>
+            <a href="#" onclick="alert('Sección Seguimiento / Rastrear')">Rastrear</a>
+            <a href="#" onclick="alert('Sección Agencias')">Agencias</a>
+            <a href="#" onclick="showSection('login')">Mi Cuenta / Login</a>
+        </nav>
+    </header>
+
+    <!-- Contenedor Principal -->
+    <main>
+        <!-- SECCIÓN DE INICIO -->
+        <section id="home" class="section home-section active">
+            <div class="hero-banner">
+                <div class="hero-content">
+                    <h2>Rastrear tu Paquete</h2>
+                    <div class="tracking-box">
+                        <input type="text" placeholder="Número de Guía">
+                        <button onclick="alert('Buscando paquete...')">Rastrear</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="icon">📦</div>
+                    <h3>Paquetería</h3>
+                    <p>Envíos rápidos a todo el país</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon">🚚</div>
+                    <h3>Carga Pesada</h3>
+                    <p>Carga volumétrica y pesada</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon">⏱️</div>
+                    <h3>Servicio Expreso</h3>
+                    <p>Entregas urgentes</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon">🇵🇪</div>
+                    <h3>Cobertura Nacional</h3>
+                    <p>Cobertura total en Perú</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE LOGIN -->
+        <section id="login" class="section login-section">
+            <h1>Iniciar Sesión en Paway</h1>
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="username">Usuario / Correo</label>
+                    <input type="text" id="username" placeholder="Ingrese su usuario" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" placeholder="Ingrese su contraseña" required>
+                </div>
+                <button type="submit" class="btn">Entrar</button>
+                <button type="button" class="btn btn-secondary" onclick="showSection('home')">Volver al Inicio</button>
+            </form>
+        </section>
+    </main>
+
+    <!-- Pie de página -->
+    <footer>
+        <p>&copy; 2026 Paway - Envíos a todo el Perú. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- Enlace al archivo JavaScript externo -->
+    <script src="script.js"></script>
+</body>
+</html>
