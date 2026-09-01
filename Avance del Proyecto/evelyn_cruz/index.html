@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paway - Envíos a todo el Perú</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Estilos Propios -->
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-paway-red sticky-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-3 tracking-wider d-flex align-items-center" href="index.html">
+                <i class="bi bi-box-seam me-2"></i>PAWAY
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#pawayNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="pawayNavbar">
+                <ul class="navbar-nav ms-auto fw-semibold me-3">
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="pages/cotizador.html">Cotizar</a></li>
+                    <li class="nav-item"><a class="nav-link" href="pages/tracking.html">Rastrear</a></li>
+                    <li class="nav-item"><a class="nav-link" href="pages/cliente.html">Mi Cuenta</a></li>
+                </ul>
+                <a href="pages/auth.html" class="btn btn-outline-light rounded-pill px-4">Ingresar</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ALERT INFORMATIVA -->
+    <div class="alert alert-warning alert-dismissible fade show mb-0 text-center rounded-0 fw-semibold" role="alert">
+        <i class="bi bi-megaphone-fill me-2"></i> ¡Nuevas agencias abiertas en Arequipa y Trujillo!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <!-- CARRUSEL -->
+    <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active bg-dark text-white paway-slide1 py-5">
+                <div class="container py-5 text-center text-lg-start">
+                    <div class="row align-items-center">
+                        <div class="col-lg-7">
+                            <span class="badge bg-danger mb-2 px-3 py-2 fs-6">RÁPIDO Y SEGURO</span>
+                            <h1 class="display-3 fw-bold mb-3">Envíos a todo el Perú</h1>
+                            <p class="lead mb-4">Conectamos a las familias y negocios peruanos con la máxima fuerza y
+                                rapidez.</p>
+                            <a href="pages/cotizador.html"
+                                class="btn btn-danger btn-lg rounded-pill me-2 px-4 shadow">Cotizar Envío</a>
+                            <a href="pages/tracking.html"
+                                class="btn btn-outline-light btn-lg rounded-pill px-4">Rastrear Guía</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item bg-dark text-white paway-slide2 py-5">
+                <div class="container py-5 text-center text-lg-start">
+                    <div class="row align-items-center">
+                        <div class="col-lg-7">
+                            <span class="badge bg-warning text-dark mb-2 px-3 py-2 fs-6">SOLUCIONES CORPORATIVAS</span>
+                            <h1 class="display-3 fw-bold mb-3">Impulsa tu E-commerce</h1>
+                            <p class="lead mb-4">Integración y logística de última milla para pequeñas y grandes
+                                empresas.</p>
+                            <a href="#contacto"
+                                class="btn btn-warning btn-lg rounded-pill px-4 text-dark font-weight-bold shadow">Afiliar
+                                mi Empresa</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+
+    <!-- RASTREO RÁPIDO -->
+    <section class="bg-light py-4 shadow-sm">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 text-center">
+                    <h5 class="fw-bold mb-3 text-secondary">¿TIENES UN CÓDIGO DE RASTREO?</h5>
+                    <form class="row g-2 justify-content-center needs-validation-fast" action="pages/tracking.html"
+                        method="GET" novalidate>
+                        <div class="col-8 col-sm-9">
+                            <input type="text" class="form-control form-control-lg border-2"
+                                placeholder="Ej: PW-98765432" required pattern="[A-Za-z0-9-]+">
+                            <div class="invalid-feedback text-start">Ingresa un código válido.</div>
+                        </div>
+                        <div class="col-4 col-sm-3">
+                            <button class="btn btn-danger btn-lg w-100 fw-bold" type="submit">Rastrear</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICIOS (CARDS + POPOVER) -->
+    <section class="py-5 container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold text-paway-red">Nuestros Servicios Logísticos</h2>
+            <p class="text-muted">Diseñados para adaptarse a tus tiempos y necesidades de carga</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm hover-card">
+                    <div class="card-body text-center p-4">
+                        <i class="bi bi-lightning-charge-fill display-4 text-danger mb-3"></i>
+                        <h4 class="card-title fw-bold">Paway Express</h4>
+                        <p class="card-text text-muted">Entrega prioritaria de sobres y paquetes pequeños en 24 horas a
+                            nivel nacional.</p>
+                        <button type="button" class="btn btn-sm btn-outline-danger rounded-pill mt-2"
+                            data-bs-toggle="popover" data-bs-title="Detalles Express"
+                            data-bs-content="Límite máximo de peso: 5kg. Incluye notificación por SMS al destinatario.">
+                            Ver condiciones
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm hover-card">
+                    <div class="card-body text-center p-4">
+                        <i class="bi bi-truck display-4 text-danger mb-3"></i>
+                        <h4 class="card-title fw-bold">Carga Consolidada</h4>
+                        <p class="card-text text-muted">Solución económica para el traslado de cajas y paquetería de
+                            mediano volumen.</p>
+                        <button type="button" class="btn btn-sm btn-outline-danger rounded-pill mt-2"
+                            data-bs-toggle="popover" data-bs-title="Detalles Carga"
+                            data-bs-content="Ideal para envíos comerciales entre 5kg y 100kg a agencias destino.">
+                            Ver condiciones
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm hover-card">
+                    <div class="card-body text-center p-4">
+                        <i class="bi bi-house-door-fill display-4 text-danger mb-3"></i>
+                        <h4 class="card-title fw-bold">Reparto a Domicilio</h4>
+                        <p class="card-text text-muted">Entregamos la carga directamente en la puerta del hogar u
+                            oficina del cliente.</p>
+                        <button type="button" class="btn btn-sm btn-outline-danger rounded-pill mt-2"
+                            data-bs-toggle="popover" data-bs-title="Detalles Domicilio"
+                            data-bs-content="Sujeto a cobertura urbana en Lima y principales capitales de departamento.">
+                            Ver condiciones
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ACCORDION (PREGUNTAS FRECUENTES) -->
+    <section class="bg-light py-5">
+        <div class="container">
+            <div class="text-center mb-4">
+                <h2 class="fw-bold text-paway-red">Preguntas Frecuentes</h2>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="accordion shadow-sm" id="faqAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#faq1">
+                                    ¿Cuánto tiempo tarda en llegar mi envío?
+                                </button>
+                            </h2>
+                            <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Los envíos mediante <strong>Paway Express</strong> llegan en un plazo estimado de 24
+                                    horas hábiles. Para carga pesada o destinos alejados de capitales de departamento,
+                                    el tiempo de entrega varía entre 48 y 72 horas.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-bold" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#faq2">
+                                    ¿Qué documentos necesito para recoger un paquete en agencia?
+                                </button>
+                            </h2>
+                            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Únicamente debes presentar tu <strong>DNI físico original</strong> o documento de
+                                    identidad oficial y el código de guía asignado a tu paquete.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-bold" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#faq3">
+                                    ¿Cómo puedo pagar mis envíos?
+                                </button>
+                            </h2>
+                            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Aceptamos pago con tarjeta de crédito/débito, Yape, Plin y pago en efectivo al
+                                    momento de dejar el paquete en cualquiera de nuestras agencias.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FORMULARIO DE CONTACTO + VALIDACIÓN + MODAL -->
+    <section id="contacto" class="py-5 container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow border-0 p-4">
+                    <h3 class="fw-bold text-center text-paway-red mb-3">Contacto Corporativo</h3>
+                    <p class="text-center text-muted mb-4">¿Deseas afiliar tu empresa o tienes alguna consulta?
+                        Escríbenos.</p>
+
+                    <form id="contactForm" class="needs-validation" novalidate>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="nombre" class="form-label fw-semibold">Nombre Completo</label>
+                                <input type="text" class="form-control" id="nombre" required>
+                                <div class="invalid-feedback">Por favor ingresa tu nombre.</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="correo" class="form-label fw-semibold">Correo Electrónico</label>
+                                <input type="email" class="form-control" id="correo" required>
+                                <div class="invalid-feedback">Ingresa un correo electrónico válido.</div>
+                            </div>
+                            <div class="col-12">
+                                <label for="asunto" class="form-label fw-semibold">Asunto</label>
+                                <select class="form-select" id="asunto" required>
+                                    <option value="" selected disabled>Selecciona una opción</option>
+                                    <option value="1">Convenio Corporativo</option>
+                                    <option value="2">Atención al Cliente</option>
+                                    <option value="3">Reclamaciones</option>
+                                </select>
+                                <div class="invalid-feedback">Selecciona un asunto.</div>
+                            </div>
+                            <div class="col-12">
+                                <label for="mensaje" class="form-label fw-semibold">Mensaje</label>
+                                <textarea class="form-control" id="mensaje" rows="4" required></textarea>
+                                <div class="invalid-feedback">Escribe tu mensaje.</div>
+                            </div>
+                            <div class="col-12 text-center mt-4">
+                                <button class="btn btn-danger btn-lg px-5 font-weight-bold" type="submit">Enviar
+                                    Mensaje</button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MODAL DE CONFIRMACIÓN -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title fw-bold"><i class="bi bi-check-circle-fill me-2"></i>¡Mensaje Enviado!</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center py-4">
+                    <p class="fs-5 mb-0">Gracias por comunicarte con <strong>PAWAY</strong>. Un asesor comercial se
+                        pondrá en contacto contigo en breve.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-dark text-white pt-5 pb-3">
+        <div class="container">
+            <div class="row g-4 mb-4">
+                <div class="col-md-4">
+                    <h4 class="fw-bold text-danger">PAWAY</h4>
+                    <p class="text-secondary">La red de envíos más rápida del Perú. Seguridad y confianza en cada
+                        paquete.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="fw-bold">Enlaces Rápidos</h5>
+                    <ul class="list-unstyled text-secondary">
+                        <li><a href="pages/cotizador.html" class="text-decoration-none text-secondary">Cotizar
+                                Tarifa</a></li>
+                        <li><a href="pages/tracking.html" class="text-decoration-none text-secondary">Rastreo de
+                                Envíos</a></li>
+                        <li><a href="pages/auth.html" class="text-decoration-none text-secondary">Agencias a Nivel
+                                Nacional</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="fw-bold">Síguenos</h5>
+                    <div class="d-flex gap-3 fs-4 text-danger">
+                        <i class="bi bi-facebook"></i>
+                        <i class="bi bi-instagram"></i>
+                        <i class="bi bi-whatsapp"></i>
+                    </div>
+                </div>
+            </div>
+            <hr class="border-secondary">
+            <p class="text-center text-secondary small mb-0">&copy; 2026 PAWAY Express. Todos los derechos reservados.
+            </p>
+        </div>
+    </footer>
+
+    <!-- JS BOOTSTRAP BUNDLE -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- JS PROPIO -->
+    <script src="app.js"></script>
+</body>
+
+</html>
