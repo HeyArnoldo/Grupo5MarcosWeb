@@ -1,0 +1,225 @@
+/* =====================================================
+   PERSONA 2 - YEIRA CHAMBI
+     MÓDULO: COTIZADOR DE ENVÍOS
+   ===================================================== */
+
+/* ==========================================================================
+   PÁGINA: CALCULADORA DE TARIFAS
+   ========================================================================== */
+
+.main-content {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.calculator-container {
+  display: flex;
+  gap: 40px;
+  align-items: stretch;
+}
+
+.calc-form-box {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+}
+
+.calc-header h2 {
+  color: var(--primario);
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+}
+
+.calc-header p {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 25px;
+}
+
+.calc-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--texto);
+}
+
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.input-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gris-suave);
+  font-size: 1rem;
+  transition: var(--transicion);
+}
+
+.calc-form input,
+.calc-form select {
+  width: 100%;
+  padding: 12px 15px 12px 42px;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  color: var(--texto);
+  outline: none;
+  transition: var(--transicion);
+  font-family: inherit;
+  background-color: var(--blanco);
+}
+
+.calc-form input:focus + .input-icon,
+.calc-form select:focus + .input-icon {
+  color: var(--primario);
+}
+
+.calc-form input:focus,
+.calc-form select:focus {
+  border-color: var(--primario);
+  box-shadow: 0 0 8px rgba(31, 97, 141, 0.15);
+}
+
+.calc-form select:disabled {
+  background-color: #f8f9f9;
+  cursor: not-allowed;
+  color: #999;
+}
+
+.form-row-split {
+  display: flex;
+  gap: 20px;
+}
+.half-width {
+  flex: 1;
+}
+
+/* ==========================================================================
+   PANEL DE RESULTADO
+   ========================================================================== */
+
+.calc-result-panel {
+  background-color: rgba(31, 97, 141, 0.05);
+  border: 2px dashed var(--primario);
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  transition: var(--transicion);
+}
+
+.calc-result-panel:hover {
+  background-color: rgba(31, 97, 141, 0.1);
+}
+
+.result-text span {
+  display: block;
+  font-size: 0.85rem;
+  color: #7f8c8d;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.result-text h3 {
+  font-size: 2rem;
+  color: var(--secundario);
+  margin: 0;
+  line-height: 1;
+}
+
+.result-icon {
+  font-size: 2.5rem;
+  color: var(--primario);
+  opacity: 0.2;
+}
+
+.btn-submit-calc {
+  background-color: var(--primario);
+  color: white;
+  border: none;
+  padding: 16px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transicion);
+  margin-top: 5px;
+}
+
+.btn-submit-calc i {
+  margin-right: 12px;
+}
+
+.btn-submit-calc:hover {
+  background-color: var(--primario-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(31, 97, 141, 0.25);
+}
+
+.calc-image-box {
+  flex: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--sombra);
+  display: flex;
+}
+
+.calc-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.calc-form .input-wrapper .input-icon {
+    pointer-events: none; 
+    z-index: 2;
+}
+
+.calc-form .input-wrapper select {
+    position: relative;
+    z-index: 1;
+    cursor: pointer;
+}
+
+/* ==========================================================================
+   DISEÑO RESPONSIVO 
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  .calculator-container {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .form-row-split {
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .calc-image-box {
+    height: 250px; 
+  }
+}
