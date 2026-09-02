@@ -5,23 +5,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paway - Envíos a todo el Perú</title>
     <link rel="stylesheet" href="estilos.css">
+    <!-- Bootstrap 5 e iconos: los usa el navbar/footer compartido -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Navbar y footer compartidos por las cinco paginas.
+         Va al final: solo define clases .paway-* que nadie mas
+         usa, asi que no pisa los estilos propios del modulo. -->
+    <link rel="stylesheet" href="../assets/paway-shell.css">
 </head>
 <body>
 
-    <!-- Menú de Navegación Superior -->
-    <header>
-        <div class="logo-container">
-            <img src="logo.jpg.jpeg" alt="Logo Paway" class="logo-img">
-            <span class="logo-text">Haz tus envíos con Paway...pe</span>
+    <!-- =====================================================
+         NAVBAR COMPARTIDO - PAWAY
+         Este mismo bloque esta en las cinco paginas del grupo.
+         Lo unico que cambia es que enlace lleva "active".
+         ===================================================== -->
+    <nav class="navbar navbar-expand-lg paway-navbar sticky-top">
+      <div class="container-fluid px-lg-4">
+
+        <a class="navbar-brand" href="../anderson_velasque/index.html">
+          <img src="../assets/logo-paway.jpg" alt="Logo PAWAY" class="paway-logo"> PAWAY
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#pawayNav"
+          aria-controls="pawayNav" aria-expanded="false" aria-label="Mostrar navegaci&oacute;n">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="pawayNav">
+          <ul class="navbar-nav ms-auto align-items-lg-center">
+
+              <li class="nav-item">
+                <a class="nav-link active" href="../anderson_velasque/index.html">
+                  <i class="bi bi-house-door"></i> Inicio
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="../yeira_chambi/cotizador_forms.html">
+                  <i class="bi bi-calculator"></i> Cotizar
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="../evelyn_cruz/paquetes.html">
+                  <i class="bi bi-geo-alt"></i> Rastrear
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="../brayan_lopez/cliente.html">
+                  <i class="bi bi-person-badge"></i> Mi Cuenta
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="../joao_souza/panel_admin.html">
+                  <i class="bi bi-speedometer2"></i> Panel Admin
+                </a>
+              </li>
+
+              <li class="nav-item ms-lg-3">
+                <a class="paway-btn-login" href="../anderson_velasque/index.html#login">
+                  <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesi&oacute;n
+                </a>
+              </li>
+
+          </ul>
         </div>
-        <nav>
-            <a href="#" class="active" onclick="showSection('home')">Inicio</a>
-            <a href="#" onclick="alert('Sección Cotizador a cargo de tu compañero')">Cotizar</a>
-            <a href="#" onclick="alert('Sección Seguimiento / Rastrear')">Rastrear</a>
-            <a href="#" onclick="alert('Sección Agencias')">Agencias</a>
-            <a href="#" onclick="showSection('login')">Mi Cuenta / Login</a>
-        </nav>
-    </header>
+
+      </div>
+    </nav>
+
+    <!-- Encabezado propio del modulo -->
+    <div class="logo-container px-4 py-3">
+        <img src="logo.jpg.jpeg" alt="Logo Paway" class="logo-img">
+        <span class="logo-text">Haz tus env&iacute;os con Paway...pe</span>
+    </div>
 
     <!-- Contenedor Principal -->
     <main>
@@ -79,12 +139,61 @@
         </section>
     </main>
 
-    <!-- Pie de página -->
-    <footer>
-        <p>&copy; 2026 Paway - Envíos a todo el Perú. Todos los derechos reservados.</p>
+    <!-- =====================================================
+         FOOTER COMPARTIDO - PAWAY
+         Este mismo bloque esta en las cinco paginas del grupo.
+         ===================================================== -->
+    <footer class="paway-footer">
+      <div class="container">
+        <div class="row g-4">
+
+          <div class="col-lg-4">
+            <h5 class="paway-footer-brand"><img src="../assets/logo-paway.jpg" alt="Logo PAWAY" class="paway-logo"> PAWAY</h5>
+            <p>Soluciones log&iacute;sticas y env&iacute;os a todo el Per&uacute;. Recojo a domicilio,
+              cobertura nacional y seguimiento en tiempo real.</p>
+          </div>
+
+          <div class="col-6 col-lg-2">
+            <h6 class="paway-footer-title">Navegaci&oacute;n</h6>
+            <ul>
+                <li><a href="../anderson_velasque/index.html">Inicio</a></li>
+                <li><a href="../yeira_chambi/cotizador_forms.html">Cotizar</a></li>
+                <li><a href="../evelyn_cruz/paquetes.html">Rastrear</a></li>
+                <li><a href="../brayan_lopez/cliente.html">Mi Cuenta</a></li>
+                <li><a href="../joao_souza/panel_admin.html">Panel Admin</a></li>
+            </ul>
+          </div>
+
+          <div class="col-6 col-lg-3">
+            <h6 class="paway-footer-title">Contacto</h6>
+            <p><i class="bi bi-envelope me-2"></i>soporte@paway.com.pe</p>
+            <p><i class="bi bi-telephone me-2"></i>(01) 511-5000</p>
+            <p><i class="bi bi-whatsapp me-2"></i>+51 925 238 054</p>
+            <p><i class="bi bi-geo-alt me-2"></i>Ate, Lima - Per&uacute;</p>
+          </div>
+
+          <div class="col-lg-3">
+            <h6 class="paway-footer-title">Equipo - Grupo 5</h6>
+            <ul class="paway-team">
+                <li><strong>Anderson Velasque</strong> &mdash; Inicio</li>
+                <li><strong>Yeira Chambi</strong> &mdash; Cotizador</li>
+                <li><strong>Evelyn Cruz</strong> &mdash; Rastreo</li>
+                <li><strong>Brayan L&oacute;pez</strong> &mdash; Panel Cliente</li>
+                <li><strong>Joao Souza</strong> &mdash; Panel Admin</li>
+            </ul>
+          </div>
+
+        </div>
+
+        <hr class="paway-footer-divider">
+        <p class="paway-footer-legal">
+          &copy; 2026 PAWAY &mdash; Proyecto acad&eacute;mico, Grupo 5. Todos los derechos reservados.
+        </p>
+      </div>
     </footer>
 
     <!-- Enlace al archivo JavaScript externo -->
     <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
