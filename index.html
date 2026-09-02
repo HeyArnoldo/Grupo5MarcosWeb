@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grupo 5 - Desarrollo Web | PAWAY</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+        :root {
+            --paway-red: #b01116;
+            --paway-ink: #14171c;
+        }
+
+        body {
+            background-color: #f5f6f8;
+            font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        .portada {
+            background: linear-gradient(135deg, var(--paway-ink) 0%, var(--paway-red) 100%);
+            color: #fff;
+            padding: 4rem 0 3.5rem;
+        }
+
+        .portada h1 {
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .tarjeta-modulo {
+            border: none;
+            border-radius: 14px;
+            box-shadow: 0 2px 12px rgba(20, 20, 30, .07);
+            transition: transform .2s ease, box-shadow .2s ease;
+            height: 100%;
+        }
+
+        .tarjeta-modulo:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 22px rgba(20, 20, 30, .14);
+        }
+
+        .tarjeta-modulo .icono {
+            font-size: 2.4rem;
+            color: var(--paway-red);
+        }
+
+        .btn-paway {
+            background-color: var(--paway-red);
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .btn-paway:hover {
+            background-color: #8a0d11;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =====================================================
+         PORTADA
+         ===================================================== -->
+    <header class="portada text-center">
+        <div class="container">
+            <p class="text-uppercase small mb-2" style="letter-spacing:3px; opacity:.8;">
+                Desarrollo de Aplicaciones Web
+            </p>
+            <img src="Avance%20del%20Proyecto/Avance1/assets/logo-paway.jpg" alt="Logo PAWAY"
+                class="mb-3 rounded-3 bg-white p-1" style="height: 110px;">
+            <h1 class="display-4 mb-3">PAWAY</h1>
+            <p class="lead mb-4">Avance 1 del Proyecto &mdash; Grupo 5</p>
+            <a href="Avance%20del%20Proyecto/Avance1/anderson_velasque/index.html"
+                class="btn btn-light btn-lg px-4 fw-semibold">
+                Entrar al proyecto <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- =====================================================
+         MODULOS DEL PROYECTO
+         ===================================================== -->
+    <main class="container py-5">
+
+        <h2 class="h4 fw-bold mb-1">Módulos del Avance 1</h2>
+        <p class="text-muted mb-4">Cada integrante desarrolló y expone su propio módulo.</p>
+
+        <div class="row g-4">
+
+            <div class="col-md-6 col-lg-4">
+                <div class="card tarjeta-modulo p-4">
+                    <div class="icono mb-3"><i class="bi bi-house-door"></i></div>
+                    <h3 class="h5 fw-bold">Inicio y Login</h3>
+                    <p class="text-muted small mb-3">Página principal, servicios e inicio de sesión.</p>
+                    <p class="small mb-3"><strong>Anderson Velasque</strong></p>
+                    <a href="Avance%20del%20Proyecto/Avance1/anderson_velasque/index.html"
+                        class="btn btn-paway btn-sm mt-auto">Ver módulo</a>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="card tarjeta-modulo p-4">
+                    <div class="icono mb-3"><i class="bi bi-calculator"></i></div>
+                    <h3 class="h5 fw-bold">Cotizador</h3>
+                    <p class="text-muted small mb-3">Calculadora de tarifas según destino, categoría y peso.</p>
+                    <p class="small mb-3"><strong>Yeira Chambi</strong></p>
+                    <a href="Avance%20del%20Proyecto/Avance1/yeira_chambi/cotizador_forms.html"
+                        class="btn btn-paway btn-sm mt-auto">Ver módulo</a>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="card tarjeta-modulo p-4">
+                    <div class="icono mb-3"><i class="bi bi-geo-alt"></i></div>
+                    <h3 class="h5 fw-bold">Rastreo</h3>
+                    <p class="text-muted small mb-3">Seguimiento de paquetes en tiempo real.</p>
+                    <p class="small mb-3"><strong>Evelyn Cruz</strong></p>
+                    <a href="Avance%20del%20Proyecto/Avance1/evelyn_cruz/paquetes.html"
+                        class="btn btn-paway btn-sm mt-auto">Ver módulo</a>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="card tarjeta-modulo p-4">
+                    <div class="icono mb-3"><i class="bi bi-person-badge"></i></div>
+                    <h3 class="h5 fw-bold">Panel del Cliente</h3>
+                    <p class="text-muted small mb-3">Historial de envíos y datos de la cuenta.</p>
+                    <p class="small mb-3"><strong>Brayan López</strong></p>
+                    <a href="Avance%20del%20Proyecto/Avance1/brayan_lopez/cliente.html"
+                        class="btn btn-paway btn-sm mt-auto">Ver módulo</a>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="card tarjeta-modulo p-4">
+                    <div class="icono mb-3"><i class="bi bi-speedometer2"></i></div>
+                    <h3 class="h5 fw-bold">Panel Administrativo</h3>
+                    <p class="text-muted small mb-3">Gestión de envíos, agencias y reportes.</p>
+                    <p class="small mb-3"><strong>Joao Souza</strong></p>
+                    <a href="Avance%20del%20Proyecto/Avance1/joao_souza/panel_admin.html"
+                        class="btn btn-paway btn-sm mt-auto">Ver módulo</a>
+                </div>
+            </div>
+
+        </div>
+
+        <hr class="my-5">
+
+        <h2 class="h5 fw-bold mb-3">Laboratorios</h2>
+        <div class="d-flex flex-wrap gap-2">
+            <a href="Laboratorio1/" class="btn btn-outline-secondary btn-sm">Laboratorio 1</a>
+            <a href="Laboratorio2/" class="btn btn-outline-secondary btn-sm">Laboratorio 2</a>
+            <a href="Laboratorio3/" class="btn btn-outline-secondary btn-sm">Laboratorio 3</a>
+            <a href="https://github.com/HeyArnoldo/Grupo5MarcosWeb" class="btn btn-outline-dark btn-sm">
+                <i class="bi bi-github me-1"></i>Repositorio
+            </a>
+        </div>
+
+    </main>
+
+    <footer class="text-center text-muted small py-4">
+        &copy; 2026 Grupo 5 &mdash; Proyecto PAWAY
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
