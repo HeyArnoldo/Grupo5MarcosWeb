@@ -1,1 +1,1 @@
-comic
+xd
