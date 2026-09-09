@@ -11,3 +11,13 @@ if (botonConsejo && consejo) {
         botonConsejo.textContent = seMostrara ? "Ocultar consejo" : "Mostrar consejo";
     });
 }
+
+// Reto Obligatorio: Cambiar de tema
+const botonTema = document.querySelector("#boton-tema");
+
+if(botonTema) {
+    botonTema.addEventListener("click", () => {
+        const temaOscuroActivo = document.body.classList.toggle("tema-oscuro");
+        botonTema.setAttribute("aria-pressed", String(temaOscuroActivo));
+    });
+}
