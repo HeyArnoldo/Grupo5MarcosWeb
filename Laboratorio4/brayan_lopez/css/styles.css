@@ -1,0 +1,39 @@
+:root {
+    --techlab-primary: #1f5f8b;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-width: 320px;
+}
+
+.hero {
+    min-height: 28rem;
+    display: flex;
+    align-items: center;
+}
+
+.card-img-top {
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+}
+
+:focus-visible {
+    outline: 0.2rem solid #ffbf47;
+    outline-offset: 0.15rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+    }
+}
