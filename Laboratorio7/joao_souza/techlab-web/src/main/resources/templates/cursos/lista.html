@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(#{curso.lista.titulo})}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Catálogo de cursos</title>
+    <link rel="stylesheet" href="../../static/css/site.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+<a class="visually-hidden-focusable position-absolute p-2 bg-white"
+   href="#contenido">Saltar al contenido</a>
+<header th:replace="~{fragments/layout :: cabecera}">
+    <nav><a href="/cursos">TechLab Web</a></nav>
+</header>
+<main id="contenido" class="container py-4">
+    <div class="row g-4 align-items-end mb-4">
+        <div class="col-lg-7">
+            <p class="text-primary fw-semibold mb-2">Semana 7</p>
+            <h1 class="display-6 fw-bold"
+                th:text="#{curso.lista.titulo}">Catálogo de cursos</h1>
+            <p class="lead mb-0">
+                Vista dinámica generada en el servidor con Spring MVC y Thymeleaf.
+            </p>
+        </div>
+    </div>
+    <form class="row g-3 align-items-end mb-4"
+          method="get"
+          th:action="@{/cursos}">
+        <div class="col-md-8">
+            <label class="form-label" for="q"
+                   th:text="#{curso.buscar}">Buscar cursos</label>
+            <input class="form-control" id="q" name="q" type="search"
+                   maxlength="60"
+                   th:value="${q}"
+                   th:placeholder="#{curso.buscar.placeholder}"
+                   placeholder="Ejemplo: Spring">
+        </div>
+        <div class="col-md-4 d-flex gap-2">
+            <button class="btn btn-primary" type="submit"
+                    th:text="#{accion.buscar}">Buscar</button>
+            <a class="btn btn-outline-secondary"
+               th:if="${!#strings.isEmpty(q)}"
+               th:href="@{/cursos}"
+               th:text="#{accion.limpiar}">Limpiar</a>
+        </div>
+    </form>
+    <p class="text-body-secondary"
+       th:text="#{curso.resultados(${#lists.size(cursos)})}">
+        3 curso(s) encontrado(s)
+    </p>
+    <div class="alert alert-info" role="status"
+         th:if="${#lists.isEmpty(cursos)}">
+        No se encontraron cursos. Pruebe con otro término.
+    </div>
+    <div class="row g-4" th:unless="${#lists.isEmpty(cursos)}">
+        <div class="col-md-6 col-xl-4" th:each="curso : ${cursos}">
+            <article class="card course-card h-100 shadow-sm">
+                <div class="card-body d-flex flex-column">
+                    <p class="text-body-secondary mb-2">
+                        Código <span th:text="${curso.id}">1</span>
+                    </p>
+                    <h2 class="h4 card-title" th:text="${curso.titulo}">
+                        HTML y CSS
+                    </h2>
+                    <p class="card-text">
+                        <span th:text="${curso.horas}">12</span>
+                        <span th:text="#{curso.horas}">Horas</span>
+                    </p>
+                    <a class="btn btn-outline-primary mt-auto align-self-start"
+                       href="detalle.html"
+                       th:href="@{/cursos/{id}(id=${curso.id})}"
+                       th:text="#{curso.ver}">Ver detalle</a>
+                </div>
+            </article>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragments/layout :: pie}">
+    <p>TechLab Web 2026</p>
+</footer>
+</body>
+</html>
