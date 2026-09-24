@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Catálogo de cursos TechLab</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+    <script src="js/catalogo.js" defer></script>
+</head>
+
+<body>
+    <header class="bg-dark p-3">
+        <nav class="container" aria-label="Navegación principal">
+            <a class="text-white" href="/inicio">Inicio TechLab</a>
+        </nav>
+    </header>
+    <main class="container py-4">
+        <h1>Catálogo de cursos</h1>
+        <p>Los datos de este catálogo provienen del servidor Java.</p>
+        <form id="busqueda" class="mb-4" role="search">
+            <label for="consulta" class="form-label">Buscar por título</label>
+            <input id="consulta" name="q" type="search" maxlength="60" class="form-control" aria-describedby="ayuda">
+            <p id="ayuda" class="form-text">Hasta 60 caracteres.</p>
+            <button id="buscar" type="submit" class="btn btn-primary">
+                Buscar
+            </button>
+        </form>
+        <p id="estado" role="status" aria-live="polite"></p>
+        <ul id="cursos" class="list-group" aria-label="Cursos disponibles">
+        </ul>
+        <noscript>Active JavaScript para consultar el catálogo.</noscript>
+    </main>
+</body>
+
+</html>
