@@ -9,7 +9,7 @@ import pe.edu.utp.Paway.model.ShipmentStatus;
 import pe.edu.utp.Paway.service.QuoteService;
 import pe.edu.utp.Paway.service.ShipmentService;
 
-@ControllerAdvice(basePackageClasses = {PublicController.class, PanelController.class})
+@ControllerAdvice(basePackageClasses = {PublicController.class, PanelController.class, LegalController.class})
 public class ViewData {
     private final QuoteService quotes;
     private final ShipmentService shipments;

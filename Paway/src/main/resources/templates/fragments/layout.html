@@ -51,8 +51,14 @@
     <link rel="icon" type="image/jpeg" th:href="@{/images/logo-paway.jpg}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
     <link rel="stylesheet" th:href="@{/css/paway.css}">
+    <th:block th:if="${active == 'tracking'}">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
+        <script defer src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+    </th:block>
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <script defer th:src="@{/js/paway.js}"></script>
 </head>
 <body class="d-flex flex-column min-vh-100">
@@ -75,6 +81,7 @@
                     <li class="nav-item"><a class="nav-link" th:classappend="${active == 'tracking'} ? 'active'" th:attr="aria-current=${active == 'tracking' ? 'page' : null}" th:href="@{/rastrear}">Rastrear</a></li>
                     <li class="nav-item"><a class="nav-link" th:classappend="${active == 'client'} ? 'active'" th:attr="aria-current=${active == 'client' ? 'page' : null}" th:href="@{/cliente}">Mis envíos</a></li>
                     <li class="nav-item" th:if="${profile == 'admin'}"><a class="nav-link" th:classappend="${active == 'admin'} ? 'active'" th:attr="aria-current=${active == 'admin' ? 'page' : null}" th:href="@{/admin}">Administrar</a></li>
+                    <li class="nav-item" th:if="${profile == 'admin'}"><a class="nav-link" th:href="@{/admin/reclamaciones}">Reclamaciones</a></li>
                 </ul>
                 <button class="btn btn-outline-secondary theme-toggle me-lg-3" type="button" data-theme-toggle aria-label="Activar modo oscuro" aria-pressed="false"><i class="bi bi-moon-stars" aria-hidden="true"></i><span class="d-lg-none ms-2">Modo oscuro</span></button>
                 <span th:if="${!profile.isEmpty()}" class="nav-profile me-lg-3" aria-live="polite"><i class="bi bi-person-circle me-1" aria-hidden="true"></i><span th:text="${profileName}">Usuario</span></span>
@@ -120,6 +127,7 @@
                 </div>
             </div>
         </div>
+        <div class="footer-legal mt-4 pt-4"><a th:href="@{/terminos-y-condiciones}">Términos y condiciones del servicio</a><a class="complaints-link" th:href="@{/libro-de-reclamaciones}"><img th:src="@{/images/libro-reclamaciones.svg}" alt="" width="76" height="54"><span>Libro de Reclamaciones</span></a></div>
         <div class="footer-bottom mt-4 pt-3"><span>Haz tus envíos con Paway…pe</span><span>Hecho por el Grupo 5</span></div>
     </div>
 </footer>

@@ -16,15 +16,18 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pe.edu.utp.Paway.dto.QuoteForm;
 import pe.edu.utp.Paway.service.QuoteService;
 import pe.edu.utp.Paway.service.ShipmentService;
+import pe.edu.utp.Paway.service.TrackingLocationService;
 
 @Controller
 public class PublicController {
     private final QuoteService quotes;
     private final ShipmentService shipments;
+    private final TrackingLocationService locations;
 
-    public PublicController(QuoteService quotes, ShipmentService shipments) {
+    public PublicController(QuoteService quotes, ShipmentService shipments, TrackingLocationService locations) {
         this.quotes = quotes;
         this.shipments = shipments;
+        this.locations = locations;
     }
 
     @GetMapping("/")
@@ -80,7 +83,10 @@ public class PublicController {
             if (normalized.length() > 40) {
                 model.addAttribute("trackingError", "El código de guía admite hasta 40 caracteres.");
             } else {
-                shipments.track(normalized).ifPresentOrElse(s -> model.addAttribute("shipment", s),
+                shipments.track(normalized).ifPresentOrElse(s -> {
+                    model.addAttribute("shipment", s);
+                    locations.locate(s).ifPresent(location -> model.addAttribute("trackingLocation", location));
+                },
                         () -> model.addAttribute("trackingError", "No encontramos un envío con esa guía."));
             }
         }

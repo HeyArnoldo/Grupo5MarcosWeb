@@ -158,6 +158,20 @@ class PawayFlowTests {
     }
 
     @Test
+    void rendersReferenceMapOnlyForKnownActiveShipments() throws Exception {
+        Shipment inTransit = shipments.get(1);
+        mvc.perform(get("/rastrear").param("guide", inTransit.guide()))
+                .andExpect(model().attributeExists("trackingLocation"))
+                .andExpect(content().string(containsString("data-tracking-map")))
+                .andExpect(content().string(containsString("no es seguimiento GPS en tiempo real")));
+        mvc.perform(get("/rastrear").param("guide", shipments.get(2).guide()))
+                .andExpect(content().string(containsString("Destino: Asia")));
+        mvc.perform(get("/rastrear").param("guide", "UNKNOWN"))
+                .andExpect(model().attributeDoesNotExist("trackingLocation"))
+                .andExpect(content().string(org.hamcrest.Matchers.not(containsString("data-tracking-map"))));
+    }
+
+    @Test
     void filtersAndPaginatesAdministrativeResults() throws Exception {
         MockHttpSession admin = profile("admin");
         for (int i = 0; i < 6; i++) {

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: page('Libro de Reclamaciones', 'complaints', ~{::main})}">
+<body><main id="contenido" class="container py-5 legal-page">
+    <header class="legal-hero d-flex flex-wrap align-items-center gap-4" data-aos="fade-up"><img th:src="@{/images/libro-reclamaciones.svg}" alt="Libro de Reclamaciones" width="180" height="128"><div><span class="section-eyebrow">Te escuchamos</span><h1>Libro de Reclamaciones</h1><p class="mb-0">Tu opinión importa. Cuéntanos qué pasó y cómo podemos ayudarte.</p></div></header>
+    <div class="row g-4 mt-2">
+        <aside class="col-lg-4">
+            <section class="card p-4 mb-4" data-aos="fade-up"><h2 class="h5">Aviso del Libro de Reclamaciones</h2><p>Conforme a lo establecido en el Código de Protección y Defensa del Consumidor, este establecimiento cuenta con un Libro de Reclamaciones a tu disposición.</p><p class="mb-0">Solicítalo para registrar la queja o reclamo que tengas. Accede aquí a la hoja virtual.</p></section>
+            <section class="card p-4 mb-4"><h2 class="h5">¿Reclamo o queja?</h2><p><strong>Reclamo:</strong> disconformidad relacionada con el producto o servicio.</p><p><strong>Queja:</strong> malestar sobre la atención al público, sin relación directa con el producto o servicio.</p><span class="legal-chip">Respuesta en hasta 15 días hábiles</span><p class="small mt-3 mb-0">Plazo improrrogable para ambos casos. No necesitas una cuenta ni realizar un pago.</p></section>
+            <section class="card p-4"><h2 class="h5">Datos del proveedor</h2><p><strong th:text="${provider.name}"></strong><br>RUC: <span th:text="${provider.ruc}"></span><br><span th:text="${provider.address}"></span></p><p class="small">Establecimiento: portal web Paway · Libro PW-WEB.</p><a href="https://consumidor.gob.pe/libro-de-reclamaciones/" target="_blank" rel="noopener noreferrer">Información del Indecopi <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i></a></section>
+        </aside>
+        <div class="col-lg-8"><form class="card p-4 p-md-5" method="post" th:action="@{/libro-de-reclamaciones}" th:object="${complaintForm}">
+            <input type="hidden" name="submissionToken" th:value="${submissionToken}">
+            <h2 class="h4">Hoja de reclamación virtual</h2><p class="text-body-secondary small">La fecha y el número correlativo se asignan al registrar. Los campos marcados con * son obligatorios.</p>
+            <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger" role="alert" tabindex="-1" data-form-errors><strong>Revisa los siguientes datos:</strong><ul class="mb-0"><li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li></ul></div>
+            <fieldset class="mb-4"><legend class="form-section-title">1. Identificación del consumidor</legend><div class="row g-3">
+                <div class="col-12"><label for="name" class="form-label">Nombre completo *</label><input id="name" class="form-control" th:field="*{name}" autocomplete="name" maxlength="150" required></div>
+                <div class="col-md-6"><label for="document" class="form-label">DNI / CE / pasaporte *</label><input id="document" class="form-control" th:field="*{document}" minlength="6" maxlength="20" required></div>
+                <div class="col-md-6"><label for="phone" class="form-label">Teléfono *</label><input id="phone" type="tel" class="form-control" th:field="*{phone}" autocomplete="tel" maxlength="25" required></div>
+                <div class="col-12"><label for="address" class="form-label">Domicilio (incluye distrito, provincia y departamento) *</label><input id="address" class="form-control" th:field="*{address}" autocomplete="street-address" maxlength="250" required></div>
+                <div class="col-12"><label for="email" class="form-label">Correo electrónico *</label><input id="email" type="email" class="form-control" th:field="*{email}" autocomplete="email" maxlength="150" required></div>
+                <div class="col-12 form-check ms-2"><input id="minor" class="form-check-input" type="checkbox" th:field="*{minor}" data-minor><label for="minor" class="form-check-label">Soy menor de edad</label></div>
+            </div><div class="guardian-fields mt-3 p-3"><p class="small fw-semibold">Si eres menor de edad, completa los datos de tu padre, madre o representante.</p><div class="row g-3">
+                <div class="col-12"><label for="guardian" class="form-label">Nombre del representante</label><input id="guardian" class="form-control" th:field="*{guardian}" maxlength="150" data-guardian></div>
+                <div class="col-12"><label for="guardianDocument" class="form-label">DNI / CE / pasaporte del representante</label><input id="guardianDocument" class="form-control" th:field="*{guardianDocument}" minlength="6" maxlength="20" data-guardian></div>
+                <div class="col-12"><label for="guardianContact" class="form-label">Domicilio, teléfono o correo del representante</label><input id="guardianContact" class="form-control" th:field="*{guardianContact}" maxlength="250" data-guardian></div>
+            </div></div></fieldset>
+            <fieldset class="mb-4"><legend class="form-section-title">2. Identificación del bien contratado</legend><div class="row g-3">
+                <div class="col-md-6"><label for="itemType" class="form-label">Bien contratado *</label><select id="itemType" class="form-select" th:field="*{itemType}" required><option value="SERVICIO">Servicio</option><option value="PRODUCTO">Producto</option></select></div>
+                <div class="col-md-6"><label for="amount" class="form-label">Monto reclamado (S/)</label><input id="amount" class="form-control" th:field="*{amount}" inputmode="decimal" pattern="[0-9]{1,8}(\.[0-9]{1,2})?" maxlength="11" placeholder="Ej. 35.50"><small class="text-body-secondary">Opcional si no corresponde o lo desconoces.</small></div>
+                <div class="col-12"><label for="guide" class="form-label">Número de guía (opcional)</label><input id="guide" class="form-control" th:field="*{guide}" maxlength="40"></div>
+                <div class="col-12"><label for="description" class="form-label">Descripción del producto o servicio *</label><textarea id="description" class="form-control" th:field="*{description}" rows="3" maxlength="1000" required></textarea></div>
+            </div></fieldset>
+            <fieldset class="mb-4"><legend class="form-section-title">3. Detalle y pedido del consumidor</legend><div class="row g-3">
+                <div class="col-12"><label for="type" class="form-label">Tipo de solicitud *</label><select id="type" class="form-select" th:field="*{type}" required><option value="RECLAMO">Reclamo</option><option value="QUEJA">Queja</option></select></div>
+                <div class="col-12"><label for="detail" class="form-label">¿Qué ocurrió? *</label><textarea id="detail" class="form-control" th:field="*{detail}" rows="5" maxlength="4000" required></textarea></div>
+                <div class="col-12"><label for="request" class="form-label">¿Qué solución solicitas? *</label><textarea id="request" class="form-control" th:field="*{request}" rows="3" maxlength="2000" required></textarea></div>
+                <div class="col-12"><label for="responseChannel" class="form-label">Medio para recibir la respuesta *</label><select id="responseChannel" class="form-select" th:field="*{responseChannel}" required><option value="EMAIL">Correo electrónico indicado</option><option value="DOMICILIO">Carta al domicilio indicado</option></select></div>
+            </div></fieldset>
+            <section class="legal-notice mb-4"><h3 class="h6">4. Observaciones y acciones del proveedor</h3><p class="small mb-0">Al registrarse, la hoja queda pendiente de atención. La respuesta y las acciones del proveedor se incorporarán a la constancia.</p></section>
+            <p class="small text-body-secondary">Tus datos se tratarán para gestionar esta solicitud conforme a la Ley N.º 29733. Consulta el <a th:href="@{/terminos-y-condiciones#datos}">tratamiento de datos personales</a>. El envío de esta hoja no requiere aceptar publicidad ni renunciar a tus derechos.</p>
+            <p class="small">La formulación del reclamo no impide acudir a otras vías de solución de controversias ni es requisito previo para presentar una denuncia ante el Indecopi. El proveedor debe responder en un máximo de <strong>15 días hábiles, improrrogables</strong>.</p>
+            <button class="btn btn-paway btn-lg" type="submit">Registrar hoja <i class="bi bi-arrow-right ms-2" aria-hidden="true"></i></button><p class="small mt-3 mb-0 text-body-secondary">Al finalizar podrás imprimir tu constancia o guardarla como PDF.</p>
+        </form></div>
+    </div>
+</main></body></html>
