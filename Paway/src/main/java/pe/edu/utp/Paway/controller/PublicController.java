@@ -4,6 +4,7 @@ import java.util.List;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -37,10 +38,19 @@ public class PublicController {
     public String help() { return "help"; }
 
     @GetMapping("/terminos")
-    public String terms() { return "terms"; }
+    public String terms() { return "redirect:/terminos-y-condiciones"; }
 
     @GetMapping("/privacidad")
-    public String privacy() { return "privacy"; }
+    public String privacy(Model model, @Value("${paway.provider.name}") String providerName,
+            @Value("${paway.provider.ruc}") String providerRuc,
+            @Value("${paway.provider.address}") String providerAddress,
+            @Value("${paway.provider.email}") String providerEmail) {
+        model.addAttribute("privacyProviderName", providerName);
+        model.addAttribute("privacyProviderRuc", providerRuc);
+        model.addAttribute("privacyProviderAddress", providerAddress);
+        model.addAttribute("privacyProviderEmail", providerEmail);
+        return "privacy";
+    }
 
     @GetMapping("/cotizar")
     public String quote(@ModelAttribute("quoteForm") QuoteForm form, Model model) {

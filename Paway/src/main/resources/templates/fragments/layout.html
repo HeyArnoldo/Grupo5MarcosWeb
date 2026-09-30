@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>try { const theme = localStorage.getItem('paway-theme') === 'dark' ? 'dark' : 'light'; document.documentElement.dataset.theme = theme; document.documentElement.dataset.bsTheme = theme; } catch (_) { document.documentElement.dataset.theme = 'light'; document.documentElement.dataset.bsTheme = 'light'; }</script>
     <title th:text="${active == 'home' ? 'Paway | Cotiza y rastrea tus envíos' : title + ' | Paway'}">Paway</title>
     <meta name="theme-color" content="#b01116">
     <th:block th:if="${active == 'home'}">
@@ -64,7 +65,7 @@
 <body class="d-flex flex-column min-vh-100">
 <a class="visually-hidden-focusable skip-link" href="#contenido">Saltar al contenido</a>
 <header>
-    <nav class="navbar navbar-expand-lg paway-navbar" aria-label="Navegación principal" data-bs-theme="light">
+    <nav class="navbar navbar-expand-lg paway-navbar" aria-label="Navegación principal">
         <div class="container">
             <a class="navbar-brand paway-brand" th:href="@{/}" aria-label="Paway, ir al inicio">
                 <img class="brand-logo" th:src="@{/images/logo-paway.jpg}" alt="Logo de Paway" width="107" height="120">
@@ -122,12 +123,12 @@
                 <p class="footer-heading">Información</p>
                 <div class="footer-links">
                     <a th:href="@{/ayuda}"><i class="bi bi-question-circle" aria-hidden="true"></i><span>Preguntas frecuentes</span><i class="bi bi-arrow-up-right ms-auto" aria-hidden="true"></i></a>
-                    <a th:href="@{/terminos}"><i class="bi bi-file-text" aria-hidden="true"></i><span>Términos de uso</span><i class="bi bi-arrow-up-right ms-auto" aria-hidden="true"></i></a>
+                    <a th:href="@{/terminos-y-condiciones}"><i class="bi bi-file-text" aria-hidden="true"></i><span>Términos de uso</span><i class="bi bi-arrow-up-right ms-auto" aria-hidden="true"></i></a>
                     <a th:href="@{/privacidad}"><i class="bi bi-shield-check" aria-hidden="true"></i><span>Privacidad</span><i class="bi bi-arrow-up-right ms-auto" aria-hidden="true"></i></a>
                 </div>
             </div>
         </div>
-        <div class="footer-legal mt-4 pt-4"><a th:href="@{/terminos-y-condiciones}">Términos y condiciones del servicio</a><a class="complaints-link" th:href="@{/libro-de-reclamaciones}"><img th:src="@{/images/libro-reclamaciones.svg}" alt="" width="76" height="54"><span>Libro de Reclamaciones</span></a></div>
+        <div class="footer-legal mt-4 pt-4"><a class="complaints-link" th:href="@{/libro-de-reclamaciones}"><img th:src="@{/images/libro-reclamaciones.svg}" alt="" width="76" height="54"><span>Libro de Reclamaciones</span></a></div>
         <div class="footer-bottom mt-4 pt-3"><span>Haz tus envíos con Paway…pe</span><span>Hecho por el Grupo 5</span></div>
     </div>
 </footer>

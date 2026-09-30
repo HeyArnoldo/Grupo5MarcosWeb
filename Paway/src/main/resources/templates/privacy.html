@@ -1,15 +1,78 @@
 <!doctype html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: page('Privacidad', 'privacy', ~{::main})}">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: page('Política de privacidad', 'privacy', ~{::main})}">
 <body>
-<main id="contenido" class="container section-space">
-    <header class="page-heading"><span class="icon-tile"><i class="bi bi-shield-check" aria-hidden="true"></i></span><div><p class="section-eyebrow mb-1">Datos personales</p><h1 class="h2 fw-bold mb-1">Aviso de privacidad</h1><p class="text-body-secondary mb-0">Información sobre el manejo de datos en esta demostración.</p></div></header>
-    <article class="card info-page-card">
-        <div class="alert alert-warning"><strong>Aplicación de prueba.</strong> No ingreses datos reales. Este aviso describe el comportamiento técnico de la demostración y no reemplaza una política de privacidad para un servicio comercial.</div>
-        <h2 class="h5">Datos utilizados</h2><p>La aplicación de ejemplo contiene perfiles y envíos precargados. Los formularios permiten introducir datos de destinatario y detalles del paquete; usa únicamente valores ficticios durante las pruebas.</p>
-        <h2 class="h5">Dónde se guardan</h2><p>Los envíos de demostración se almacenan en memoria en el proceso de la aplicación. La sesión del navegador mantiene temporalmente el perfil seleccionado y, si corresponde, la cotización pendiente. Los datos en memoria se restablecen al reiniciar el sistema.</p>
-        <h2 class="h5">Alcance</h2><p>Esta versión no implementa una base de datos ni un flujo de autenticación con contraseña. Este aviso no afirma que cubra todos los tratamientos, proveedores o derechos aplicables a un servicio desplegado.</p>
-        <h2 class="h5">Referencias normativas</h2><p class="mb-0">Para preparar una política antes de operar un servicio real, revisa la <a href="https://www.gob.pe/institucion/congreso-de-la-republica/normas-legales/243470-29733" target="_blank" rel="noopener noreferrer">Ley de Protección de Datos Personales</a> y su <a href="https://www.gob.pe/institucion/anpd/normas-legales/6554453-n-016-2024-jus" target="_blank" rel="noopener noreferrer">reglamento vigente</a>, además de recibir asesoría adecuada para el tratamiento concreto.</p>
-    </article>
+<main id="contenido" class="container section-space legal-page">
+    <header class="legal-hero mb-4">
+        <span class="section-eyebrow">Privacidad y confianza</span>
+        <h1>Política de privacidad</h1>
+        <p>En Paway protegemos tu información y la utilizamos con transparencia para gestionar tus envíos, mantenerte informado y atenderte.</p>
+        <span class="legal-chip">Última actualización: 30 de septiembre de 2026</span>
+    </header>
+    <div class="row g-4">
+        <aside class="col-lg-3">
+            <nav class="card p-4 legal-index" aria-label="Secciones de la política de privacidad">
+                <h2 class="h6">En esta página</h2>
+                <a href="#responsable">Responsable</a><a href="#datos">Datos que tratamos</a>
+                <a href="#finalidades">Finalidades</a><a href="#comunicacion">Uso y comunicación</a>
+                <a href="#conservacion">Conservación y seguridad</a><a href="#derechos">Tus derechos</a>
+                <a href="#cookies">Cookies y servicios externos</a><a href="#menores">Niñas, niños y adolescentes</a>
+            </nav>
+        </aside>
+        <div class="col-lg-9 legal-copy">
+            <section id="responsable" class="card p-4 mb-4">
+                <h2 class="h4">1. ¿Quién es responsable de tus datos?</h2>
+                <p>El responsable del tratamiento es <strong th:text="${privacyProviderName}">Paway Envios S.A.C.</strong>, identificado con RUC <span th:text="${privacyProviderRuc}">20123456789</span>, con domicilio en <span th:text="${privacyProviderAddress}">Lima, Perú</span>.</p>
+                <p class="mb-0">Para consultas sobre privacidad o para ejercer tus derechos, escríbenos a <a th:href="${'mailto:' + privacyProviderEmail}" th:text="${privacyProviderEmail}">atencion@paway.groowtech.com</a>.</p>
+            </section>
+            <section id="datos" class="card p-4 mb-4">
+                <h2 class="h4">2. ¿Qué información recopilamos?</h2>
+                <ul class="mb-0">
+                    <li><strong>Identificación y contacto:</strong> nombres y apellidos, documento de identidad, teléfono, correo electrónico y domicilio.</li>
+                    <li><strong>Datos del envío:</strong> origen y destino, dirección de entrega, persona destinataria, contenido declarado, categoría, peso, cantidad, importe, guía, estado e instrucciones relacionadas con la entrega.</li>
+                    <li><strong>Atención al cliente:</strong> consultas, comunicaciones, solicitudes y, cuando corresponda, los datos y documentos incluidos en una queja o reclamo.</li>
+                    <li><strong>Datos técnicos:</strong> información necesaria para mantener la sesión y proteger el portal, como identificadores de sesión, tipo de navegador y datos básicos de conexión.</li>
+                </ul>
+                <p class="mt-3 mb-0">Los datos se obtienen directamente de ti cuando cotizas, solicitas un envío, contactas con Paway o presentas una queja o reclamo. Si registras los datos de otra persona como destinataria, debes proporcionarle esta información.</p>
+            </section>
+            <section id="finalidades" class="card p-4 mb-4">
+                <h2 class="h4">3. ¿Para qué utilizamos tus datos?</h2>
+                <p>Tratamos la información para preparar cotizaciones, registrar y coordinar envíos, identificar a remitentes y destinatarios, generar guías, informar sobre el estado de un paquete, responder consultas y gestionar incidencias o reclamos.</p>
+                <p>También la utilizamos para administrar la relación con nuestros clientes, prevenir usos indebidos, proteger la seguridad del portal, cumplir obligaciones legales y conservar constancias cuando sea necesario.</p>
+                <p class="mb-0">Usamos los datos para atender solicitudes antes de contratar, prestar los servicios que solicites y cumplir obligaciones legales. Si un dato obligatorio no se proporciona, podríamos no poder cotizar, registrar o completar el envío. Para enviarte promociones, pediremos tu autorización por separado y podrás retirarla en cualquier momento.</p>
+            </section>
+            <section id="comunicacion" class="card p-4 mb-4">
+                <h2 class="h4">4. ¿Con quién compartimos la información?</h2>
+                <p>El acceso se limita al personal que necesita la información para atenderte y gestionar el servicio. Cuando es necesario, podemos comunicar los datos pertinentes a empresas de transporte, agencias, operadores de tecnología y proveedores que colaboran en la atención, seguridad, alojamiento o funcionamiento del portal.</p>
+                <p>También podremos entregarlos a autoridades competentes cuando exista una obligación legal o un requerimiento válido. No vendemos tus datos personales ni los compartimos con terceros para que realicen publicidad propia.</p>
+                <p class="mb-0">Al utilizar servicios de mapas y distribución de recursos digitales, algunos datos técnicos de conexión pueden ser tratados por proveedores ubicados fuera del Perú. Estos proveedores actúan conforme a sus propias políticas y a las garantías aplicables a la transferencia de información.</p>
+            </section>
+            <section id="conservacion" class="card p-4 mb-4">
+                <h2 class="h4">5. Conservación y seguridad</h2>
+                <p>Conservamos la información durante el tiempo necesario para prestar el servicio, atender solicitudes y determinar o responder responsabilidades. Después, la eliminamos o la anonimizamos, salvo que una norma exija conservarla por más tiempo. Las hojas del Libro de Reclamaciones se conservan por un mínimo de dos años desde su presentación.</p>
+                <p class="mb-0">Aplicamos medidas organizativas y técnicas para proteger los datos contra accesos no autorizados, pérdida, alteración o divulgación, y revisamos estas medidas de acuerdo con la naturaleza de la información y los riesgos del tratamiento.</p>
+            </section>
+            <section id="derechos" class="card p-4 mb-4">
+                <h2 class="h4">6. ¿Cómo puedes ejercer tus derechos?</h2>
+                <p>Puedes solicitar acceso a tus datos personales, pedir que se rectifiquen o actualicen, solicitar su cancelación cuando corresponda u oponerte a determinados tratamientos. También puedes retirar el consentimiento que hayas otorgado, sin afectar los tratamientos realizados antes de tu solicitud.</p>
+                <p>Escríbenos a <a th:href="${'mailto:' + privacyProviderEmail}" th:text="${privacyProviderEmail}">atencion@paway.groowtech.com</a> con el asunto «Protección de datos personales» e indica tu nombre, el derecho que deseas ejercer y la información necesaria para atender la solicitud.</p>
+                <p class="mb-0">Si consideras que tu solicitud no fue atendida adecuadamente, puedes acudir a la Autoridad Nacional de Protección de Datos Personales. Para presentar una queja o reclamo relacionado con el servicio, visita el <a th:href="@{/libro-de-reclamaciones}">Libro de Reclamaciones</a>.</p>
+            </section>
+            <section id="cookies" class="card p-4 mb-4">
+                <h2 class="h4">7. Cookies y servicios externos</h2>
+                <p>Utilizamos una cookie de sesión para mantener tu sesión y conservar temporalmente la información necesaria para completar una solicitud. El portal guarda en el almacenamiento local de tu navegador la preferencia de tema visual. No utilizamos cookies de publicidad comportamental.</p>
+                <p>Al consultar un mapa de seguimiento, tu navegador se conecta con OpenStreetMap para mostrar la cartografía. Algunos recursos visuales del portal se distribuyen mediante jsDelivr. Esos proveedores pueden recibir datos técnicos de la conexión, como la dirección IP, conforme a sus propias políticas de privacidad.</p>
+                <p class="mb-0"><a href="https://osmfoundation.org/wiki/Privacy_Policy" target="_blank" rel="noopener noreferrer">Privacidad de OpenStreetMap</a> · <a href="https://www.jsdelivr.com/terms/privacy-policy-jsdelivr-net" target="_blank" rel="noopener noreferrer">Privacidad de jsDelivr</a></p>
+            </section>
+            <section id="menores" class="card p-4 mb-4">
+                <h2 class="h4">8. Datos de niñas, niños y adolescentes</h2>
+                <p class="mb-0">Cuando una solicitud o reclamo involucre a una persona menor de edad, podremos solicitar los datos de su madre, padre o representante para verificar la representación y atender el caso con las garantías que correspondan.</p>
+            </section>
+            <section class="card p-4">
+                <h2 class="h4">9. Cambios a esta política</h2>
+                <p class="mb-0">Podemos actualizar esta política para reflejar cambios en nuestros servicios o en las normas aplicables. Publicaremos la versión vigente en esta página e indicaremos la fecha de su última actualización.</p>
+            </section>
+        </div>
+    </div>
 </main>
 </body>
 </html>
