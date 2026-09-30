@@ -50,6 +50,8 @@ La [guía de despliegue](docs/deployment.md) detalla la configuración y los pas
 
 La interfaz utiliza el logo original de `Avance del Proyecto/Avance1/assets/logo-paway.jpg`, disponible en `src/main/resources/static/images/logo-paway.jpg`. Cabecera, pie y acceso comparten la marca, con una portada clara y adaptable a móviles.
 
+La portada incluye un banner ilustrado de ciudad y vehículos, accesos rojos para enviar/rastrear/cotizar y fotografías de stock relacionadas con logística. El cotizador utiliza una ilustración de reparto. El [detalle de recursos visuales y SEO](docs/visual-assets.md) documenta sus fuentes y la imagen social de 1200 × 630 para **https://paway.groowtech.com**.
+
 ## Qué aplicamos de los laboratorios
 
 | Concepto | Aplicación en Paway |

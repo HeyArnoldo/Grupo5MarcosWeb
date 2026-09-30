@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /cliente
+Disallow: /login
+Disallow: /logout
+Disallow: /api/
+Disallow: /actuator/
+Disallow: /rastrear
+
+Sitemap: https://paway.groowtech.com/sitemap.xml
