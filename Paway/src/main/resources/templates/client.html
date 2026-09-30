@@ -3,15 +3,15 @@
 <body>
 <main id="contenido" class="container py-5">
     <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
-        <div><p class="section-eyebrow">Panel del cliente</p><h1 class="fw-bold" th:text="'Hola, ' + ${client.name}"></h1><p class="text-body-secondary mb-0" th:text="${client.email}"></p></div>
+        <div><p class="section-eyebrow">Tu espacio en Paway</p><h1 class="fw-bold" th:text="'Hola, ' + ${client.name}"></h1><p class="text-body-secondary mb-0">Tus envíos y sus novedades, siempre a mano.</p></div>
         <a class="btn btn-paway" th:href="@{/cotizar}">Cotizar un nuevo envío</a>
     </div>
     <div th:replace="~{fragments/components :: statistics}"></div>
     <section class="card mb-4">
-        <div class="p-4 border-bottom"><h2 class="h5 mb-1">Historial de mis envíos</h2><p class="small text-body-secondary mb-0">Los estados se actualizan desde el panel administrativo.</p></div>
+        <div class="p-4 border-bottom"><h2 class="h5 mb-1">Mis envíos</h2><p class="small text-body-secondary mb-0">Consulta su estado o abre el rastreo para conocer cada paso.</p></div>
         <div th:replace="~{fragments/components :: shipmentTable(false)}"></div>
     </section>
-    <section class="card p-4"><h2 class="h5 mb-3">Mi perfil de demostración</h2>
+    <section class="card p-4"><h2 class="h5 mb-3"><i class="bi bi-person-circle text-paway me-2" aria-hidden="true"></i>Mis datos</h2>
         <dl class="row mb-0"><dt class="col-md-2">Nombre</dt><dd class="col-md-4" th:text="${client.name}"></dd><dt class="col-md-2">DNI</dt><dd class="col-md-4" th:text="${client.document}"></dd><dt class="col-md-2">Correo</dt><dd class="col-md-4" th:text="${client.email}"></dd><dt class="col-md-2">Teléfono</dt><dd class="col-md-4" th:text="${client.phone}"></dd></dl>
     </section>
 </main>

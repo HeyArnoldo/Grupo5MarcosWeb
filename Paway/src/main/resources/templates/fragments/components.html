@@ -5,10 +5,10 @@
       th:classappend="'text-bg-' + ${status.badge}" th:text="${status.label}">Registrado</span>
 
 <div th:fragment="statistics" class="row g-3 mb-4">
-    <div class="col-6 col-lg-3"><div class="card p-3"><span class="text-body-secondary">Total de envíos</span><strong class="fs-2" th:text="${total}">0</strong></div></div>
-    <div class="col-6 col-lg-3"><div class="card p-3"><span class="text-body-secondary">En tránsito</span><strong class="fs-2" th:text="${stats[T(pe.edu.utp.Paway.model.ShipmentStatus).TRANSIT]}">0</strong></div></div>
-    <div class="col-6 col-lg-3"><div class="card p-3"><span class="text-body-secondary">Entregados</span><strong class="fs-2" th:text="${stats[T(pe.edu.utp.Paway.model.ShipmentStatus).DELIVERED]}">0</strong></div></div>
-    <div class="col-6 col-lg-3"><div class="card p-3"><span class="text-body-secondary">Incidencias</span><strong class="fs-2" th:text="${stats[T(pe.edu.utp.Paway.model.ShipmentStatus).INCIDENT]}">0</strong></div></div>
+    <div class="col-6 col-lg-3"><div class="card stat-card"><span class="stat-icon"><i class="bi bi-collection" aria-hidden="true"></i></span><span class="stat-label">Total de envíos</span><strong class="stat-value" th:text="${total}">0</strong><small>Tu actividad en Paway</small></div></div>
+    <div class="col-6 col-lg-3"><div class="card stat-card"><span class="stat-icon stat-icon--blue"><i class="bi bi-truck" aria-hidden="true"></i></span><span class="stat-label">En tránsito</span><strong class="stat-value" th:text="${stats[T(pe.edu.utp.Paway.model.ShipmentStatus).TRANSIT]}">0</strong><small>Camino a su destino</small></div></div>
+    <div class="col-6 col-lg-3"><div class="card stat-card"><span class="stat-icon stat-icon--green"><i class="bi bi-check2-circle" aria-hidden="true"></i></span><span class="stat-label">Entregados</span><strong class="stat-value" th:text="${stats[T(pe.edu.utp.Paway.model.ShipmentStatus).DELIVERED]}">0</strong><small>En su destino final</small></div></div>
+    <div class="col-6 col-lg-3"><div class="card stat-card"><span class="stat-icon stat-icon--amber"><i class="bi bi-exclamation-circle" aria-hidden="true"></i></span><span class="stat-label">Incidencias</span><strong class="stat-value" th:text="${stats[T(pe.edu.utp.Paway.model.ShipmentStatus).INCIDENT]}">0</strong><small>Requieren atención</small></div></div>
 </div>
 
 <div th:fragment="shipmentTable(admin)" class="table-responsive">
@@ -16,11 +16,11 @@
         <caption class="visually-hidden">Envíos registrados y sus estados</caption>
         <thead><tr><th scope="col">Guía</th><th scope="col">Destinatario</th><th scope="col">Ruta</th><th scope="col">Importe</th><th scope="col">Estado</th><th scope="col">Acciones</th></tr></thead>
         <tbody>
-        <tr th:if="${#lists.isEmpty(shipments)}"><td colspan="6" class="text-center py-5 text-body-secondary">No se encontraron envíos.</td></tr>
+        <tr th:if="${#lists.isEmpty(shipments)}"><td colspan="6" class="text-center py-5"><div class="empty-state"><i class="bi bi-inbox" aria-hidden="true"></i><strong>No hay envíos para mostrar</strong><span>Prueba con otros filtros o registra tu próximo envío.</span></div></td></tr>
         <tr th:each="shipment : ${shipments}">
             <td><strong class="text-paway" th:text="${shipment.guide}"></strong><br><small class="text-body-secondary" th:text="${#temporals.format(shipment.createdAt, 'dd/MM/yyyy')}"></small></td>
             <td th:text="${shipment.recipient}"></td>
-            <td><span th:text="${shipment.origin}"></span><br><small th:text="${shipment.district}"></small></td>
+            <td><span class="route-origin" th:text="${shipment.origin}"></span><br><small class="route-destination"><i class="bi bi-arrow-return-right me-1" aria-hidden="true"></i><span th:text="${shipment.district}"></span></small></td>
             <td class="text-nowrap" th:text="'S/ ' + ${shipment.total}"></td>
             <td><span th:replace="~{fragments/components :: badge(${shipment.status})}"></span></td>
             <td class="text-nowrap">

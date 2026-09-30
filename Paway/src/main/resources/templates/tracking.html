@@ -2,7 +2,7 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: page('Rastreo', 'tracking', ~{::main})}">
 <body>
 <main id="contenido" class="container py-5">
-    <p class="section-eyebrow">Sigue tu paquete</p><h1 class="fw-bold">Rastreo de envíos</h1>
+    <p class="section-eyebrow">Sigue tu paquete</p><h1 class="fw-bold">¿Cómo va tu envío?</h1><p class="text-body-secondary mt-2">Cada paso cuenta. Ingresa tu guía y consulta las últimas novedades.</p>
     <form class="card p-4 my-4" method="get" th:action="@{/rastrear}">
         <label for="guide" class="form-label">Número de guía</label>
         <div class="d-flex flex-wrap gap-2">
@@ -24,7 +24,7 @@
         </section></div>
         <div class="col-lg-5"><section class="card p-4"><h2 class="h5 mb-4">Historial de estados</h2><ol th:replace="~{fragments/components :: timeline}"></ol></section></div>
     </div>
-    <p th:if="${guide.isEmpty()}" class="text-body-secondary">Ingresa la guía que recibiste al registrar tu envío. Puedes consultar las guías de demostración desde el panel administrativo.</p>
+    <div th:if="${guide.isEmpty()}" class="tracking-empty"><span class="icon-tile icon-tile--blue"><i class="bi bi-signpost-2" aria-hidden="true"></i></span><h2 class="h5 mt-3">Tu guía es el punto de partida</h2><p class="text-body-secondary">La encuentras en el historial de tus envíos. Cópiala arriba y nosotros te mostramos su recorrido.</p><a class="step-link" th:href="@{/cliente}">Ir a mis envíos <i class="bi bi-arrow-right" aria-hidden="true"></i></a></div>
 </main>
 </body>
 </html>

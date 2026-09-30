@@ -3,7 +3,7 @@
 <body>
 <main id="contenido" class="container py-5">
     <p class="section-eyebrow">Datos del envío</p><h1 class="fw-bold" th:text="${editing ? 'Editar envío' : 'Registrar envío'}"></h1>
-    <p class="text-body-secondary">Completa los datos. El importe se calcula nuevamente en el servidor al guardar.</p>
+    <p class="text-body-secondary">Unos datos más y tu envío estará listo. Confirmaremos el importe al guardar.</p>
     <form class="card p-4 mt-4" method="post" th:action="@{${formAction}}" th:object="${shipmentForm}">
         <div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}" role="alert"><strong>Revisa los datos del envío.</strong><ul class="mb-0"><li th:each="error : ${#fields.globalErrors()}" th:text="${error}"></li></ul></div>
         <div class="row g-3 mb-4">

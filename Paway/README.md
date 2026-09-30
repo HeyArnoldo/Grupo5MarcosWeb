@@ -23,7 +23,7 @@ $env:JAVA_HOME = 'C:\Program Files\Apache NetBeans\jdk'
 
 ## Demostrar la integración
 
-1. En **Acceso demo**, selecciona **Administrador**.
+1. En **Entrar**, selecciona **Administrador**.
 2. Registra un envío para Brayan o María; copia la guía generada.
 3. Consulta esa guía en **Rastrear**. Una guía inexistente muestra un mensaje, no un resultado simulado.
 4. En administración, abre **Ver** y actualiza el estado a **En tránsito** con una observación. Vuelve a rastrear: verás el nuevo estado y el evento.
@@ -31,7 +31,24 @@ $env:JAVA_HOME = 'C:\Program Files\Apache NetBeans\jdk'
 6. Cotiza un envío y pulsa **Solicitar envío**. Los datos de cotización pasan al formulario del cliente, incluso si primero debes seleccionar su perfil.
 7. Prueba editar, filtrar y anular desde administración. La anulación conserva la guía y el historial; no permite modificar después el envío.
 
-Hay cuatro envíos iniciales, con guías `PW-<año actual>-0001` a `0004`, y dos clientes de demostración. Los registros y cambios se restablecen al reiniciar la aplicación. **Acceso demo selecciona un perfil en sesión; no autentica con usuario y contraseña.**
+Hay cuatro envíos iniciales, con guías `PW-<año actual>-0001` a `0004`, y dos clientes de demostración. Los registros y cambios se restablecen al reiniciar la aplicación. **El acceso selecciona un perfil en sesión; no autentica con usuario y contraseña.**
+
+## Docker, Coolify y PostgreSQL
+
+Desde `Paway`, con Docker Desktop iniciado:
+
+```powershell
+docker build -t paway:local .
+docker run --rm --name paway -p 8080:8080 paway:local
+```
+
+Para Coolify: Build Pack **Dockerfile**, Base Directory **`/Paway`**, Dockerfile Location **`/Dockerfile`** y puerto **`8080`**. La ruta de salud es **`/actuator/health`**.
+
+La [guía de despliegue](docs/deployment.md) detalla la configuración y los pasos para integrar PostgreSQL. **La conexión a BD aún no está implementada**: requiere entidades, repositorios y migraciones, además de las variables de conexión.
+
+## Identidad visual
+
+La interfaz utiliza el logo original de `Avance del Proyecto/Avance1/assets/logo-paway.jpg`, disponible en `src/main/resources/static/images/logo-paway.jpg`. Cabecera, pie y acceso comparten la marca, con una portada clara y adaptable a móviles.
 
 ## Qué aplicamos de los laboratorios
 

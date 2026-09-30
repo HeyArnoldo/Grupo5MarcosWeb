@@ -2,37 +2,44 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: page('Inicio', 'home', ~{::main})}">
 <body>
 <main id="contenido">
-    <section class="hero py-5">
-        <div class="container py-lg-4">
+    <section class="hero">
+        <div class="container py-5">
             <div class="row g-5 align-items-center">
                 <div class="col-lg-7">
-                    <p class="text-uppercase fw-semibold hero-eyebrow">Tu paquete, siempre cerca</p>
-                    <h1 class="display-4 fw-bold">Haz tus envíos<br>con Paway…pe</h1>
-                    <p class="lead mt-3">Cotiza, solicita y consulta el estado de tus paquetes desde un mismo lugar.</p>
-                    <a class="btn btn-light btn-lg rounded-pill mt-2" th:href="@{/cotizar}">Cotizar mi envío <i class="bi bi-arrow-right ms-2" aria-hidden="true"></i></a>
+                    <span class="hero-eyebrow"><span class="status-dot" aria-hidden="true"></span>Un destino. Muchas historias.</span>
+                    <h1 class="hero-title mt-4">Tu envío,<br><span>en buenas manos.</span></h1>
+                    <p class="hero-description mt-4">De tu puerta a su próximo destino. Cotiza tu paquete y sigue cada paso con Paway.</p>
+                    <div class="d-flex flex-wrap align-items-center gap-3 mt-4">
+                        <a class="btn btn-paway btn-lg" th:href="@{/cotizar}">Quiero enviar <i class="bi bi-arrow-right ms-2" aria-hidden="true"></i></a>
+                        <a class="hero-secondary" th:href="@{/rastrear}">Ya tengo una guía <i class="bi bi-arrow-up-right ms-1" aria-hidden="true"></i></a>
+                    </div>
+                    <div class="hero-benefits mt-4"><span><i class="bi bi-check-circle" aria-hidden="true"></i>Tarifas claras</span><span><i class="bi bi-check-circle" aria-hidden="true"></i>Seguimiento fácil</span><span><i class="bi bi-check-circle" aria-hidden="true"></i>Todo en un lugar</span></div>
                 </div>
                 <div class="col-lg-5">
-                    <div class="card p-4 text-dark shadow">
-                        <h2 class="h4 fw-bold">Rastrea tu paquete</h2>
-                        <p class="text-body-secondary">Consulta una guía registrada en el sistema.</p>
+                    <div class="hero-tracking">
+                        <div class="tracking-card-top"><span class="icon-tile"><i class="bi bi-geo-alt" aria-hidden="true"></i></span><span class="tracking-tag">Sigue su camino</span></div>
+                        <h2 class="h3 fw-bold mt-4">¿Dónde va tu envío?</h2>
+                        <p class="text-body-secondary">Tu guía te conecta con el estado de tu paquete.</p>
                         <form method="get" th:action="@{/rastrear}">
                             <label for="guide" class="form-label">Número de guía</label>
-                            <input id="guide" name="guide" class="form-control mb-3" maxlength="40" placeholder="PW-2026-0001" required>
-                            <button class="btn btn-paway w-100" type="submit">Rastrear envío</button>
+                            <div class="input-with-icon mb-3"><i class="bi bi-search" aria-hidden="true"></i><input id="guide" name="guide" class="form-control" maxlength="40" placeholder="Ej. PW-2026-0001" required></div>
+                            <button class="btn btn-paway w-100" type="submit">Buscar mi envío <i class="bi bi-arrow-right ms-2" aria-hidden="true"></i></button>
                         </form>
+                        <div class="tracking-card-note"><i class="bi bi-info-circle" aria-hidden="true"></i><span>Encuentra tu guía en el historial de tus envíos.</span></div>
+                        <div class="tracking-brand-stamp"><img th:src="@{/images/logo-paway.jpg}" alt="" width="54" height="60"><span>Conectamos destinos.<br><strong>Acercamos personas.</strong></span></div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <section class="container py-5">
-        <h2 class="h3 fw-bold mb-4">Todo lo que necesitas para tu envío</h2>
+    <section class="container section-space">
+        <div class="section-heading"><p class="section-eyebrow">Así de sencillo</p><h2>De aquí para allá,<br>en tres pasos.</h2><p class="text-body-secondary">Menos vueltas. Más claridad para tu próximo envío.</p></div>
         <div class="row g-4">
-            <div class="col-md-4"><article class="card h-100 p-4"><i class="bi bi-calculator service-icon" aria-hidden="true"></i><h3 class="h5 mt-3">Cotización transparente</h3><p class="text-body-secondary mb-0">Tarifas según destino, peso, categoría y cantidad de paquetes.</p></article></div>
-            <div class="col-md-4"><article class="card h-100 p-4"><i class="bi bi-truck service-icon" aria-hidden="true"></i><h3 class="h5 mt-3">Seguimiento de paquetes</h3><p class="text-body-secondary mb-0">Una misma guía conecta el registro administrativo y el rastreo.</p></article></div>
-            <div class="col-md-4"><article class="card h-100 p-4"><i class="bi bi-person-circle service-icon" aria-hidden="true"></i><h3 class="h5 mt-3">Historial del cliente</h3><p class="text-body-secondary mb-0">Consulta tus envíos, sus importes y sus estados actualizados.</p></article></div>
+            <div class="col-md-4"><article class="card step-card h-100"><div class="d-flex justify-content-between align-items-center"><span class="icon-tile"><i class="bi bi-calculator" aria-hidden="true"></i></span><span class="step-number">01</span></div><h3 class="h5 mt-4">Cotiza a tu medida</h3><p class="text-body-secondary">Elige el destino y cuéntanos qué envías. Conoce el importe antes de continuar.</p><a class="step-link mt-auto" th:href="@{/cotizar}">Calcular mi tarifa <i class="bi bi-arrow-right" aria-hidden="true"></i></a></article></div>
+            <div class="col-md-4"><article class="card step-card h-100"><div class="d-flex justify-content-between align-items-center"><span class="icon-tile icon-tile--blue"><i class="bi bi-send" aria-hidden="true"></i></span><span class="step-number">02</span></div><h3 class="h5 mt-4">Prepara tu envío</h3><p class="text-body-secondary">Completa los datos del destinatario y recibe una guía para identificar tu paquete.</p><a class="step-link mt-auto" th:href="@{/cliente}">Ver mis envíos <i class="bi bi-arrow-right" aria-hidden="true"></i></a></article></div>
+            <div class="col-md-4"><article class="card step-card h-100"><div class="d-flex justify-content-between align-items-center"><span class="icon-tile icon-tile--green"><i class="bi bi-pin-map" aria-hidden="true"></i></span><span class="step-number">03</span></div><h3 class="h5 mt-4">Sigue cada paso</h3><p class="text-body-secondary">Consulta el estado y el historial de tu envío siempre que lo necesites.</p><a class="step-link mt-auto" th:href="@{/rastrear}">Rastrear mi paquete <i class="bi bi-arrow-right" aria-hidden="true"></i></a></article></div>
         </div>
-        <div class="card p-4 mt-4"><h3 class="h5">Cobertura del cotizador</h3><p class="mb-0 text-body-secondary">Lima, Huarochirí, Huaral y Cañete. Conservamos las tarifas del primer avance.</p></div>
+        <section class="coverage-card mt-5"><div><p class="section-eyebrow">Más cerca de tu destino</p><h2 class="h3 fw-bold">Aquí empieza tu próximo envío.</h2><p class="text-body-secondary mb-3">Conoce los destinos disponibles y elige el tuyo.</p><div class="coverage-tags"><span>Lima</span><span>Huarochirí</span><span>Huaral</span><span>Cañete</span></div></div><a class="btn btn-paway" th:href="@{/cotizar}">Ver destinos <i class="bi bi-arrow-right ms-2" aria-hidden="true"></i></a></section>
     </section>
 </main>
 </body>

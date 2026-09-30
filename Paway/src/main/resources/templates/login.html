@@ -1,20 +1,39 @@
 <!doctype html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: page('Acceso demo', 'login', ~{::main})}">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: page('Bienvenido', 'login', ~{::main})}">
 <body>
 <main id="contenido" class="container py-5">
-    <div class="card p-4 p-md-5 mx-auto login-card">
-        <p class="section-eyebrow">Explora Paway</p><h1 class="h2 fw-bold">Acceso de demostración</h1>
-        <p class="text-body-secondary">Selecciona un perfil para probar sus pantallas. Este avance utiliza una sesión de demostración; no es un inicio de sesión con credenciales.</p>
-        <p th:if="${session.pendingQuote != null}" class="alert alert-info">Tu cotización está lista. Selecciona un cliente para completar el envío.</p>
-        <form method="post" th:action="@{/login}">
-            <label for="profile" class="form-label">Perfil</label>
-            <select class="form-select mb-4" id="profile" name="profile" required>
-                <option value="">Selecciona un perfil</option>
-                <option th:each="client : ${clients}" th:value="'client' + ${client.id}" th:text="'Cliente · ' + ${client.name}"></option>
-                <option value="admin">Administrador · Gestión de envíos</option>
-            </select>
-            <button class="btn btn-paway w-100" type="submit">Entrar al perfil</button>
-        </form>
+    <div class="login-shell row g-0 mx-auto">
+        <div class="col-lg-5 login-welcome">
+            <img class="login-logo" th:src="@{/images/logo-paway.jpg}" alt="Logo de Paway" width="107" height="120">
+            <p class="section-eyebrow mt-4">Qué bueno tenerte aquí</p>
+            <h1 class="h2 fw-bold">Tu próximo envío<br>empieza contigo.</h1>
+            <p class="text-body-secondary mt-3">Cotiza, consulta tus paquetes y encuentra todos tus envíos en un solo lugar.</p>
+            <div class="login-benefit"><i class="bi bi-check-circle" aria-hidden="true"></i>Un perfil, todos tus envíos</div>
+            <div class="login-benefit"><i class="bi bi-check-circle" aria-hidden="true"></i>Historial y estados a la mano</div>
+        </div>
+        <div class="col-lg-7 p-4 p-md-5">
+            <h2 class="h4 fw-bold">Elige tu espacio</h2>
+            <p class="text-body-secondary">¿Con qué perfil quieres continuar?</p>
+            <p th:if="${session.pendingQuote != null}" class="alert alert-info">Tu cotización está lista. Selecciona un cliente para completar el envío.</p>
+            <form method="post" th:action="@{/login}">
+                <fieldset><legend class="visually-hidden">Perfil de demostración</legend>
+                    <label class="profile-option" th:each="client : ${clients}">
+                        <input type="radio" name="profile" th:value="'client' + ${client.id}" required>
+                        <span class="profile-avatar"><i class="bi bi-person" aria-hidden="true"></i></span>
+                        <span class="profile-copy"><strong th:text="${client.name}"></strong><small>Cliente · Consulta y solicita envíos</small></span>
+                        <i class="bi bi-check-circle profile-check" aria-hidden="true"></i>
+                    </label>
+                    <label class="profile-option">
+                        <input type="radio" name="profile" value="admin" required>
+                        <span class="profile-avatar"><i class="bi bi-grid" aria-hidden="true"></i></span>
+                        <span class="profile-copy"><strong>Administrador</strong><small>Gestiona envíos y sus estados</small></span>
+                        <i class="bi bi-check-circle profile-check" aria-hidden="true"></i>
+                    </label>
+                </fieldset>
+                <button class="btn btn-paway w-100 mt-3" type="submit">Continuar <i class="bi bi-arrow-right ms-2" aria-hidden="true"></i></button>
+            </form>
+            <p class="demo-access-note mt-3 mb-0"><i class="bi bi-info-circle me-1" aria-hidden="true"></i>Acceso de demostración: selecciona un perfil sin usuario ni contraseña.</p>
+        </div>
     </div>
 </main>
 </body>
