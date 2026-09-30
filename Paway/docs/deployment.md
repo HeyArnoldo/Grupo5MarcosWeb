@@ -17,7 +17,7 @@ Crea una aplicación desde este repositorio y selecciona **Dockerfile** como Bui
 
 La ruta del Dockerfile es relativa a la Base Directory: Coolify resolverá `/Paway/Dockerfile`. El contexto de construcción debe ser `Paway`, no la raíz de todos los laboratorios. No necesitas un comando de inicio adicional: el Dockerfile ya lo define.
 
-El Dockerfile incluye su propio `HEALTHCHECK`. Puedes usarlo o configurar el equivalente en Coolify. Da un margen inicial de 60 segundos para que Java arranque. La ruta responde `{"status":"UP"}` cuando la aplicación está disponible.
+El Dockerfile incluye su propio `HEALTHCHECK`. Puedes usarlo o configurar el equivalente en Coolify. Da un margen inicial de 60 segundos para que Java arranque. La respuesta incluye `"status":"UP"` cuando la aplicación está disponible.
 
 Coolify termina HTTPS en su proxy y dirige el tráfico al puerto interno 8080. La aplicación procesa las cabeceras de ese proxy con `server.forward-headers-strategy=framework`. Cambiar `PORT` también exige cambiar el puerto configurado en Coolify; lo más sencillo es mantener 8080.
 
