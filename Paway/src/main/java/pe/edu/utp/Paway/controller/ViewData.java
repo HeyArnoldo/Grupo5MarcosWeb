@@ -32,4 +32,13 @@ public class ViewData {
         Object profile = session.getAttribute("profile");
         return profile == null ? "" : profile.toString();
     }
+    @ModelAttribute("profileName")
+    public String profileName(HttpSession session) {
+        Object profile = session.getAttribute("profile");
+        if (profile == null) return "";
+        if ("admin".equals(profile)) return "Administrador";
+        if ("client1".equals(profile)) return shipments.client(1L).name();
+        if ("client2".equals(profile)) return shipments.client(2L).name();
+        return "";
+    }
 }
