@@ -1,0 +1,29 @@
+### *Integrante 1 (El Conductor / Presentador Principal)*
+
+> "¡Muy buenas tardes, estimado profesor y audiencia! Transmitimos en directo desde el aula de clases. Hoy investigamos uno de los casos más complejos de la ingeniería de software: *¿Cómo se integran a la perfección el Backend y el Frontend en una aplicación web?* Para resolverlo, hemos enviado a nuestro equipo de investigación directo a las entrañas del código. Vamos con nuestro primer especialista en servidores. ¡Adelante con el reporte!"
+
+---
+
+### *Integrante 2 (El Ingeniero Backend - Spring Boot)*
+
+> "Gracias, estudio. Les habla *Spring Boot* desde el núcleo del sistema. Aquí tengo toda la información guardada: listas de objetos en Java, conexiones y reglas de negocio puras. El problema es que soy un servidor muy cerrado; si un usuario intenta ver mi estructura cruda desde el navegador, no entendería absolutamente nada. Necesitaba que alguien sacara mis datos a la luz sin romper la seguridad."
+
+---
+
+### *Integrante 3 (El Traductor - Thymeleaf)*
+
+> "¡Aquí reportando, *Thymeleaf*! Mi trabajo clave fue actuar como el puente traductor. Intercepté los datos que mandaba Spring Boot desde el servidor y los inyecté directamente al archivo HTML al vuelo, utilizando etiquetas dinámicas como th:text y th:each para recorrer las listas. Sin mí, el HTML y Java vivirían en mundos completamente separados."
+
+---
+
+### *Integrante 4 (El Diseñador UI - Bootstrap)*
+
+> "¡Y ahí entré yo, *Bootstrap*! Porque claro, Thymeleaf logró traer los datos al HTML, pero la pantalla se veía plana, gris y sin estilo. Como especialista en experiencia visual, tomé esa estructura y le añadí diseño responsivo al instante: contenedores limpios, tarjetas elegantes (cards), tablas modernas y botones atractivos sin escribir código CSS desde cero. ¡Convertí un texto aburrido en una interfaz profesional!"
+
+---
+
+### *Integrante 5 (El Operador de Campo - Demostración Final)*
+
+> "¡Con estos testimonios, el caso está totalmente cerrado! Las piezas encajan a la perfección. Estudio, es momento de la prueba de campo en tiempo real."
+> (Actualiza la página en el navegador mostrando la app corriendo en http://localhost:8080)
+> "Como pueden ver en las imágenes en directo, los datos viajan del Backend de Spring Boot, se procesan con Thymeleaf y se visualizan con el diseño impecable de Bootstrap. ¡Reportó para ustedes el equipo de integración. ¡Muchas gracias!"
