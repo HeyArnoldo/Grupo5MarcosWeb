@@ -23,6 +23,9 @@ html:not(.aos-ready) [data-aos] { opacity: 1 !important; transform: none !import
 .receipt-details { display: grid; grid-template-columns: minmax(120px, 180px) 1fr; gap: .5rem 1.5rem; margin-bottom: 2rem; }
 .receipt-details dd { margin: 0; overflow-wrap: anywhere; }
 .preserve-lines { white-space: pre-wrap; overflow-wrap: anywhere; }
+.shipment-map { height: 360px; border-radius: .9rem; border: 1px solid var(--paway-border); background: #eef1f0; z-index: 0; }
+.paway-map-marker { display: grid; place-items: center; border: 3px solid #fff; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); background: var(--paway-red); box-shadow: 0 4px 16px #24283140; }
+.paway-map-marker span { display: block; font-size: 1.3rem; transform: rotate(45deg); }
 @media (max-width: 575px) {
     .legal-hero { padding: 1.5rem; }
     .receipt-details { grid-template-columns: 1fr; gap: .25rem; }
