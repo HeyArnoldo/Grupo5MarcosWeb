@@ -66,3 +66,23 @@ if (minor) {
     minor.addEventListener('change', updateGuardian);
     updateGuardian();
 }
+
+const mapElement = document.querySelector('[data-tracking-map]');
+if (mapElement && window.L) {
+    const latitude = Number(mapElement.dataset.lat);
+    const longitude = Number(mapElement.dataset.lng);
+    if (Number.isFinite(latitude) && Number.isFinite(longitude)) {
+        const map = window.L.map(mapElement, { scrollWheelZoom: false }).setView([latitude, longitude], 13);
+        const tiles = window.L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        const popup = document.createElement('strong');
+        popup.textContent = mapElement.dataset.label;
+        const pin = window.L.divIcon({ className: 'paway-map-marker', html: '<span aria-hidden="true">📦</span>', iconSize: [42, 42], iconAnchor: [21, 42], popupAnchor: [0, -44] });
+        window.L.marker([latitude, longitude], { icon: pin, title: mapElement.dataset.label, alt: 'Punto de referencia del envío' }).addTo(map).bindPopup(popup).openPopup();
+        tiles.on('tileerror', () => { document.querySelector('[data-map-fallback]').hidden = false; });
+        // A failed tile request keeps the external location link available.
+        mapElement.addEventListener('focusin', () => mapElement.scrollIntoView({ block: 'nearest' }));
+    }
+}
