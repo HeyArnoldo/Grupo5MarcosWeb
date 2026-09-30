@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: page('Inicio', 'home', ~{::main})}">
+<body>
+<main id="contenido">
+    <section class="hero py-5">
+        <div class="container py-lg-4">
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-7">
+                    <p class="text-uppercase fw-semibold hero-eyebrow">Tu paquete, siempre cerca</p>
+                    <h1 class="display-4 fw-bold">Haz tus envíos<br>con Paway…pe</h1>
+                    <p class="lead mt-3">Cotiza, solicita y consulta el estado de tus paquetes desde un mismo lugar.</p>
+                    <a class="btn btn-light btn-lg rounded-pill mt-2" th:href="@{/cotizar}">Cotizar mi envío <i class="bi bi-arrow-right ms-2" aria-hidden="true"></i></a>
+                </div>
+                <div class="col-lg-5">
+                    <div class="card p-4 text-dark shadow">
+                        <h2 class="h4 fw-bold">Rastrea tu paquete</h2>
+                        <p class="text-body-secondary">Consulta una guía registrada en el sistema.</p>
+                        <form method="get" th:action="@{/rastrear}">
+                            <label for="guide" class="form-label">Número de guía</label>
+                            <input id="guide" name="guide" class="form-control mb-3" maxlength="40" placeholder="PW-2026-0001" required>
+                            <button class="btn btn-paway w-100" type="submit">Rastrear envío</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="container py-5">
+        <h2 class="h3 fw-bold mb-4">Todo lo que necesitas para tu envío</h2>
+        <div class="row g-4">
+            <div class="col-md-4"><article class="card h-100 p-4"><i class="bi bi-calculator service-icon" aria-hidden="true"></i><h3 class="h5 mt-3">Cotización transparente</h3><p class="text-body-secondary mb-0">Tarifas según destino, peso, categoría y cantidad de paquetes.</p></article></div>
+            <div class="col-md-4"><article class="card h-100 p-4"><i class="bi bi-truck service-icon" aria-hidden="true"></i><h3 class="h5 mt-3">Seguimiento de paquetes</h3><p class="text-body-secondary mb-0">Una misma guía conecta el registro administrativo y el rastreo.</p></article></div>
+            <div class="col-md-4"><article class="card h-100 p-4"><i class="bi bi-person-circle service-icon" aria-hidden="true"></i><h3 class="h5 mt-3">Historial del cliente</h3><p class="text-body-secondary mb-0">Consulta tus envíos, sus importes y sus estados actualizados.</p></article></div>
+        </div>
+        <div class="card p-4 mt-4"><h3 class="h5">Cobertura del cotizador</h3><p class="mb-0 text-body-secondary">Lima, Huarochirí, Huaral y Cañete. Conservamos las tarifas del primer avance.</p></div>
+    </section>
+</main>
+</body>
+</html>

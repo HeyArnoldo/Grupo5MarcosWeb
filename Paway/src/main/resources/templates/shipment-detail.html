@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: page('Detalle del envío', 'admin', ~{::main})}">
+<body>
+<main id="contenido" class="container py-5">
+    <a class="text-paway" th:href="@{/admin}">← Volver al panel</a>
+    <div class="d-flex flex-wrap align-items-center gap-3 my-4"><h1 class="fw-bold mb-0" th:text="${shipment.guide}"></h1><span th:replace="~{fragments/components :: badge(${shipment.status})}"></span></div>
+    <div class="row g-4">
+        <div class="col-lg-7"><section class="card p-4 h-100"><h2 class="h5 mb-4">Información del envío</h2>
+            <dl class="row">
+                <dt class="col-sm-4">Cliente</dt><dd class="col-sm-8" th:text="${client.name}"></dd>
+                <dt class="col-sm-4">Destinatario</dt><dd class="col-sm-8" th:text="${shipment.recipient}"></dd>
+                <dt class="col-sm-4">DNI</dt><dd class="col-sm-8" th:text="${shipment.document}"></dd>
+                <dt class="col-sm-4">Origen</dt><dd class="col-sm-8" th:text="${shipment.origin}"></dd>
+                <dt class="col-sm-4">Destino</dt><dd class="col-sm-8" th:text="${shipment.district}"></dd>
+                <dt class="col-sm-4">Peso por paquete</dt><dd class="col-sm-8" th:text="${shipment.weight} + ' kg'"></dd>
+                <dt class="col-sm-4">Paquetes</dt><dd class="col-sm-8" th:text="${shipment.quantity}"></dd>
+                <dt class="col-sm-4">Importe</dt><dd class="col-sm-8 fw-bold" th:text="'S/ ' + ${shipment.total}"></dd>
+            </dl>
+            <div class="d-flex flex-wrap gap-2"><a class="btn btn-outline-secondary" th:href="@{/rastrear(guide=${shipment.guide})}">Ver rastreo público</a><a th:if="${shipment.status.name() != 'CANCELLED'}" class="btn btn-outline-danger" th:href="@{/admin/envios/{id}/editar(id=${shipment.id})}">Editar datos</a></div>
+        </section></div>
+        <div class="col-lg-5"><section class="card p-4 h-100"><h2 class="h5 mb-4">Historial de estados</h2><ol th:replace="~{fragments/components :: timeline}"></ol></section></div>
+    </div>
+    <section th:if="${shipment.status.name() != 'CANCELLED'}" class="card p-4 mt-4">
+        <h2 class="h5 mb-3">Actualizar estado</h2>
+        <form class="row g-3 align-items-end" method="post" th:action="@{/admin/envios/{id}/estado(id=${shipment.id})}">
+            <div class="col-md-4"><label class="form-label" for="status">Estado</label><select class="form-select" id="status" name="status" required><option th:each="status : ${statuses}" th:value="${status}" th:text="${status.label}" th:selected="${status == shipment.status}"></option></select></div>
+            <div class="col-md-6"><label class="form-label" for="observation">Observación (opcional)</label><input class="form-control" id="observation" name="observation" maxlength="500"></div>
+            <div class="col-md-2"><button class="btn btn-paway" type="submit">Actualizar</button></div>
+        </form>
+    </section>
+</main>
+</body>
+</html>

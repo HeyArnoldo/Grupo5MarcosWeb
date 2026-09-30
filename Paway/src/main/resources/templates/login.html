@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: page('Acceso demo', 'login', ~{::main})}">
+<body>
+<main id="contenido" class="container py-5">
+    <div class="card p-4 p-md-5 mx-auto login-card">
+        <p class="section-eyebrow">Explora Paway</p><h1 class="h2 fw-bold">Acceso de demostración</h1>
+        <p class="text-body-secondary">Selecciona un perfil para probar sus pantallas. Este avance utiliza una sesión de demostración; no es un inicio de sesión con credenciales.</p>
+        <p th:if="${session.pendingQuote != null}" class="alert alert-info">Tu cotización está lista. Selecciona un cliente para completar el envío.</p>
+        <form method="post" th:action="@{/login}">
+            <label for="profile" class="form-label">Perfil</label>
+            <select class="form-select mb-4" id="profile" name="profile" required>
+                <option value="">Selecciona un perfil</option>
+                <option th:each="client : ${clients}" th:value="'client' + ${client.id}" th:text="'Cliente · ' + ${client.name}"></option>
+                <option value="admin">Administrador · Gestión de envíos</option>
+            </select>
+            <button class="btn btn-paway w-100" type="submit">Entrar al perfil</button>
+        </form>
+    </div>
+</main>
+</body>
+</html>

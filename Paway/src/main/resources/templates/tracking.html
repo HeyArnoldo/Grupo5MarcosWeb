@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: page('Rastreo', 'tracking', ~{::main})}">
+<body>
+<main id="contenido" class="container py-5">
+    <p class="section-eyebrow">Sigue tu paquete</p><h1 class="fw-bold">Rastreo de envíos</h1>
+    <form class="card p-4 my-4" method="get" th:action="@{/rastrear}">
+        <label for="guide" class="form-label">Número de guía</label>
+        <div class="d-flex flex-wrap gap-2">
+            <input id="guide" name="guide" class="form-control tracking-input" th:value="${guide}" placeholder="PW-2026-0001" maxlength="40" required>
+            <button class="btn btn-paway" type="submit">Buscar envío</button>
+        </div>
+    </form>
+    <div th:if="${trackingError != null}" class="alert alert-warning" role="alert" th:text="${trackingError}"></div>
+    <div th:if="${shipment != null}" class="row g-4">
+        <div class="col-lg-7"><section class="card p-4">
+            <div class="d-flex flex-wrap justify-content-between gap-2 mb-4"><h2 class="h4 mb-0" th:text="${shipment.guide}"></h2><span th:replace="~{fragments/components :: badge(${shipment.status})}"></span></div>
+            <dl class="row mb-0">
+                <dt class="col-sm-4">Origen</dt><dd class="col-sm-8" th:text="${shipment.origin}"></dd>
+                <dt class="col-sm-4">Destino</dt><dd class="col-sm-8" th:text="${shipment.district}"></dd>
+                <dt class="col-sm-4">Paquetes</dt><dd class="col-sm-8" th:text="${shipment.quantity}"></dd>
+                <dt class="col-sm-4">Peso por paquete</dt><dd class="col-sm-8" th:text="${shipment.weight} + ' kg'"></dd>
+                <dt class="col-sm-4">Registro</dt><dd class="col-sm-8" th:text="${#temporals.format(shipment.createdAt, 'dd/MM/yyyy HH:mm')}"></dd>
+            </dl>
+        </section></div>
+        <div class="col-lg-5"><section class="card p-4"><h2 class="h5 mb-4">Historial de estados</h2><ol th:replace="~{fragments/components :: timeline}"></ol></section></div>
+    </div>
+    <p th:if="${guide.isEmpty()}" class="text-body-secondary">Ingresa la guía que recibiste al registrar tu envío. Puedes consultar las guías de demostración desde el panel administrativo.</p>
+</main>
+</body>
+</html>

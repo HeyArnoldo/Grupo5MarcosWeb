@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: page('Datos del envío', ${adminForm ? 'admin' : 'client'}, ~{::main})}">
+<body>
+<main id="contenido" class="container py-5">
+    <p class="section-eyebrow">Datos del envío</p><h1 class="fw-bold" th:text="${editing ? 'Editar envío' : 'Registrar envío'}"></h1>
+    <p class="text-body-secondary">Completa los datos. El importe se calcula nuevamente en el servidor al guardar.</p>
+    <form class="card p-4 mt-4" method="post" th:action="@{${formAction}}" th:object="${shipmentForm}">
+        <div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}" role="alert"><strong>Revisa los datos del envío.</strong><ul class="mb-0"><li th:each="error : ${#fields.globalErrors()}" th:text="${error}"></li></ul></div>
+        <div class="row g-3 mb-4">
+            <div class="col-md-6" th:if="${adminForm}"><label class="form-label" for="clientId">Cliente remitente</label><select class="form-select" id="clientId" th:field="*{clientId}" required><option th:each="client : ${clients}" th:value="${client.id}" th:text="${client.name}"></option></select><div class="text-danger small" th:errors="*{clientId}"></div></div>
+            <div class="col-md-6"><label class="form-label" for="origin">Agencia de origen</label><select class="form-select" id="origin" th:field="*{origin}" required><option th:each="agency : ${agencies}" th:value="${agency}" th:text="${agency}"></option></select><div class="text-danger small" th:errors="*{origin}"></div></div>
+            <div class="col-md-6"><label class="form-label" for="recipient">Nombre del destinatario</label><input class="form-control" id="recipient" th:field="*{recipient}" maxlength="100" required><div class="text-danger small" th:errors="*{recipient}"></div></div>
+            <div class="col-md-6"><label class="form-label" for="document">DNI del destinatario</label><input class="form-control" id="document" th:field="*{document}" inputmode="numeric" pattern="[0-9]{8}" minlength="8" maxlength="8" required><div class="text-danger small" th:errors="*{document}"></div></div>
+        </div>
+        <div th:replace="~{fragments/components :: quoteFields}"></div>
+        <div class="mt-4"><label class="form-label" for="observation">Observación (opcional)</label><textarea class="form-control" id="observation" th:field="*{observation}" maxlength="500" rows="3"></textarea><div class="text-danger small" th:errors="*{observation}"></div></div>
+        <div class="d-flex gap-2 mt-4"><button class="btn btn-paway" type="submit">Guardar envío</button><a class="btn btn-outline-secondary" th:href="${adminForm} ? @{/admin} : @{/cliente}">Volver</a></div>
+    </form>
+</main>
+</body>
+</html>

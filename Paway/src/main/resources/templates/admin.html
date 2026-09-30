@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: page('Administración', 'admin', ~{::main})}">
+<body>
+<main id="contenido" class="container py-5">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+        <div><p class="section-eyebrow">Control de operaciones</p><h1 class="fw-bold">Panel administrativo</h1></div>
+        <a class="btn btn-paway" th:href="@{/admin/envios/nuevo}"><i class="bi bi-plus-lg me-2" aria-hidden="true"></i>Registrar envío</a>
+    </div>
+    <div th:replace="~{fragments/components :: statistics}"></div>
+    <section class="card mb-4">
+        <div class="p-4 border-bottom">
+            <h2 class="h5 mb-3">Gestión de envíos</h2>
+            <form class="row g-3 align-items-end" method="get" th:action="@{/admin}">
+                <div class="col-md-4"><label class="form-label" for="q">Guía o destinatario</label><input class="form-control" id="q" name="q" maxlength="60" th:value="${q}" placeholder="Buscar envío"></div>
+                <div class="col-md-3"><label class="form-label" for="status">Estado</label><select class="form-select" id="status" name="status"><option value="">Todos</option><option th:each="status : ${statuses}" th:value="${status}" th:text="${status.label}" th:selected="${status == selectedStatus}"></option></select></div>
+                <div class="col-md-3"><label class="form-label" for="origin">Agencia de origen</label><select class="form-select" id="origin" name="origin"><option value="">Todas</option><option th:each="agency : ${agencies}" th:value="${agency}" th:text="${agency}" th:selected="${agency == selectedOrigin}"></option></select></div>
+                <div class="col-md-2 d-flex gap-2"><button class="btn btn-paway" type="submit">Filtrar</button><a class="btn btn-outline-secondary" th:href="@{/admin}" aria-label="Limpiar filtros"><i class="bi bi-x-lg" aria-hidden="true"></i></a></div>
+            </form>
+        </div>
+        <div th:replace="~{fragments/components :: shipmentTable(true)}"></div>
+        <div class="p-3 border-top d-flex flex-wrap justify-content-between align-items-center gap-3">
+            <span class="small text-body-secondary" th:text="${resultCount} + ' resultado(s) · Página ' + ${page} + ' de ' + ${pages}"></span>
+            <nav aria-label="Páginas de envíos" th:if="${pages > 1}"><ul class="pagination mb-0">
+                <li class="page-item" th:each="number : ${#numbers.sequence(1, pages)}" th:classappend="${number == page} ? 'active'">
+                    <a class="page-link" th:href="@{/admin(q=${q},status=${selectedStatus},origin=${selectedOrigin},page=${number})}" th:text="${number}" th:attr="aria-current=${number == page ? 'page' : null}"></a>
+                </li>
+            </ul></nav>
+        </div>
+    </section>
+    <div class="row g-4">
+        <div class="col-lg-6"><section class="card p-4 h-100"><h2 class="h5 mb-3">Agencias de la demostración</h2><ul class="list-group list-group-flush"><li class="list-group-item d-flex justify-content-between px-0" th:each="agency : ${agencyCounts}"><span th:text="${agency.name}"></span><span class="badge text-bg-secondary rounded-pill" th:text="${agency.count} + ' envío(s)'"></span></li></ul><p class="small text-body-secondary mb-0 mt-3">Agencias alineadas con la cobertura del cotizador del primer avance.</p></section></div>
+        <div class="col-lg-6"><section class="card p-4 h-100"><h2 class="h5 mb-3">Reporte por estado</h2><div th:each="entry : ${stats}" class="mb-3"><div class="d-flex justify-content-between small mb-1"><span th:text="${entry.key.label}"></span><span th:text="${entry.value}"></span></div><div class="progress" role="progressbar" th:aria-label="${entry.key.label}" th:attr="aria-valuenow=${entry.value},aria-valuemin=0,aria-valuemax=${total}"><div class="progress-bar bg-paway" th:style="'width: ' + ${total == 0 ? 0 : entry.value * 100 / total} + '%'"></div></div></div></section></div>
+    </div>
+</main>
+</body>
+</html>

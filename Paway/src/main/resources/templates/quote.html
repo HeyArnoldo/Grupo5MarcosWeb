@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: page('Cotizador', 'quote', ~{::main})}">
+<body>
+<main id="contenido" class="container py-5">
+    <p class="section-eyebrow">Planifica tu envío</p>
+    <h1 class="fw-bold">Cotizador de envíos</h1>
+    <p class="text-body-secondary mb-4">El servidor calcula tu tarifa con los datos del paquete.</p>
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <form class="card p-4" method="post" th:action="@{/cotizar}" th:object="${quoteForm}">
+                <div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}" role="alert">
+                    <strong>Revisa los datos de la cotización.</strong>
+                    <ul class="mb-0"><li th:each="error : ${#fields.globalErrors()}" th:text="${error}"></li></ul>
+                </div>
+                <div th:replace="~{fragments/components :: quoteFields}"></div>
+                <div class="d-flex flex-wrap gap-2 mt-4">
+                    <button class="btn btn-paway" type="submit">Calcular tarifa</button>
+                    <button class="btn btn-outline-danger" type="submit" name="requestShipment" value="true">Solicitar envío</button>
+                </div>
+                <p class="small text-body-secondary mt-3 mb-0">Al solicitar el envío, conservaremos tu cotización para completar los datos del destinatario.</p>
+            </form>
+        </div>
+        <div class="col-lg-4">
+            <section class="card p-4 quote-result" aria-live="polite">
+                <h2 class="h5 fw-bold">Resumen de la cotización</h2>
+                <div th:if="${quote != null}">
+                    <dl class="row mt-3">
+                        <dt class="col-8 fw-normal">Tarifa base</dt><dd class="col-4 text-end" th:text="'S/ ' + ${quote.base}"></dd>
+                        <dt class="col-8 fw-normal">Sobrepeso</dt><dd class="col-4 text-end" th:text="'S/ ' + ${quote.overweight}"></dd>
+                        <dt class="col-8 fw-normal">Recargo de categoría</dt><dd class="col-4 text-end" th:text="'S/ ' + ${quote.surcharge}"></dd>
+                        <dt class="col-8 fw-normal">Por paquete</dt><dd class="col-4 text-end" th:text="'S/ ' + ${quote.unit}"></dd>
+                        <dt class="col-8 fw-normal">Cantidad</dt><dd class="col-4 text-end" th:text="${quoteForm.quantity}"></dd>
+                    </dl>
+                    <p class="mb-1 text-body-secondary">Total estimado</p><strong class="display-6 text-paway" th:text="'S/ ' + ${quote.total}"></strong>
+                </div>
+                <p th:unless="${quote != null}" class="text-body-secondary my-3">Completa los datos y pulsa «Calcular tarifa».</p>
+                <hr><p class="small mb-0">Incluye 2 kg por paquete. Cada kg adicional cuesta S/ 3.00. El recargo depende de la categoría.</p>
+            </section>
+        </div>
+    </div>
+</main>
+</body>
+</html>
