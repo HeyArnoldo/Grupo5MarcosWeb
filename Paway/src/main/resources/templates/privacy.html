@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: page('Privacidad', 'privacy', ~{::main})}">
+<body>
+<main id="contenido" class="container section-space">
+    <header class="page-heading"><span class="icon-tile"><i class="bi bi-shield-check" aria-hidden="true"></i></span><div><p class="section-eyebrow mb-1">Datos personales</p><h1 class="h2 fw-bold mb-1">Aviso de privacidad</h1><p class="text-body-secondary mb-0">Información sobre el manejo de datos en esta demostración.</p></div></header>
+    <article class="card info-page-card">
+        <div class="alert alert-warning"><strong>Aplicación de prueba.</strong> No ingreses datos reales. Este aviso describe el comportamiento técnico de la demostración y no reemplaza una política de privacidad para un servicio comercial.</div>
+        <h2 class="h5">Datos utilizados</h2><p>La aplicación de ejemplo contiene perfiles y envíos precargados. Los formularios permiten introducir datos de destinatario y detalles del paquete; usa únicamente valores ficticios durante las pruebas.</p>
+        <h2 class="h5">Dónde se guardan</h2><p>Los envíos de demostración se almacenan en memoria en el proceso de la aplicación. La sesión del navegador mantiene temporalmente el perfil seleccionado y, si corresponde, la cotización pendiente. Los datos en memoria se restablecen al reiniciar el sistema.</p>
+        <h2 class="h5">Alcance</h2><p>Esta versión no implementa una base de datos ni un flujo de autenticación con contraseña. Este aviso no afirma que cubra todos los tratamientos, proveedores o derechos aplicables a un servicio desplegado.</p>
+        <h2 class="h5">Referencias normativas</h2><p class="mb-0">Para preparar una política antes de operar un servicio real, revisa la <a href="https://www.gob.pe/institucion/congreso-de-la-republica/normas-legales/243470-29733" target="_blank" rel="noopener noreferrer">Ley de Protección de Datos Personales</a> y su <a href="https://www.gob.pe/institucion/anpd/normas-legales/6554453-n-016-2024-jus" target="_blank" rel="noopener noreferrer">reglamento vigente</a>, además de recibir asesoría adecuada para el tratamiento concreto.</p>
+    </article>
+</main>
+</body>
+</html>

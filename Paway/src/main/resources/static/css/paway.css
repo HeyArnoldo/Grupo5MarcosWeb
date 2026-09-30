@@ -188,6 +188,11 @@ a { text-underline-offset: .2em; }
 .footer-coverage { display: flex; flex-wrap: wrap; gap: .55rem; }
 .footer-coverage span { padding: .45rem .75rem; border: 1px solid #ffffff30; border-radius: 50rem; background: #ffffff0b; color: #fff; font-size: .8rem; }
 .footer-bottom { margin-top: 1.5rem !important; padding-top: 1rem !important; }
+.info-page-card, .info-page-note { padding: clamp(1.25rem, 3vw, 2rem); }
+.info-page-card h2:not(:first-of-type) { margin-top: 1.5rem; }
+.info-page-card p { color: var(--paway-muted); }
+.info-page-card a { color: var(--paway-red); }
+.info-page-note { position: sticky; top: 1.5rem; }
 .skip-link { position: absolute; z-index: 2000; background: #fff; padding: .75rem; }
 .pagination { --bs-pagination-color: var(--paway-red); --bs-pagination-active-bg: var(--paway-red); --bs-pagination-active-border-color: var(--paway-red); --bs-pagination-border-color: var(--paway-border); font-size: .85rem; }
 .theme-toggle { padding: .55rem .75rem; }
@@ -235,6 +240,7 @@ a { text-underline-offset: .2em; }
 [data-theme="dark"] .form-section-nav a { background-color: #292e38; }
 [data-theme="dark"] .coverage-card { background: #242832; border-color: #3b414d; }
 [data-theme="dark"] .tracking-tag { color: #f1cbc5; background: #38282b; }
+[data-theme="dark"] .alert-warning { --bs-alert-color: #f4dfad; --bs-alert-bg: #3a311e; --bs-alert-border-color: #65532d; }
 [data-theme="dark"] .timeline li::before { box-shadow: 0 0 0 4px #222630; }
 [data-theme="dark"] .banner-search { border-color: #414652; background: #222630; }
 [data-theme="dark"] .banner-search .form-control { background: #171a20; }

@@ -94,11 +94,11 @@
 <footer class="paway-footer mt-auto">
     <div class="container py-5">
         <div class="row g-4 footer-main">
-            <div class="col-md-4 footer-column">
+            <div class="col-md-6 col-lg-3 footer-column">
                 <a class="footer-brand" th:href="@{/}"><img th:src="@{/images/logo-paway.jpg}" alt="Paway" width="54" height="60"><span>Paway<span class="brand-dot">.</span></span></a>
                 <p class="footer-description">Cada envío tiene una historia. Te ayudamos a seguir la tuya, desde la cotización hasta la entrega.</p>
             </div>
-            <div class="col-md-4 footer-column">
+            <div class="col-md-6 col-lg-3 footer-column">
                 <p class="footer-heading">Tu envío, a un clic</p>
                 <div class="footer-links">
                     <a th:href="@{/cotizar}"><i class="bi bi-calculator" aria-hidden="true"></i><span>Cotizar un envío</span><i class="bi bi-arrow-up-right ms-auto" aria-hidden="true"></i></a>
@@ -106,10 +106,18 @@
                     <a th:href="@{/cliente}"><i class="bi bi-box-seam" aria-hidden="true"></i><span>Mis envíos</span><i class="bi bi-arrow-up-right ms-auto" aria-hidden="true"></i></a>
                 </div>
             </div>
-            <div class="col-md-4 footer-column">
+            <div class="col-md-6 col-lg-3 footer-column">
                 <p class="footer-heading">Nuestra cobertura</p>
                 <p class="footer-description mb-3">Llegamos a estos destinos:</p>
                 <div class="footer-coverage"><span>Lima</span><span>Huarochirí</span><span>Huaral</span><span>Cañete</span></div>
+            </div>
+            <div class="col-md-6 col-lg-3 footer-column">
+                <p class="footer-heading">Información</p>
+                <div class="footer-links">
+                    <a th:href="@{/ayuda}"><i class="bi bi-question-circle" aria-hidden="true"></i><span>Preguntas frecuentes</span><i class="bi bi-arrow-up-right ms-auto" aria-hidden="true"></i></a>
+                    <a th:href="@{/terminos}"><i class="bi bi-file-text" aria-hidden="true"></i><span>Términos de uso</span><i class="bi bi-arrow-up-right ms-auto" aria-hidden="true"></i></a>
+                    <a th:href="@{/privacidad}"><i class="bi bi-shield-check" aria-hidden="true"></i><span>Privacidad</span><i class="bi bi-arrow-up-right ms-auto" aria-hidden="true"></i></a>
+                </div>
             </div>
         </div>
         <div class="footer-bottom mt-4 pt-3"><span>Haz tus envíos con Paway…pe</span><span>Hecho por el Grupo 5</span></div>

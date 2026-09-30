@@ -30,6 +30,15 @@ public class PublicController {
     @GetMapping("/")
     public String home() { return "home"; }
 
+    @GetMapping("/ayuda")
+    public String help() { return "help"; }
+
+    @GetMapping("/terminos")
+    public String terms() { return "terms"; }
+
+    @GetMapping("/privacidad")
+    public String privacy() { return "privacy"; }
+
     @GetMapping("/cotizar")
     public String quote(@ModelAttribute("quoteForm") QuoteForm form, Model model) {
         addDistricts(form, model);

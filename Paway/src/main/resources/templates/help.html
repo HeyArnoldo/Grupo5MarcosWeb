@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: page('Preguntas frecuentes', 'help', ~{::main})}">
+<body>
+<main id="contenido" class="container section-space">
+    <header class="page-heading"><span class="icon-tile"><i class="bi bi-question-circle" aria-hidden="true"></i></span><div><p class="section-eyebrow mb-1">Centro de ayuda</p><h1 class="h2 fw-bold mb-1">Preguntas frecuentes</h1><p class="text-body-secondary mb-0">Información sobre las funciones disponibles en esta demostración.</p></div></header>
+    <div class="row g-4">
+        <div class="col-lg-8"><section class="card info-page-card">
+            <h2 class="h5">¿Qué destinos puedo cotizar?</h2><p>La aplicación incluye cobertura para Lima, Huarochirí, Huaral y Cañete. Los distritos disponibles dependen de la provincia elegida en el cotizador.</p>
+            <h2 class="h5">¿Cómo se calcula la cotización?</h2><p>El total se calcula con la tarifa base del destino, el peso por paquete, el recargo de la categoría y la cantidad. El cotizador muestra el importe antes de iniciar una solicitud.</p>
+            <h2 class="h5">¿Cómo solicito un envío?</h2><p>Primero cotiza el paquete y elige «Solicitar envío». Luego selecciona un perfil de cliente de demostración y completa los datos requeridos.</p>
+            <h2 class="h5">¿Cómo consulto el recorrido?</h2><p>Usa la guía en la sección <a th:href="@{/rastrear}">Rastrear</a>. El historial refleja los estados registrados en esta aplicación.</p>
+            <h2 class="h5">¿Esta página recibe paquetes reales?</h2><p class="mb-0">No. Es una aplicación de demostración: los perfiles y envíos son de prueba, los registros se guardan en memoria y se restablecen al reiniciar el sistema.</p>
+        </section></div>
+        <aside class="col-lg-4"><div class="card info-page-note"><span class="icon-tile"><i class="bi bi-info-circle" aria-hidden="true"></i></span><h2 class="h5 mt-3">¿Necesitas hacer una prueba?</h2><p>Explora las funciones sin ingresar información real.</p><a class="btn btn-paway" th:href="@{/cotizar}">Ir al cotizador <i class="bi bi-arrow-right ms-2" aria-hidden="true"></i></a></div></aside>
+    </div>
+</main>
+</body>
+</html>
