@@ -3,13 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title th:text="${title} + ' | Paway'">Paway</title>
+    <title th:text="${active == 'home' ? 'Paway | Cotiza y rastrea tus envíos' : title + ' | Paway'}">Paway</title>
     <meta name="theme-color" content="#b01116">
+    <th:block th:if="${active == 'home'}">
+        <meta name="description" content="Cotiza tus paquetes, solicita un envío y sigue su recorrido con Paway. Consulta tarifas y destinos en Lima, Huarochirí, Huaral y Cañete.">
+        <link rel="canonical" href="https://paway.groowtech.com/">
+        <meta property="og:type" content="website">
+        <meta property="og:site_name" content="Paway">
+        <meta property="og:locale" content="es_PE">
+        <meta property="og:title" content="Paway | Cada envío nos acerca">
+        <meta property="og:description" content="Cotiza, envía y sigue tu paquete. Tarifas claras y tus envíos en un solo lugar.">
+        <meta property="og:url" content="https://paway.groowtech.com/">
+        <meta property="og:image" content="https://paway.groowtech.com/images/paway-social.png">
+        <meta property="og:image:secure_url" content="https://paway.groowtech.com/images/paway-social.png">
+        <meta property="og:image:type" content="image/png">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta property="og:image:alt" content="Paway: cada envío nos acerca. Ciudad y vehículos de reparto al atardecer.">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Paway | Cada envío nos acerca">
+        <meta name="twitter:description" content="Cotiza, envía y sigue tu paquete. Tarifas claras y tus envíos en un solo lugar.">
+        <meta name="twitter:image" content="https://paway.groowtech.com/images/paway-social.png">
+        <meta name="twitter:image:alt" content="Paway: cada envío nos acerca. Ciudad y vehículos de reparto al atardecer.">
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Organization",
+              "@id": "https://paway.groowtech.com/#organization",
+              "name": "Paway",
+              "url": "https://paway.groowtech.com/",
+              "logo": "https://paway.groowtech.com/images/logo-paway.jpg"
+            },
+            {
+              "@type": "WebSite",
+              "@id": "https://paway.groowtech.com/#website",
+              "name": "Paway",
+              "url": "https://paway.groowtech.com/",
+              "inLanguage": "es-PE",
+              "publisher": { "@id": "https://paway.groowtech.com/#organization" }
+            }
+          ]
+        }
+        </script>
+    </th:block>
     <link rel="icon" type="image/jpeg" th:href="@{/images/logo-paway.jpg}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
     <link rel="stylesheet" th:href="@{/css/paway.css}">
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <script defer th:src="@{/js/paway.js}"></script>
 </head>
 <body class="d-flex flex-column min-vh-100">
@@ -32,6 +77,7 @@
                     <li class="nav-item"><a class="nav-link" th:classappend="${active == 'tracking'} ? 'active'" th:attr="aria-current=${active == 'tracking' ? 'page' : null}" th:href="@{/rastrear}">Rastrear</a></li>
                     <li class="nav-item"><a class="nav-link" th:classappend="${active == 'client'} ? 'active'" th:attr="aria-current=${active == 'client' ? 'page' : null}" th:href="@{/cliente}">Mis envíos</a></li>
                     <li class="nav-item" th:if="${profile == 'admin'}"><a class="nav-link" th:classappend="${active == 'admin'} ? 'active'" th:attr="aria-current=${active == 'admin' ? 'page' : null}" th:href="@{/admin}">Administrar</a></li>
+                    <li class="nav-item" th:if="${profile == 'admin'}"><a class="nav-link" th:href="@{/admin/reclamaciones}">Reclamaciones</a></li>
                 </ul>
                 <a th:if="${profile.isEmpty()}" class="btn btn-paway nav-action" th:href="@{/login}"><i class="bi bi-person me-2" aria-hidden="true"></i>Entrar</a>
                 <form th:unless="${profile.isEmpty()}" method="post" th:action="@{/logout}">
@@ -53,6 +99,7 @@
             <div class="col-md-4"><p class="footer-heading">Tu envío, a un clic</p><div class="d-flex flex-wrap gap-3"><a th:href="@{/cotizar}">Cotizar</a><a th:href="@{/rastrear}">Rastrear</a><a th:href="@{/cliente}">Mis envíos</a></div></div>
             <div class="col-md-3"><p class="footer-heading">Nuestra cobertura</p><p class="small mb-0">Lima · Huarochirí<br>Huaral · Cañete</p></div>
         </div>
+        <div class="footer-legal mt-4 pt-4"><a th:href="@{/terminos-y-condiciones}">Términos y condiciones del servicio</a><a class="complaints-link" th:href="@{/libro-de-reclamaciones}"><img th:src="@{/images/libro-reclamaciones.svg}" alt="" width="76" height="54"><span>Libro de Reclamaciones</span></a></div>
         <div class="footer-bottom mt-4 pt-3"><span>Haz tus envíos con Paway…pe</span><span>Hecho por el Grupo 5</span></div>
     </div>
 </footer>

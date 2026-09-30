@@ -41,3 +41,28 @@ document.querySelectorAll('form[data-confirm]').forEach((form) => {
         if (!window.confirm(form.dataset.confirm)) event.preventDefault();
     });
 });
+
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+if (window.AOS && !reducedMotion.matches) {
+    document.querySelectorAll('.banner-content, .quick-actions, .section-heading, .info-card, .service-feature, .coverage-card, .page-heading').forEach((element, index) => {
+        element.dataset.aos = 'fade-up';
+        element.dataset.aosDelay = String((index % 3) * 50);
+    });
+    try {
+        window.AOS.init({ duration: 650, easing: 'ease-out-cubic', once: true, offset: 35 });
+        document.documentElement.classList.add('aos-ready');
+    } catch {
+        document.documentElement.classList.remove('aos-ready');
+    }
+}
+reducedMotion.addEventListener('change', (event) => {
+    if (event.matches) document.documentElement.classList.remove('aos-ready');
+});
+document.querySelector('[data-form-errors]')?.focus();
+document.querySelectorAll('[data-print-receipt]').forEach((button) => button.addEventListener('click', () => window.print()));
+const minor = document.querySelector('[data-minor]');
+if (minor) {
+    const updateGuardian = () => document.querySelectorAll('[data-guardian]').forEach((field) => { field.required = minor.checked; });
+    minor.addEventListener('change', updateGuardian);
+    updateGuardian();
+}

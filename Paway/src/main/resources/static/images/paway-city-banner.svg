@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 660" fill="none">
+  <defs>
+    <linearGradient id="sky" x1="800" y1="0" x2="800" y2="550" gradientUnits="userSpaceOnUse"><stop stop-color="#ee8565"/><stop offset=".5" stop-color="#ffbc7c"/><stop offset="1" stop-color="#ffe3ac"/></linearGradient>
+    <linearGradient id="sun" x1="800" y1="190" x2="800" y2="470" gradientUnits="userSpaceOnUse"><stop stop-color="#fff0b8"/><stop offset="1" stop-color="#ffd176"/></linearGradient>
+    <linearGradient id="road" x1="800" y1="530" x2="800" y2="660" gradientUnits="userSpaceOnUse"><stop stop-color="#465065"/><stop offset="1" stop-color="#252e40"/></linearGradient>
+    <linearGradient id="truck" x1="0" y1="0" x2="0" y2="100"><stop stop-color="#db3540"/><stop offset="1" stop-color="#a71120"/></linearGradient>
+    <pattern id="windows" width="30" height="42" patternUnits="userSpaceOnUse"><rect x="9" y="9" width="10" height="22" rx="1" fill="#aec0ca" opacity=".5"/></pattern>
+    <symbol id="truck-red" viewBox="0 0 250 130">
+      <ellipse cx="125" cy="116" rx="116" ry="9" fill="#182235" opacity=".28"/>
+      <rect x="13" y="18" width="136" height="82" rx="7" fill="url(#truck)"/>
+      <path d="M149 47h49l30 33v25h-79V47Z" fill="#fff5e9"/>
+      <path d="M164 53h29l20 25h-49V53Z" fill="#58788b"/>
+      <path d="M194 53l19 25h-14l-16-25h11Z" fill="#86a8b7"/>
+      <rect x="158" y="85" width="12" height="4" rx="2" fill="#c3bbb1"/>
+      <rect x="18" y="95" width="215" height="10" rx="4" fill="#24364a"/>
+      <rect x="218" y="83" width="9" height="11" rx="2" fill="#ffdb92"/>
+      <circle cx="56" cy="104" r="19" fill="#26354a"/><circle cx="56" cy="104" r="9" fill="#b7c3cc"/><circle cx="56" cy="104" r="4" fill="#657487"/>
+      <circle cx="193" cy="104" r="19" fill="#26354a"/><circle cx="193" cy="104" r="9" fill="#b7c3cc"/><circle cx="193" cy="104" r="4" fill="#657487"/>
+      <path d="M46 47h45m-49 9h42m-46 9h36" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".85"/>
+      <path d="M94 46h17l9 11v15H94V46Z" stroke="#fff" stroke-width="3"/><circle cx="99" cy="74" r="5" fill="#fff"/><circle cx="115" cy="74" r="5" fill="#fff"/>
+      <path d="M21 27h119" stroke="#f36965" stroke-width="3" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="van" viewBox="0 0 190 105">
+      <ellipse cx="93" cy="94" rx="85" ry="7" fill="#172332" opacity=".25"/>
+      <path d="M15 22h104l42 32 12 7v25H15V22Z" fill="#faf5e9"/>
+      <path d="M113 30h12l30 24h-42V30Z" fill="#57798c"/><rect x="91" y="30" width="16" height="24" rx="2" fill="#789eb2"/>
+      <path d="M15 71h151v14H15V71Z" fill="#d5373b"/><rect x="28" y="34" width="41" height="22" rx="3" fill="#b31822"/>
+      <path d="M36 45h25m-21 5h17" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+      <rect x="166" y="68" width="7" height="7" fill="#ffce77"/>
+      <circle cx="45" cy="86" r="14" fill="#28384d"/><circle cx="45" cy="86" r="6" fill="#b9c5ce"/>
+      <circle cx="139" cy="86" r="14" fill="#28384d"/><circle cx="139" cy="86" r="6" fill="#b9c5ce"/>
+    </symbol>
+    <symbol id="drone" viewBox="0 0 140 80">
+      <ellipse cx="28" cy="16" rx="26" ry="4" fill="#ab2936"/><ellipse cx="111" cy="16" rx="26" ry="4" fill="#ab2936"/>
+      <path d="m29 20 26 14h32l25-14M70 31v25" stroke="#8d2730" stroke-width="5" stroke-linecap="round"/>
+      <rect x="49" y="27" width="44" height="14" rx="7" fill="#c8353d"/><rect x="58" y="49" width="25" height="23" rx="3" fill="#d69557"/>
+      <path d="M69 49v23" stroke="#f4c78e" stroke-width="4"/>
+    </symbol>
+  </defs>
+  <path fill="url(#sky)" d="M0 0h1600v660H0z"/>
+  <circle cx="806" cy="318" r="160" fill="url(#sun)"/>
+  <g fill="#ffe7bc" opacity=".5">
+    <path d="M54 105c4-26 41-32 56-12 20-36 72-24 77 8 23-9 47 5 48 22H38c-4-9 4-16 16-18Z"/>
+    <path d="M1208 87c5-20 31-25 43-10 18-26 51-17 56 9 23-4 41 11 42 22h-154c-1-9 4-16 13-21Z"/>
+    <path d="M371 48c10-15 29-15 40 0 18-8 36 2 39 13h-91c0-5 5-10 12-13Z"/>
+    <path d="M1023 166c9-20 35-22 46-5 18-9 37 2 39 15h-100c0-5 6-9 15-10Z"/>
+  </g>
+  <path d="M0 426h98v-83h67v49h78v-109h56v86h84v-50h73v78h57v-40h67v77h126v-44h95v38h105v-69h69v31h58v-79h60v105h73v-136h70v91h62v-76h78v115h95v-97h79v98h100v91H0Z" fill="#c88e78" opacity=".45"/>
+  <g>
+    <path d="M0 247h63v272H0z" fill="#50788e"/><path d="M0 247h63v272H0z" fill="url(#windows)"/>
+    <path d="M51 153h95v368H51z" fill="#3e5d76"/><path d="M51 153h95v368H51z" fill="url(#windows)"/><path d="M146 177h28v344h-28z" fill="#2c475e"/>
+    <path d="M171 285h79v236h-79z" fill="#6e96a2"/><path d="M171 285h79v236h-79z" fill="url(#windows)"/>
+    <path d="M237 211h83v310h-83z" fill="#4f7085"/><path d="M237 211h83v310h-83z" fill="url(#windows)"/><path d="m237 211 42-40 41 40" fill="#3b5d72"/>
+    <path d="M312 328h82v193h-82z" fill="#8ea9ad"/><path d="M312 328h82v193h-82z" fill="url(#windows)"/>
+    <path d="M1259 305h98v216h-98z" fill="#7d9aa3"/><path d="M1259 305h98v216h-98z" fill="url(#windows)"/>
+    <path d="M1345 201h88v320h-88z" fill="#4b6c82"/><path d="M1345 201h88v320h-88z" fill="url(#windows)"/><path d="M1386 171h7v30h-7z" fill="#4b6c82"/>
+    <path d="M1427 271h74v250h-74z" fill="#7093a0"/><path d="M1427 271h74v250h-74z" fill="url(#windows)"/>
+    <path d="M1488 139h88v382h-88z" fill="#3e5e76"/><path d="M1488 139h88v382h-88z" fill="url(#windows)"/><path d="M1576 164h24v357h-24z" fill="#2d475c"/>
+  </g>
+  <g>
+    <path d="M395 457h814v78H395z" fill="#c77855"/><path d="m368 458 61-52h731l79 52H368Z" fill="#ad544c"/>
+    <path d="M459 470h137v65H459zM667 470h137v65H667zM880 470h137v65H880z" fill="#794b47"/>
+    <path d="M465 477h125v58H465zM673 477h125v58H673zM886 477h125v58H886z" fill="#d8b398"/>
+    <path d="M1081 476h73v59h-73z" fill="#fde0ae"/>
+    <path d="M433 485h23M641 485h23M851 485h23" stroke="#ffe9ad" stroke-width="4"/>
+    <rect x="0" y="518" width="1600" height="18" fill="#8595a0"/>
+  </g>
+  <g fill="#d87c54"><ellipse cx="27" cy="448" rx="18" ry="32"/><ellipse cx="372" cy="474" rx="16" ry="29"/><ellipse cx="1252" cy="466" rx="20" ry="34"/><ellipse cx="1455" cy="476" rx="17" ry="29"/></g>
+  <g stroke="#735b50" stroke-width="5"><path d="M27 449v70m345-44v44m880-52v52m203-42v42"/></g>
+  <path fill="url(#road)" d="M0 536h1600v124H0z"/>
+  <path d="M0 592h1600" stroke="#e9e2c8" stroke-width="4" stroke-dasharray="64 44" opacity=".7"/>
+  <path d="M0 650h1600" stroke="#8e9aa7" stroke-width="3" opacity=".45"/>
+  <use href="#truck-red" x="82" y="487" width="310" height="161"/>
+  <use href="#van" x="466" y="473" width="185" height="102"/>
+  <use href="#truck-red" x="923" y="472" width="185" height="96"/>
+  <use href="#van" x="1163" y="519" width="237" height="131"/>
+  <use href="#drone" x="260" y="100" width="135" height="77"/>
+  <use href="#drone" x="1125" y="86" width="151" height="86"/>
+</svg>
