@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle del curso</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
+            <a class="navbar-brand" href="/cursos">TechLab Web</a>
+            <div class="ms-auto">
+                <a class="nav-link d-inline-block me-3" href="/cursos">Cursos</a>
+                <a class="nav-link d-inline-block" href="/api/cursos">API JSON</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container py-5">
+        <section class="mx-auto detail-panel" th:object="${curso}">
+            <p class="text-primary fw-semibold">Detalle del curso</p>
+            <h1 class="display-6 fw-bold" th:text="*{titulo}">Título</h1>
+            <dl class="row mt-4">
+                <dt class="col-sm-4">Código</dt>
+                <dd class="col-sm-8" th:text="*{id}">1</dd>
+                <dt class="col-sm-4">Horas</dt>
+                <dd class="col-sm-8" th:text="*{horas} + ' horas'">16 horas</dd>
+            </dl>
+            <a class="btn btn-primary mt-3" th:href="@{/cursos}">Volver al catálogo</a>
+        </section>
+    </main>
+
+    <footer class="mt-auto text-center py-3 bg-light">
+        <p class="mb-0 text-muted">TechLab Web Marcos de Desarrollo Web 2026</p>
+    </footer>
+</body>
+
+</html>
