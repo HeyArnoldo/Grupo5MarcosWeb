@@ -34,6 +34,14 @@ java --version
 docker compose version
 ```
 
+Si la terminal aún no reconoce Java después de instalarlo, en este equipo se puede
+configurar solo la sesión actual (sin modificar variables globales):
+
+```powershell
+$env:JAVA_HOME = 'C:\Program Files\Java\jdk-25.0.4'
+$env:Path = "$env:JAVA_HOME\bin;$env:Path"
+```
+
 ## Configurar e iniciar MySQL
 
 ```powershell
@@ -176,18 +184,22 @@ no se vuelven a aplicar. Para detener MySQL sin borrar sus datos: `docker compos
 
 ## Matriz y estado real de verificación
 
-Durante la preparación del código, la terminal no encontró `java` y Maven informó
-que `JAVA_HOME` no estaba configurado correctamente. No se pudo validar la línea base,
-compilar, ejecutar pruebas ni generar el JAR. No se crearon credenciales ni se inició MySQL.
-No se afirma `BUILD SUCCESS` hasta ejecutar las comprobaciones siguientes.
+Durante la preparación inicial no se encontró Java. Después de instalar el JDK 25.0.4,
+se configuró su ruta en el proceso de Maven y el código compiló con Spring Boot 4.1.1.
+Se corrigió la codificación heredada de `messages.properties` en esta copia.
+Las 17 pruebas unitarias y web terminaron con `BUILD SUCCESS`, cero fallos y cero errores.
+La línea base del Laboratorio 7 no se ejecutó posteriormente ni se modificó.
+Docker Desktop no estaba iniciado y no existe `.env`, por lo que la integración con
+MySQL y el empaquetado siguen pendientes. No se crearon credenciales ni se inició MySQL.
 
 | Comprobación | Estado |
 | --- | --- |
 | Configuración sintáctica de Compose con valores de muestra | Aprobada |
-| Java 25 y Maven Wrapper | Pendiente: configurar JDK/JAVA_HOME |
-| Descarga de dependencias e imagen MySQL | Pendiente |
+| Java 25 y Maven Wrapper | Aprobada usando JAVA_HOME en el proceso |
+| Descarga de dependencias Maven | Aprobada |
+| Descarga de imagen MySQL | Pendiente |
 | MySQL healthy | Pendiente |
-| Pruebas unitarias y web | Pendiente |
+| Pruebas unitarias y web | Aprobadas: 17 pruebas, cero fallos y errores |
 | Pruebas de integración y empaquetado | Pendiente |
 | Tres filas, 48 horas y categorías | Pendiente |
 | Historial V1/V2/V3 con success=1 | Pendiente |
