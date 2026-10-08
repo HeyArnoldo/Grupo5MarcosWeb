@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Resumen de cursos')}">
+    <meta charset="UTF-8">
+    <title>Resumen de cursos</title>
+</head>
+<body class="d-flex flex-column min-vh-100">
+<a class="visually-hidden-focusable position-absolute p-2 bg-white"
+   href="#contenido">Saltar al contenido</a>
+<header th:replace="~{fragments/layout :: cabecera}"></header>
+<main id="contenido" class="container py-5">
+    <section class="mx-auto detail-panel">
+        <h1 class="display-6 fw-bold">Resumen de cursos</h1>
+        <dl class="row mt-4">
+            <dt class="col-sm-4">Cantidad de cursos</dt>
+            <dd class="col-sm-8" th:text="${cantidadCursos}">3</dd>
+            <dt class="col-sm-4">Total de horas</dt>
+            <dd class="col-sm-8" th:text="${totalHoras}">48</dd>
+        </dl>
+        <a class="btn btn-primary mt-3" th:href="@{/cursos}">Volver al catálogo</a>
+    </section>
+</main>
+<footer th:replace="~{fragments/layout :: pie}"></footer>
+</body>
+</html>
