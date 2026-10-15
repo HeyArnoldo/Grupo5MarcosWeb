@@ -81,8 +81,7 @@ public class CourseService {
         Course entity = repository.findById(id)
                 .orElseThrow(() -> new CourseNotFoundException(id));
         CourseData data = normalizar(input);
-        boolean repetido = repository
-                .existsByTituloIgnoreCaseAndIdNot(data.titulo(), id);
+        boolean repetido = repository.existsByTituloIgnoreCaseAndIdNot(data.titulo(), id);
         if (repetido) {
             throw new DuplicateCourseTitleException(data.titulo());
         }
