@@ -18,6 +18,11 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     List<Course> findByTituloContainingIgnoreCaseAndCategoriaIgnoreCaseOrderByIdAsc(
             String titulo, String categoria);
 
+
+    boolean existsByTituloIgnoreCase(String titulo);
+
+    boolean existsByTituloIgnoreCaseAndIdNot(String titulo, Long id);
+
     @Query("select sum(c.horas) from Course c")
     Long sumarHoras();
 }

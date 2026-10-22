@@ -1,3 +1,4 @@
+package pe.edu.utp.techlab_web.dto;
 public class CourseInputDto {
     
     private String titulo;
