@@ -1,0 +1,77 @@
+REPARTO Y ROLES
+
+* El Profesor (Hombre 1): El cerebro / Explica JPA y el plan.
+* Berlín (Hombre 2): El brazo ejecutor / Representa a Hibernate.
+* Río (Hombre 3): El hacker / Explica ORM y JPQL.
+* Denver (Hombre 4): El hombre de acción / Cuestiona la teoría con humor.
+* Tokio (Mujer 1): La rebelde / Representa a la Aplicación Java y los Objetos.
+* Nairobi (Mujer 2): La jefa de producción / Domina las Transacciones.
+
+🎬 INICIO DEL SKETCH
+
+(🎵 EFECTO DE SONIDO): Comienza a sonar de fondo "Bella Ciao" en una versión suave o de tensión. Mantener volumen bajo para que se escuchen las voces.
+(💻 DIAPOSITIVA 1): Título con estética de la serie: "El Plan de Persistencia: Asalto al Banco de Datos".
+* El Profesor: (Ajustándose los lentes frente a la pizarra o pantalla) Señores. Bienvenidos al atraco más grande de la historia. No vamos a robar dinero. Vamos a extraer... Datos.
+
+* Tokio: (Cruzada de brazos, impaciente) Profesor, déjese de rodeos. Mi mundo es el de los objetos en Java. Yo solo entiendo de clases, atributos y memoria RAM.
+
+* Río: El problema, Tokio, es que el banco guarda todo en una Base de Datos Relacional. Tablas rígidas, filas, columnas y llaves primarias. ¡No hablan tu mismo idioma!
+
+* Denver: (Dando un paso al frente, confundido) ¡A ver, a ver! ¿Me están diciendo que los objetos de Tokio y las tablas del banco se llevan como el agua y el aceite? ¡Nos van a atrapar!
+
+* Berlín: (Con una sonrisa cínica) Tranquilo, Denver, no nos pongamos ordinarios. Para eso el Profesor diseñó el plan ORM (Object-Relational Mapping). Río, activa el puente.
+
+💻 CAMBIO A DIAPOSITIVA 2: "1. ORM"
+
+(Imagen recomendada: Un puente que une un Objeto Java con una Tabla SQL)
+* Río: (Tecleando en una laptop ficticia) Listo. El ORM es nuestro mapa de infiltración. Convierte automáticamente las filas de la base de datos en elegantes Objetos de Java para Tokio, y viceversa.
+
+* Denver: (Riéndose con su risa icónica) ¡Aaaah! ¡Qué buena jugada! Es como un pasaporte falso para que los datos pasen la frontera sin levantar sospechas.
+
+* El Profesor: Exacto, Denver. Pero para que el plan funcione a nivel internacional, necesitamos un reglamento oficial. Las leyes de la corona: JPA.
+
+💻 CAMBIO A DIAPOSITIVA 3: "2. JPA"
+
+(Imagen recomendada: Un libro de reglas oficial de Java)
+* Nairobi: (Interviniendo con autoridad) A ver, Profesor, aclaremos esto. JPA (Java Persistence API) son solo las reglas escritas sobre el papel. Es la teoría de cómo se deben mapear los datos. ¡Pero un libro de leyes no dobla los barrotes de una celda!
+
+* Berlín: (Acomodándose el saco) Para doblar los barrotes y ensuciarse las manos estoy yo. Yo soy el Motor de ORM: Hibernate.
+
+💻 CAMBIO A DIAPOSITIVA 4: "3. Motor de ORM (Hibernate)"
+
+(Imagen recomendada: Un motor potente o herramientas de asalto)
+* Berlín: JPA da las órdenes, pero Hibernate ejecuta la acción real. Yo leo las especificaciones de JPA, tomo los objetos de Tokio y los meto a la fuerza en las tablas del banco. ¡Yo soy el músculo que hace el trabajo sucio!
+
+* Denver: (Emocionado, golpeando su puño contra su mano) ¡Eso es! ¡Menos charla y más acción, Berlín!
+
+* Río: Profesor, tenemos un problema en los canales de radio. No podemos usar SQL nativo dentro del banco, las patrullas policiales pueden interceptar las frecuencias.
+
+* El Profesor: Lo tengo fríamente calculado, Río. Usaremos un código encriptado: JPQL (Java Persistence Query Language).
+
+💻 CAMBIO A DIAPOSITIVA 5: "4. JPQL"
+
+(Ejemplo visual corto en pantalla: SELECT u FROM Usuario u WHERE u.nombre = 'Denver')
+* Tokio: ¿JPQL? ¿Y cómo nos comunicamos con eso?
+
+* Río: En vez de hacer consultas pensando en tablas y columnas del banco, hacemos consultas pensando en las clases de Tokio. No buscas la tabla física de la policía, buscas el objeto Policia.
+
+* Denver: ¡Espera, espera! ¿O sea que le pido cosas al banco usando nombres de Java y el motor Hibernate se encarga de traducirlo a escondidas? ¡Magistral!
+
+* Nairobi: (Golpeando la mesa) ¡Muy bonito el código, muchachos! Pero a mí lo que me importa es asegurar el botín en los camiones. Hablemos de las Transacciones. Si fallamos al final, el plan no vale nada.
+
+💻 CAMBIO A DIAPOSITIVA 6: "5. Transacciones"
+
+(Imagen recomendada: Una balanza o un interruptor de Todo o Nada)
+* El Profesor: Así es. Una Transacción es "Todo o Nada". O guardamos todos los datos con éxito (Commit), o regresamos al inicio como si nunca hubiéramos entrado (Rollback). Denver, vigila la primera opción: Gestionada por la Aplicación (BMT).
+
+* Denver: (Apuntando con un arma ficticia, simulando sudar) ¡La tengo! Aquí el programador tiene todo el estrés. Yo tengo que abrir la transacción manualmente, y si algo sale mal, ¡tengo que activar el botón de pánico de Rollback antes de que explote todo! ¡Mucha presión, Profesor!
+
+* Nairobi: (Dando un paso al frente y quitándole el arma a Denver con calma) ¡Por eso la jefa aquí prefiere la segunda opción! Gestionada por el Contenedor (CMT). ¡Aquí manda el matriarcado!
+
+* Berlín: Explícate, Nairobi.
+
+* Nairobi: Le dejamos la responsabilidad al Contenedor del servidor de aplicaciones. Nosotros solo entramos por los datos. Si una sola alarma suena, el Contenedor automatiza el Rollback y nos salva el pellejo de forma automática.
+
+* El Profesor: (Mirando directamente al público o al profesor) El plan está en marcha. ORM nos conecta, JPA nos norma, Hibernate ejecuta, JPQL nos comunica y las Transacciones aseguran el botín. ¿Están listos?
+
+🎬 FINAL
