@@ -1,8 +1,14 @@
 package pe.edu.utp.techlab_web.controller;
 
 import static org.hamcrest.Matchers.endsWith;
+import org.junit.jupiter.api.Test;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -10,12 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
-import org.springframework.test.web.servlet.MockMvc;
+
 import pe.edu.utp.techlab_web.dto.CourseDTO;
 import pe.edu.utp.techlab_web.dto.CourseInputDto;
 import pe.edu.utp.techlab_web.exception.InvalidCourseDataException;
@@ -23,6 +24,7 @@ import pe.edu.utp.techlab_web.service.CourseService;
 
 @WebMvcTest(CourseController.class)
 class CourseControllerTests {
+
     @Autowired
     private MockMvc mvc;
     @MockitoBean
@@ -31,11 +33,11 @@ class CourseControllerTests {
     @Test
     void postCreaRecursoYDevuelveLocation() throws Exception {
         given(service.crear(any(CourseInputDto.class)))
-                .willReturn(new CourseDTO(4L, "Java profesional", 24));
+                .willReturn(new CourseDTO(4L, "Java profesional", 24, "Backend"));
         mvc.perform(post("/api/v1/cursos")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(
-                        "{\"titulo\":\"Java profesional\",\"horas\":24}"))
+                        "{\"titulo\":\"Java profesional\",\"horas\":24,\"categoria\":\"Backend\"}"))
                 .andExpect(status().isCreated())
                 .andExpect(header().string(
                         "Location",
@@ -49,10 +51,10 @@ class CourseControllerTests {
         given(service.actualizar(
                 org.mockito.ArgumentMatchers.eq(4L),
                 any(CourseInputDto.class)))
-                .willReturn(new CourseDTO(4L, "Java web", 32));
+                .willReturn(new CourseDTO(4L, "Java web", 32, "Backend"));
         mvc.perform(put("/api/v1/cursos/4")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"titulo\":\"Java web\",\"horas\":32}"))
+                .content("{\"titulo\":\"Java web\",\"horas\":32,\"categoria\":\"Backend\"}"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.horas").value(32));
         mvc.perform(delete("/api/v1/cursos/4"))
@@ -66,7 +68,7 @@ class CourseControllerTests {
                         "El título es obligatorio"));
         mvc.perform(post("/api/v1/cursos")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"titulo\":\"\",\"horas\":24}"))
+                .content("{\"titulo\":\"\",\"horas\":24,\"categoria\":\"Backend\"}"))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentTypeCompatibleWith(
                         MediaType.APPLICATION_PROBLEM_JSON))

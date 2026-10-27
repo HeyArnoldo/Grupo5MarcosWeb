@@ -9,7 +9,11 @@ import pe.edu.utp.techlab_web.entity.Course;
 public class CourseMapper {
 
     public CourseDTO toDto(Course course) {
-        return new CourseDTO(course.getId(), course.getTitulo(),
-                course.getHoras(), course.getCategoria());
+        return new CourseDTO(
+                course.getId(),
+                course.getTitulo(),
+                course.getHoras(),
+                course.getCategoria()
+        );
     }
 }

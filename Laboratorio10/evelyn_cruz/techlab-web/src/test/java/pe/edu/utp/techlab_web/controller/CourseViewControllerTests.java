@@ -1,9 +1,17 @@
 package pe.edu.utp.techlab_web.controller;
 
+import java.util.Optional;
+
 import static org.hamcrest.Matchers.containsString;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -12,20 +20,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
-import java.util.Optional;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
-import org.springframework.test.web.servlet.MockMvc;
+
 import pe.edu.utp.techlab_web.dto.CourseDTO;
 import pe.edu.utp.techlab_web.dto.CourseInputDto;
 import pe.edu.utp.techlab_web.exception.DuplicateCourseTitleException;
 import pe.edu.utp.techlab_web.service.CourseService;
 
-@WebMvcTest({ CourseViewController.class, PortalController.class })
+@WebMvcTest({CourseViewController.class, PortalController.class})
 class CourseViewControllerTests {
+
     @Autowired
     private MockMvc mvc;
     @MockitoBean
@@ -34,7 +37,7 @@ class CourseViewControllerTests {
 
     @BeforeEach
     void prepararDatos() {
-        bootstrap = new CourseDTO(2L, "Bootstrap", 16);
+        bootstrap = new CourseDTO(2L, "Bootstrap", 16, "Frontend");
         given(service.buscarPorId(2L))
                 .willReturn(Optional.of(bootstrap));
     }
@@ -52,10 +55,11 @@ class CourseViewControllerTests {
     @Test
     void crearValidoAplicaPostRedirectGet() throws Exception {
         given(service.crear(any(CourseInputDto.class)))
-                .willReturn(new CourseDTO(4L, "Java profesional", 24));
+                .willReturn(new CourseDTO(4L, "Java profesional", 24, "Backend"));
         mvc.perform(post("/cursos")
                 .param("titulo", "Java profesional")
-                .param("horas", "24"))
+                .param("horas", "24")
+                .param("categoria", "Backend"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/cursos/4"))
                 .andExpect(flash().attribute(
@@ -69,7 +73,8 @@ class CourseViewControllerTests {
                 .willThrow(new DuplicateCourseTitleException("Bootstrap"));
         mvc.perform(post("/cursos")
                 .param("titulo", "Bootstrap")
-                .param("horas", "18"))
+                .param("horas", "18")
+                .param("categoria", "Frontend"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("cursos/formulario"))
                 .andExpect(model().attributeExists("form"))

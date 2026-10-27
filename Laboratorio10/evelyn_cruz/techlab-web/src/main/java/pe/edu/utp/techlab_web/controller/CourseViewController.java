@@ -92,7 +92,8 @@ public class CourseViewController {
                 .orElseThrow(() -> notFound(id));
         CourseInputDto form = new CourseInputDto(
                 curso.titulo(),
-                curso.horas());
+                curso.horas(),
+                curso.categoria());
         return mostrarFormulario(
                 form,
                 id,

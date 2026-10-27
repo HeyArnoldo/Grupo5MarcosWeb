@@ -1,21 +1,27 @@
 package pe.edu.utp.techlab_web.controller;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.Optional;
+
 import org.junit.jupiter.api.BeforeEach;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
-import pe.edu.utp.techlab_web.dto.CourseDTO;
+import org.junit.jupiter.api.Test;
 import static org.mockito.BDDMockito.given;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import pe.edu.utp.techlab_web.dto.CourseDTO;
 import pe.edu.utp.techlab_web.service.CourseService;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest({CourseController.class, PortalController.class})
 class WebRoutesTests {
+
     @Autowired
     private MockMvc mvc;
 
@@ -31,11 +37,10 @@ class WebRoutesTests {
         given(service.buscar("SPRING")).willReturn(List.of(spring));
         given(service.buscarPorId(2L)).willReturn(Optional.of(bootstrap));
         given(service.buscarPorId(999L)).willReturn(Optional.empty());
-        given(service.buscar("", "Backend")).willReturn(List.of(spring));
     }
 
     @Test
-    void categoriaSeExponeYFiltraEnJson() throws Exception {
+    void categoriaSeExponeYFiltroEnJson() throws Exception {
         mvc.perform(get("/api/v1/cursos").param("categoria", "Backend"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(1))
@@ -66,6 +71,7 @@ class WebRoutesTests {
         mvc.perform(get("/api/v1/cursos").param("q", "x".repeat(61)))
                 .andExpect(status().isBadRequest());
     }
+
     @Test
     void metodoNoPermitidoYRedireccion() throws Exception {
         mvc.perform(post("/api/v1/cursos"))

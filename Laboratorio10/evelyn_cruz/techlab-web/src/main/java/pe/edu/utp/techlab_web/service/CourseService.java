@@ -2,9 +2,11 @@ package pe.edu.utp.techlab_web.service;
 
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import pe.edu.utp.techlab_web.dto.CourseDTO;
 import pe.edu.utp.techlab_web.dto.CourseInputDto;
 import pe.edu.utp.techlab_web.entity.Course;
@@ -17,6 +19,7 @@ import pe.edu.utp.techlab_web.repository.CourseRepository;
 @Service
 @Transactional(readOnly = true)
 public class CourseService {
+
     private static final int MAX_QUERY_LENGTH = 60;
     private static final int MAX_TITLE_LENGTH = 120;
     private static final int MIN_HOURS = 1;
@@ -69,7 +72,7 @@ public class CourseService {
             throw new DuplicateCourseTitleException(data.titulo());
         }
         try {
-            Course entity = Course.crear(data.titulo(), data.horas());
+            Course entity = Course.crear(data.titulo(), data.horas(), data.categoria());
             return mapper.toDto(repository.saveAndFlush(entity));
         } catch (DataIntegrityViolationException exception) {
             throw new DuplicateCourseTitleException(data.titulo());
@@ -85,7 +88,7 @@ public class CourseService {
         if (repetido) {
             throw new DuplicateCourseTitleException(data.titulo());
         }
-        entity.actualizar(data.titulo(), data.horas());
+        entity.actualizar(data.titulo(), data.horas(), data.categoria());
         try {
             repository.flush();
             return mapper.toDto(entity);
@@ -128,9 +131,17 @@ public class CourseService {
             throw new InvalidCourseDataException(
                     "Las horas deben estar entre 1 y 500");
         }
-        return new CourseData(titulo, horas);
+        String categoria = Optional.ofNullable(input.getCategoria())
+                .orElse("")
+                .strip();
+        if (categoria.isBlank()) {
+            throw new InvalidCourseDataException(
+                    "La categoría es obligatoria");
+        }
+        return new CourseData(titulo, horas, categoria);
     }
 
-    private record CourseData(String titulo, int horas) {
+    private record CourseData(String titulo, int horas, String categoria) {
+
     }
 }

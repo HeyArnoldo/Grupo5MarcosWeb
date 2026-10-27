@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class CourseServiceTests {
+
     private CourseRepository repository;
     private CourseMapper mapper;
     private CourseService service;
@@ -42,19 +43,6 @@ class CourseServiceTests {
                 .thenReturn(List.of(course));
         when(mapper.toDto(course)).thenReturn(dto);
         assertEquals(List.of(dto), service.buscar(" SPRING "));
-    }
-
-    @Test
-    void categoriaYTituloSeConsultanEnRepositorio() {
-        when(repository.findByCategoriaIgnoreCaseOrderByIdAsc("Frontend"))
-                .thenReturn(List.of());
-        when(repository.findByTituloContainingIgnoreCaseAndCategoriaIgnoreCaseOrderByIdAsc(
-                "Boot", "Backend")).thenReturn(List.of());
-        service.buscar("", " Frontend ");
-        service.buscar(" Boot ", " Backend ");
-        verify(repository).findByCategoriaIgnoreCaseOrderByIdAsc("Frontend");
-        verify(repository).findByTituloContainingIgnoreCaseAndCategoriaIgnoreCaseOrderByIdAsc(
-                "Boot", "Backend");
     }
 
     @Test

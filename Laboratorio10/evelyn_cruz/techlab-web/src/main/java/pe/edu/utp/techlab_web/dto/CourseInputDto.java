@@ -1,15 +1,18 @@
 package pe.edu.utp.techlab_web.dto;
+
 public class CourseInputDto {
-    
+
     private String titulo;
     private Integer horas;
+    private String categoria;
 
     public CourseInputDto() {
     }
 
-    public CourseInputDto(String titulo, Integer horas) {
+    public CourseInputDto(String titulo, Integer horas, String categoria) {
         this.titulo = titulo;
         this.horas = horas;
+        this.categoria = categoria;
     }
 
     public String getTitulo() {
@@ -28,4 +31,11 @@ public class CourseInputDto {
         this.horas = horas;
     }
 
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
 }
