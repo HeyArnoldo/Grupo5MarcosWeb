@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Import;
 import pe.edu.utp.Paway.support.PostgresTestConfiguration;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.mock.web.MockHttpSession;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
@@ -28,6 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class PawayFlowTests {
     @Autowired private MockMvc mvc;
     @Autowired private ShipmentService shipments;
+    @Autowired private JdbcTemplate jdbc;
 
     private MockHttpSession profile(String profile) throws Exception {
         MockHttpSession session = new MockHttpSession();
@@ -42,6 +44,44 @@ class PawayFlowTests {
                 .param("origin", "Lima Centro").param("province", "lima")
                 .param("district", "Miraflores").param("category", "tecnologia")
                 .param("weight", "2.5").param("quantity", "3").param("observation", "Prueba del flujo integrado.");
+    }
+
+    @Test
+    void helpExplainsDurableDemoStorage() throws Exception {
+        mvc.perform(get("/ayuda")).andExpect(status().isOk())
+                .andExpect(content().string(containsString("PostgreSQL")))
+                .andExpect(content().string(containsString("se conservan al reiniciar")))
+                .andExpect(content().string(containsString("demostración")))
+                .andExpect(content().string(org.hamcrest.Matchers.not(containsString("se guardan en memoria"))));
+    }
+
+    @Test
+    void databaseConstraintFailureRendersConflictWithoutChangingStoredRows() throws Exception {
+        MockHttpSession admin = profile("admin");
+        String before = storedRows();
+        // A database-only constraint simulates a real integrity rejection after form validation.
+        jdbc.execute("alter table shipment add constraint ck_shipment_advice_probe "
+                + "check (recipient <> 'Conflict regression')");
+        try {
+            mvc.perform(shipmentPost("/admin/envios", admin, "Conflict regression"))
+                    .andExpect(status().isConflict())
+                    .andExpect(view().name("error/4xx"))
+                    .andExpect(model().attribute("status", 409))
+                    .andExpect(content().string(containsString("Código: 409")))
+                    .andExpect(content().string(org.hamcrest.Matchers.not(containsString("ck_shipment_advice_probe"))));
+            assertThat(storedRows()).isEqualTo(before);
+        } finally {
+            jdbc.execute("alter table shipment drop constraint ck_shipment_advice_probe");
+        }
+    }
+
+    private String storedRows() {
+        StringBuilder result = new StringBuilder();
+        for (String table : new String[]{"customer", "agency", "shipment", "shipment_event", "complaint"}) {
+            result.append(jdbc.queryForObject("select coalesce(jsonb_agg(to_jsonb(t) order by id)::text, '[]') "
+                    + "from " + table + " t", String.class));
+        }
+        return result.toString();
     }
 
     @Test

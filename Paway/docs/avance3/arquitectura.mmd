@@ -1,0 +1,44 @@
+---
+config:
+    theme: neutral
+    look: classic
+    htmlLabels: false
+---
+flowchart TB
+    browser["Navegador: público / cliente / administrador"]
+    subgraph app["Paway · aplicación Spring Boot"]
+        views["Thymeleaf + Bootstrap / CSS / JavaScript"]
+        mvc["Controladores MVC: Public / Panel / Legal"]
+        api["DestinationApiController: distritos JSON"]
+        session["DemoAccessConfig + sesión: selección de perfil"]
+        validation["DTO + Bean Validation"]
+        quote["QuoteService: tarifas y catálogos"]
+        shipment["ShipmentService: envíos e historial"]
+        complaint["ComplaintService: hojas y respuestas"]
+        location["TrackingLocationService: mapa referencial"]
+        repositories["Spring Data JPA: repositorios y filtros"]
+        orm["Hibernate: entidades y bloqueo optimista"]
+        flyway["Flyway: V1 esquema / V2 datos demo"]
+        errors["PersistenceErrorAdvice: conflictos HTTP 409"]
+    end
+    db[("PostgreSQL 16")]
+    external["CDN y mapas externos: jsDelivr / OpenStreetMap"]
+    browser --> views
+    browser --> mvc
+    browser --> api
+    browser --> external
+    session -. "limita paneles; no autentica" .-> mvc
+    mvc --> validation
+    mvc --> views
+    mvc --> quote
+    mvc --> shipment
+    mvc --> complaint
+    mvc --> location
+    api --> quote
+    shipment --> quote
+    shipment --> repositories
+    complaint --> repositories
+    repositories --> orm
+    orm --> db
+    flyway --> db
+    errors -. "resuelve excepciones MVC" .-> mvc

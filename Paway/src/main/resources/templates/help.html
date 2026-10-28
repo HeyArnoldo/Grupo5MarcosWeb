@@ -9,7 +9,7 @@
             <h2 class="h5">¿Cómo se calcula la cotización?</h2><p>El total se calcula con la tarifa base del destino, el peso por paquete, el recargo de la categoría y la cantidad. El cotizador muestra el importe antes de iniciar una solicitud.</p>
             <h2 class="h5">¿Cómo solicito un envío?</h2><p>Primero cotiza el paquete y elige «Solicitar envío». Luego selecciona un perfil de cliente de demostración y completa los datos requeridos.</p>
             <h2 class="h5">¿Cómo consulto el recorrido?</h2><p>Usa la guía en la sección <a th:href="@{/rastrear}">Rastrear</a>. El historial refleja los estados registrados en esta aplicación.</p>
-            <h2 class="h5">¿Esta página recibe paquetes reales?</h2><p class="mb-0">No. Es una aplicación de demostración: los perfiles y envíos son de prueba, los registros se guardan en memoria y se restablecen al reiniciar el sistema.</p>
+            <h2 class="h5">¿Esta página recibe paquetes reales?</h2><p class="mb-0">No. Es una aplicación de demostración: los perfiles y envíos son de prueba. Los registros se guardan en PostgreSQL y se conservan al reiniciar el sistema. No ingreses información real.</p>
         </section></div>
         <aside class="col-lg-4"><div class="card info-page-note"><span class="icon-tile"><i class="bi bi-info-circle" aria-hidden="true"></i></span><h2 class="h5 mt-3">¿Necesitas hacer una prueba?</h2><p>Explora las funciones sin ingresar información real.</p><a class="btn btn-paway" th:href="@{/cotizar}">Ir al cotizador <i class="bi bi-arrow-right ms-2" aria-hidden="true"></i></a></div></aside>
     </div>

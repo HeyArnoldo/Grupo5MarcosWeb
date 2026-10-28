@@ -1,6 +1,8 @@
-# Paway — Segundo avance
+# Paway — Tercer avance
 
 Aplicación de envíos que integra los cinco módulos del primer avance con **Spring Boot, Spring MVC, Thymeleaf y Bootstrap**. El cotizador, el panel administrativo, el historial del cliente, el rastreo y el libro de reclamaciones comparten los mismos datos, guardados en **PostgreSQL** con Spring Data JPA (Hibernate) y migraciones Flyway.
+
+El [Capítulo III del Avance 3](docs/avance3/README.md) presenta el diagrama relacional (3.4), el prototipo y su recorrido (3.5), y los componentes y la arquitectura (3.6), con diagramas renderizados y fuentes Mermaid editables.
 
 ## Ejecutar
 
@@ -22,7 +24,7 @@ Al arrancar, Flyway crea las tablas (`V1`) y carga los datos de demostración (`
 | `PAWAY_DB_PASSWORD` | `paway` | Contraseña (en producción, como secreto) |
 | `PORT` | `5000` | Puerto HTTP de la aplicación |
 
-Abre **http://localhost:5000** (o el puerto de `PORT`). En Linux/macOS usa `./mvnw spring-boot:run`.
+Abre **http://localhost:5000** (o el puerto de `PORT`). En Linux/macOS usa `sh ./mvnw spring-boot:run`.
 
 Si tu Java está instalado con NetBeans y no está en el PATH, puedes definirlo solo para esa terminal:
 
@@ -128,4 +130,8 @@ Los módulos originales se encuentran en `../Avance del Proyecto/Avance1`. Esta 
 .\mvnw.cmd test
 ```
 
+En Linux/macOS: `sh ./mvnw -B -ntp test`. Para verificar y generar el JAR ejecutable: `sh ./mvnw -B -ntp verify`.
+
 Las pruebas levantan su propio PostgreSQL con **Testcontainers**: solo necesitan Docker en ejecución, no la base de `compose.yaml`. Comprueban las migraciones sobre una base vacía, la unicidad de la guía, el orden del historial, las restricciones de validación y `CHECK`, el bloqueo optimista, el libro de reclamaciones, las tarifas, validaciones, vistas, API, acceso por perfil, traslado de cotización, asociación del cliente, registro, edición, rastreo, actualización de estados, anulación y paginación.
+
+También verifican que Ayuda describa la persistencia actual y que una restricción de PostgreSQL rechace un registro con HTTP 409, sin alterar las filas existentes ni exponer el nombre de la restricción en la página de error.

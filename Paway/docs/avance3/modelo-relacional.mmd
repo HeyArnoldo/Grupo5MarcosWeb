@@ -1,0 +1,76 @@
+---
+config:
+    theme: neutral
+    look: classic
+    htmlLabels: false
+    themeCSS: ".edgeLabel rect { fill: white !important; } .edgeLabel text { fill: black !important; }"
+---
+erDiagram
+    customer ||--o{ shipment : remite
+    agency ||--o{ shipment : origen
+    shipment ||--o{ shipment_event : registra
+    customer {
+        bigint id PK
+        varchar full_name
+        varchar document UK
+        varchar email UK
+        varchar phone
+        timestamptz created_at
+    }
+    agency {
+        bigint id PK
+        varchar name UK
+        varchar district
+    }
+    shipment {
+        bigint id PK
+        varchar guide UK
+        bigint customer_id FK
+        bigint origin_agency_id FK
+        varchar recipient
+        varchar recipient_document
+        varchar province
+        varchar district
+        varchar category
+        numeric weight_kg
+        integer quantity
+        numeric total
+        varchar status
+        varchar observation
+        timestamptz created_at
+        timestamptz updated_at
+        bigint version
+    }
+    shipment_event {
+        bigint id PK
+        bigint shipment_id FK
+        varchar status
+        timestamptz occurred_at
+        varchar observation
+    }
+    complaint {
+        bigint id PK
+        uuid token UK
+        varchar sheet_number UK
+        timestamptz created_at
+        varchar consumer_name
+        varchar consumer_document
+        varchar address
+        varchar email
+        varchar phone
+        boolean minor
+        varchar guardian_name
+        varchar guardian_document
+        varchar guardian_contact
+        varchar complaint_type
+        varchar item_type
+        numeric amount
+        varchar guide "Texto opcional, sin FK"
+        varchar description
+        varchar detail
+        varchar consumer_request
+        varchar response_channel
+        varchar response
+        varchar response_delivery
+        timestamptz responded_at
+    }
