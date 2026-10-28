@@ -4,6 +4,7 @@ import java.util.List;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +27,8 @@ import pe.edu.utp.Paway.service.ShipmentService;
 @Controller
 public class PanelController {
     private static final int PAGE_SIZE = 5;
+    private static final String STALE = "Otro usuario modificó este envío mientras lo editabas. "
+            + "Vuelve a abrirlo para ver los datos actuales.";
     private final ShipmentService shipments;
     private final QuoteService quotes;
 
@@ -132,6 +135,8 @@ public class PanelController {
                 return "redirect:" + (admin ? "/admin" : "/cliente");
             } catch (IllegalArgumentException ex) {
                 errors.reject("shipment.invalid", ex.getMessage());
+            } catch (OptimisticLockingFailureException ex) {
+                errors.reject("shipment.stale", STALE);
             }
         }
         return formView(form, admin, id, model);
@@ -164,6 +169,8 @@ public class PanelController {
             redirect.addFlashAttribute("message", "Estado actualizado. El cambio ya está disponible en rastreo.");
         } catch (IllegalArgumentException ex) {
             redirect.addFlashAttribute("error", ex.getMessage());
+        } catch (OptimisticLockingFailureException ex) {
+            redirect.addFlashAttribute("error", STALE);
         }
         return "redirect:/admin/envios/" + id;
     }
@@ -175,6 +182,8 @@ public class PanelController {
             redirect.addFlashAttribute("message", "Envío anulado. La guía y el historial se conservan.");
         } catch (IllegalArgumentException ex) {
             redirect.addFlashAttribute("error", ex.getMessage());
+        } catch (OptimisticLockingFailureException ex) {
+            redirect.addFlashAttribute("error", STALE);
         }
         return "redirect:/admin";
     }

@@ -98,6 +98,25 @@ class PawayFlowTests {
     }
 
     @Test
+    void rejectsAnEditFormOpenedBeforeAnotherChange() throws Exception {
+        MockHttpSession admin = profile("admin");
+        mvc.perform(shipmentPost("/admin/envios", admin, "Edición concurrente")).andExpect(redirectedUrl("/admin"));
+        Shipment shipment = shipments.search("Edición concurrente", null, "").getFirst();
+        mvc.perform(get("/admin/envios/" + shipment.id() + "/editar").session(admin))
+                .andExpect(content().string(containsString("name=\"version\" value=\"" + shipment.version() + "\"")));
+
+        mvc.perform(post("/admin/envios/" + shipment.id() + "/estado").session(admin)
+                .param("status", "WAREHOUSE").param("observation", "Otro operador."));
+        mvc.perform(shipmentPost("/admin/envios/" + shipment.id(), admin, "Datos viejos")
+                .param("version", String.valueOf(shipment.version())))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeHasErrors("shipmentForm"))
+                .andExpect(content().string(containsString("Otro usuario modificó este envío")));
+        assertThat(shipments.get(shipment.id()).recipient()).isEqualTo("Edición concurrente");
+        assertThat(shipments.get(shipment.id()).status()).isEqualTo(ShipmentStatus.WAREHOUSE);
+    }
+
+    @Test
     void retainsQuoteAcrossDemoLoginAndUsesTheSessionClient() throws Exception {
         MockHttpSession session = new MockHttpSession();
         mvc.perform(post("/cotizar").session(session).param("province", "canete").param("district", "Asia")
