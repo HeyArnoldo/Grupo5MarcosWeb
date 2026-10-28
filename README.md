@@ -49,3 +49,6 @@ Repositorio del Grupo 5 para los trabajos y laboratorios del curso de desarrollo
 | Evelyn Crisherat Cruz Quispe | smilyng7 |
 | Yeira Nikole Chambi Rios | MushuIsHere |
 | Brayan Jesus Lopez Sacha | MrHuntersini |
+
+
+https://canva.link/t4zavg8bjk3b86d 
