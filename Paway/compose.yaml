@@ -1,0 +1,24 @@
+# Local PostgreSQL for Paway. Start with `docker compose up -d` from the Paway folder.
+# The host port is 5440 (not 5432) to avoid clashing with other local databases.
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: paway-postgres
+    environment:
+      POSTGRES_DB: paway
+      POSTGRES_USER: paway
+      POSTGRES_PASSWORD: ${PAWAY_DB_PASSWORD:-paway}
+      TZ: America/Lima
+    ports:
+      - "${PAWAY_DB_HOST_PORT:-5440}:5432"
+    volumes:
+      - paway-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U paway -d paway"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+
+volumes:
+  paway-postgres-data:
