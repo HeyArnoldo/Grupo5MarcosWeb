@@ -1,0 +1,46 @@
+Miniteatro: “Al Fondo hay Hibernate”
+
+### 🎭 Reparto:
+
+* *Persona 1 (Nicolás de las Casas):* El programador fresa que sufre con las bases de datos relacionales.
+* *Persona 2 (Joel Gonzales):* El músico de barrio que ve todo como un chiste... hasta que entiende la metáfora.
+* *Persona 3 (Charo Flores):* La mamá protectora que traduce la tecnología a puro sentido común (y cocina).
+
+---
+
+### 🎬 Escena 1: El colapso en la oficina de los Maldini-Las Casas
+
+(Música de tensión de AFHS 🎶. Nicolás está frente a una laptop, jalándose los pelos y sudando frío).
+
+* *Nicolás:* (Gritando) ¡No puede ser! ¡Otra vez me botó error de sintaxis! ¿Por qué la base de datos es tan grosera conmigo? Yo solo quiero guardar un objeto Cliente y me obliga a escribir un chorizo de SQL: INSERT INTO clientes... ¡Si cambio una coma, se cae toda la web! ¡Odio este sistema!
+* *Joel:* (Entra bailando pasitos malcriados, con un estero portátil al hombro) ¡Uy, cuñado! ¿Qué pasó? ¿Te peleaste con tu ex o te hackearon el microondas? Estás más tenso que calzoncillo de choclito.
+* *Nicolás:* ¡Cállate, Joel! No entiendes nada. En mi código Java manejo objetos modernos y elegantes. Pero la base de datos es un sótano oscuro lleno de tablas, filas y columnas cuadradas. Traducir eso a mano es una tortura china.
+* *Joel:* Ah, ya toparon fondo. Eso pasa por no consultar con el Chiki-Chac de los datos, pes, hermanito.
+
+---
+
+### 🎬 Escena 2: La intervención de Charo
+
+(Música cómica de fondo 🎶. Charo entra a la habitación cargando una bandeja con limonada).
+
+* *Charo:* (Preocupada, persignándose) ¡Jesús, María y José! ¿Por qué tantos gritos? Parecen los vecinos de las Lomas peleando por el agua. Hijito, te va a dar un infarto a la memoria RAM.
+* *Nicolás:* Charo, es que el backend de mi aplicación web es un infierno. Mis objetos y la base de datos se odian. Hablan idiomas distintos.
+* *Charo:* (Deja la bandeja, pone las manos en la cintura y sonríe) Ay, Nicolás, qué complicado eres. ¿Acaso cuando tú quieres mandar una carta a tu abuelita te vas caminando hasta Europa a entregársela en la mano?
+* *Nicolás:* ... No, uso el correo o un mensajero.
+* *Charo:* ¡Claro, pues, hijito! Para eso contratas a un intermediario que hable los dos idiomas. En la cocina, cuando no me entiendo con el carnicero, llamo a Lucho para que traduzca. Lo que tú necesitas en tu sistema no es sufrir con SQL... ¡necesitas un buen mayordomo traductor! ¡Un *ORM*!
+
+---
+
+### 🎬 Escena 3: El secreto del ORM (Y la solución final)
+
+(Música alegre de AFHS 🎶. Joel chasquea los dedos iluminado).
+
+* *Joel:* ¡Esa es, mamá! ¡La criolla sabiosha! Un traductor en la sombra, ¡como los amigos de la mafia pero para la computadora!
+* *Nicolás:* (Parpadeando, confundido) ¿Un traductor? ¿Te refieres a un... *ORM? ¿Como **Hibernate*?
+* *Charo:* ¡Exacto, mi amor! Tú agarras tu clase en Java, le pones una etiquetita invisible de @Entity —como cuando le pongo etiqueta al táper de Joel para que no se lo roben— y listo. El sistema ya sabe con qué tabla de abajo se lleva bien.
+* *Joel:* ¡Claro! Y cuando quieras guardar a un cliente, no escribes ni una letra de SQL aburrido. Solo le dices al objeto: "Vete a pasear" (session.save()), y el Hibernate te lo traduce, lo clava en la base de datos de abasto, le trae su número de ID y te lo devuelve limpiecito a la mano.
+* *Nicolás:* (Abre los ojos emocionado, teclea rápido y mira la pantalla) ¡Es verdad! ¡El objeto se guardó solo, se creó la fila abajo y ni siquiera tuve que tocar el SQL! ¡Hibernate es un genio!
+* *Charo:* (Sonriendo, agarrando su bandeja) Viste, Nicolás. Con un buen *ORM*, hasta la tecnología más difícil se arregla con orden y cariño... Ahora, dejen la computadora, que ya está lista la sopa de fideos.
+* *Joel:* (Bailando hacia la salida) ¡Eso, mamá! ¡Datos guardados y barriga llena, corazón contento! ¡A comer anticuchos virtuales, cuñado!
+
+(Los tres hacen su pose final cómica mientras suena el acorde clásico de cierre de Al Fondo Hay Sitio. ¡Fin! 🎬)
