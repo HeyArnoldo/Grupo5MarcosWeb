@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout:: head('Detalle del curso')}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Detalle del curso</title>
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+    <a class="visually-hidden-focusable position-absolute p-2 bg-white" href="#contenido">Saltar al contenido</a>
+    <header th:replace="~{fragments/layout:: cabecera}">
+        <nav><a href="/cursos">TechLab Web</a></nav>
+    </header>
+    <main id="contenido" class="container py-5">
+        <section class="mx-auto detail-panel" th:object="${curso}">
+            <p class="text-primary fw-semibold">Detalle del curso</p>
+            <h1 class="display-6 fw-bold" th:text="*{titulo}">Bootstrap</h1>
+            <dl class="row mt-4">
+                <dt class="col-sm-4">Código</dt>
+                <dd class="col-sm-8" th:text="*{id}">2</dd>
+                <dt class="col-sm-4">Horas</dt>
+                <dd class="col-sm-8" th:text="|*{horas} horas|">16 horas</dd>
+                <dt class="col-sm-4">Categoría</dt>
+                <dd class="col-sm-8" th:text="*{categoriaNombre}">Front-end</dd>
+            </dl>
+            <div class="d-flex flex-wrap gap-2 mt-4">
+                <a class="btn btn-primary" th:href="@{/cursos/{id}/editar(id=${curso.id})}">Editar</a>
+                <a class="btn btn-outline-secondary" th:href="@{/cursos}">Volver al catálogo</a>
+                <form method="post" th:action="@{/cursos/{id}/eliminar(id=${curso.id})}">
+                    <button class="btn btn-outline-danger" type="submit">Eliminar</button>
+                </form>
+            </div>
+        </section>
+    </main>
+    <footer th:replace="~{fragments/layout:: pie}">
+        <p>TechLab Web 2026</p>
+    </footer>
+</body>
+
+</html>

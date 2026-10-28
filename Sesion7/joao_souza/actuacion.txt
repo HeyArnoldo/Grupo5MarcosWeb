@@ -1,0 +1,228 @@
+ACTO ÚNICO: El Laboratorio de Desarrollo
+
+Luz dramática de oficina. Música de violines trágicos de fondo.
+
+MARÍA DE LA LUZ está de rodillas ante su escritorio, llorando desconsoladamente mientras mira la pantalla.
+
+DON ALEJANDRO entra azotando la puerta, con su camisa de cuadros desabrochada en el cuello.
+
+---
+
+DON ALEJANDRO
+
+Voz grave y dramática.
+
+—¡Basta ya, María de la Luz! ¡No soporto ver tus ojos inundados de lágrimas sobre ese teclado mecánico!
+
+¡¿Qué es lo que atormenta tu alma de maquetadora?!
+
+MARÍA DE LA LUZ
+
+Mirándolo con despecho, limpiándose una lágrima.
+
+—¡No te acerques, Alejandro! ¡Eres un monstruo despiadado!
+
+He buscado por todo el repositorio... ¡y no hay APIs! ¡No hay un solo archivo JSON!
+
+¿Cómo pretendes que mi hermoso HTML se entere de los datos si me has privado de la bendición del "fetch()" y del Axios?
+
+¡Has dejado a mi interfaz vacía... vacía como mi corazón!
+
+DON ALEJANDRO
+
+Se lleva una mano al pecho, herido.
+
+—¡Te equivocas, mujer ingrata! ¡Yo jamás dejaría tu HTML vacío!
+
+Lo que pasa es que tu mente está cegada por las falsas promesas del renderizado en el cliente.
+
+Lo que ves ahí...
+
+¡es Thymeleaf!
+
+MARÍA DE LA LUZ
+
+Música de suspenso impactante.
+
+—¡¿Thyme... qué?!
+
+¡No te creo! ¡Eso es brujería del pasado! ¡Es código espagueti que pretende revivir a los muertos!
+
+DON ALEJANDRO
+
+La toma suavemente por los hombros.
+
+—¡Escúchame bien!
+
+En tu pasado con React, tú ibas como una mendiga con un plato vacío a pedirle datos a mis endpoints.
+
+Pero con Thymeleaf...
+
+¡yo soy tu proveedor absoluto!
+
+El servidor es nuestra hacienda.
+
+Yo cocino los datos en el backend, los fusiono con el HTML en nuestras propias tierras y, al navegador del usuario...
+
+¡le entrego el milagro de una página ya bendecida y lista para ser mostrada!
+
+---
+
+Entra MATEOESTEBAN aplaudiendo lentamente, con una sonrisa maquiavélica.
+
+MATEOESTEBAN
+
+Risa malvada.
+
+—¡Jajaja!
+
+Qué escena tan conmovedora...
+
+Pero los deadlines no entienden de amor, Don Alejandro.
+
+Si esa página no es dinámica para el viernes...
+
+¡vayan despidiéndose de sus puestos!
+
+¿Cómo pretendes meter la pureza de tus variables de Java dentro de ese HTML pagano sin usar JavaScript?
+
+¡Es imposible!
+
+DON ALEJANDRO
+
+Se interpone entre el villano y María de la Luz.
+
+—¡Te equivocas, MateoEsteban!
+
+¡Porque yo poseo el arma secreta de los justos!
+
+¡El objeto Model!
+
+MARÍA DE LA LUZ
+
+Juntando las manos, asombrada.
+
+—¿El... el Model?
+
+¡Háblame de él, Alejandro, te lo ruego!
+
+DON ALEJANDRO
+
+Apunta a la pantalla con pasión.
+
+—¡Mira el Controlador de Java, María de la Luz!
+
+En mi método, yo invoco al "Model", que es como un carruaje sagrado.
+
+Con un suspiro de mi código, hago esto:
+
+model.addAttribute("amorInfinito", "Alejandro y María");
+return "pagina-romantica"; // El nombre del HTML
+
+Usa el código con precaución.
+
+—¡Todo lo que guardo en ese cofre viaja oculto y seguro hacia tu plantilla!
+
+---
+
+SOR JUANA DEL CONTROLADOR
+
+Aparece de la nada detrás de una columna, con un crucifijo hecho de cables de red.
+
+—¡Detengan esa blasfemia!
+
+¡Si el HTML recibe esos datos directamente en el servidor, yo, como QA, desataré las plagas del Cross-Site Scripting para corromper tu templo!
+
+¡¿Cómo se defiende tu HTML de mis ataques si no tiene JavaScript para filtrar?!
+
+DON ALEJANDRO
+
+Con orgullo heroico.
+
+—¡Con los atributos "th:"!
+
+¡Contempla el milagro de la plantilla natural!
+
+En el HTML, María de la Luz solo tiene que escribir:
+
+<p th:text="${amorInfinito}">
+    Texto viejo que será destruido
+</p>
+
+Usa el código con precaución.
+
+—¡Cuando el servidor procesa la página, Thymeleaf purifica la etiqueta, borra el texto viejo, inyecta mi variable de forma segura contra tus ataques y destruye los atributos "th:" antes de enviarlo!
+
+¡Al navegador solo llega HTML puro, limpio y libre de pecado!
+
+MARÍA DE LA LUZ
+
+Se lleva las manos a la cabeza, conmovida.
+
+—¡Oh, Alejandro! ¡Es hermoso!
+
+O sea que, si abro mi archivo HTML directamente en mi computadora sin encender el servidor...
+
+¿se sigue viendo mi diseño original gracias al texto viejo?
+
+DON ALEJANDRO
+
+—¡Sí, mi amor!
+
+¡Es un motor de plantillas natural!
+
+Vive en el servidor, pero respeta tu arte en el diseño local.
+
+---
+
+MATEOESTEBAN
+
+Sufriendo, tocándose la cabeza.
+
+—¡Noooo!
+
+¡Mi métrica de velocidad de carga!
+
+¡Mis llamadas asíncronas innecesarias!
+
+¡Todo mi caos se ha derrumbado por culpa del Server-Side Rendering!
+
+Sale corriendo dramáticamente.
+
+SOR JUANA DEL CONTROLADOR
+
+Cae de rodillas.
+
+—El código compila...
+
+No hay errores en el log...
+
+¡Es un milagro del backend!
+
+Se retira rezando.
+
+---
+
+MARÍA DE LA LUZ
+
+Mirando a Don Alejandro con ojos enamorados.
+
+—Perdóname por dudar de ti, Alejandro.
+
+Estaba ciega por los componentes de React...
+
+¡pero ahora veo que tu Model y mis etiquetas "th:" nacieron para estar juntos por toda la eternidad!
+
+DON ALEJANDRO
+
+—¡Oh, María de la Luz!
+
+¡Que el servidor nunca se caiga y que nuestro Thymeleaf renderice nuestra felicidad por los siglos de los siglos!
+
+---
+
+Se abrazan apasionadamente mientras la pantalla se va a negro.
+
+Letras elegantes aparecen en pantalla:
+
+FIN DEL SPRINT

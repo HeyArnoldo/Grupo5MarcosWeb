@@ -1,0 +1,106 @@
+🎬 *GUION: EL GRAN DEBATE PRESIDENCIAL DEL SOFTWARE*
+
+*Escenografía:* Al centro, una mesa alta para Mascaly (campana y laptop de cartón). A los lados, 5 atriles para los candidatos con sus nombres.
+(Música de debate político. Mascaly mira fijo a la cámara con ironía).
+
+---
+
+### 🏁 INTRODUCCIÓN: EL FILTRO DE ENTRADA
+
+*MASCALY:*
+¡Bienvenidos a "Elecciones Spring Validator 2026"! Hoy no ampayamos peloteros, ¡ampayamos datos basura en la base de datos! Yo soy el Controller REST, la puerta de entrada. Si un candidato me trae un objeto defectuoso... (Toca la campana) ¡Código 400 Bad Request! Pasamos al Bloque 1: Anotaciones de Jakarta. ¡Tío Melcochita, adelante!
+
+*MELCOCHITA:*
+¡Hermanos! Para limpiar el Perú no necesitamos leyes raras, ¡necesitamos Anotaciones de Jakarta Bean Validation! Si el ciudadano no quiere espacios en blanco, ponle @NotBlank. ¿Texto requerido? @Size(min=10, max=200). ¿Sueldo mínimo? @Min(1025). ¡Es automático y sin código extra, carajo!
+
+*KEIKO:*
+(Sonríe falsamente con un táper naranja)
+Melcochita vive en la informalidad. Anotaciones como @NotNull o @Email sirven solo para cositas básicas. El Perú real necesita lógica profunda que cruce datos de bases de datos, no etiquetas simples que se quedan cortas.
+
+---
+
+### 🛠️ BLOQUE 2: PERSONALIZACIÓN DE VALIDACIONES
+
+*MASCALY:*
+(Tocando la campana)
+¡Paaaaara todo! Bloque de Personalización. ¿Cómo creamos nuestras propias reglas? Candidato Porky, dele.
+
+*PORKY:*
+(Se acomoda el saco, renegando)
+¡Los datos vienen corruptos de fábrica! Si el estándar no basta, creas tu anotación con dos pasos:
+
+1. Creas la interfaz con @Constraint(validatedBy = NoEsUnVagoValidator.class).
+2. Creas la clase validadora que implementa ConstraintValidator.
+¡Y listo para limpiar la municipalidad de pirañas informáticas!
+
+*MASCALY:*
+Muy bien. Candidata Keiko, ¿cómo lo hace Spring de forma programática?
+
+*KEIKO:*
+Nosotros preferimos procesos institucionales con la interfaz org.springframework.validation.Validator. Sin tocar el DTO, creamos un validador aparte. Implementamos supports() para verificar el objeto, y en validate() metemos lógica pura para cruzar servicios y detectar desbalances con errors.rejectValue().
+
+*MASCALY:*
+Tía Pochita se me marea. Candidato Acuña, explíquenos la diferencia clara.
+
+*CÉSAR ACUÑA:*
+(Pone cara seria)
+Una cosa es una cosa, y otra cosa es otra cosa. Jakarta valida el campo porque el campo es del objeto. Spring valida con interfaz porque la interfaz valida lo que no se valida. En conclusión: si se valida bien, ya no se valida mal. Gracias.
+
+*MELCOCHITA:*
+¡Imbécil! ¡No se entendió ni un carajo!
+
+---
+
+### 🚀 BLOQUE 3: ¿CÓMO SE APLICAN EN LA VIDA REAL?
+
+*MASCALY:*
+(Tocando la campana)
+¡Silencio! ¿Cómo se activa toda esta maquinaria en una petición HTTP? Candidato Alan.
+
+*ALAN:*
+(Voz teatral y engolada)
+Compatriotas, la teoría sin práctica es murmullo. En el altar del Controller, antes del parámetro @RequestBody, colocamos el mantra sagrado... ¡@Valid!
+
+*KEIKO:*
+O @Validated si usamos grupos de validación para separar creación de actualización.
+
+*ALAN:*
+(Ignorándola)
+Al ver @Valid, Spring Validator detiene el flujo. Si Melcochita falló un @NotBlank o Keiko detectó anomalías... ¡El sistema se rebela y frena la ejecución en el acto!
+
+*MASCALY:*
+¡Exacto! Y como soy un Controller responsable, atrapo la excepción MethodArgumentNotValidException con un @RestControllerAdvice global. Armo un JSON bonito y le digo al cliente en su cara: "¡Corrige tus campos antes de entrar a mi servidor!"
+
+---
+
+### 🏁 CONCLUSIÓN Y CIERRE
+
+*MASCALY:*
+¡Conclusiones en cinco segundos! ¡Tío Melcochita!
+
+*MELCOCHITA:*
+¡Usa anotaciones de Jakarta para validar rápido y sin robar código, carajo!
+
+*MASCALY:*
+¡Señora Keiko!
+
+*KEIKO:*
+Usa la interfaz Validator de Spring para auditorías y lógica de negocio compleja.
+
+*MASCALY:*
+¡Candidato Porky!
+
+*PORKY:*
+¡Crea tu propio ConstraintValidator para cazar vagos en todo el sistema!
+
+*MASCALY:*
+¡Candidato Acuña!
+
+*CÉSAR ACUÑA:*
+Un código bien validado es el que no falla porque se validó antes de que fallara.
+
+*MASCALY:*
+(A la cámara)
+¡Y recuerden, ingenieros! El @Valid en el Controller es el que activa la fiesta, o ¡los ampayamos la próxima semana! ¡Buenas noches!
+
+(Música de cierre mientras posan para la foto oficial).
