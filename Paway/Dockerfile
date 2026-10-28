@@ -8,7 +8,9 @@ COPY pom.xml ./pom.xml
 RUN --mount=type=cache,target=/root/.m2 ./mvnw -B -ntp dependency:go-offline
 
 COPY src/ ./src/
-RUN --mount=type=cache,target=/root/.m2 ./mvnw -B -ntp package
+# Tests need Docker (Testcontainers PostgreSQL), which is not available inside this build;
+# run them before deploying with `./mvnw test`.
+RUN --mount=type=cache,target=/root/.m2 ./mvnw -B -ntp package -DskipTests
 
 FROM eclipse-temurin:21-jre-jammy AS runtime
 WORKDIR /app
