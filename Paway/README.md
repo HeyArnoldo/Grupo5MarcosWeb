@@ -1,18 +1,28 @@
 # Paway — Segundo avance
 
-Aplicación de envíos que integra los cinco módulos del primer avance con **Spring Boot, Spring MVC, Thymeleaf y Bootstrap**. El cotizador, el panel administrativo, el historial del cliente y el rastreo utilizan servicios Java y los mismos datos en memoria.
+Aplicación de envíos que integra los cinco módulos del primer avance con **Spring Boot, Spring MVC, Thymeleaf y Bootstrap**. El cotizador, el panel administrativo, el historial del cliente, el rastreo y el libro de reclamaciones comparten los mismos datos, guardados en **PostgreSQL** con Spring Data JPA (Hibernate) y migraciones Flyway.
 
 ## Ejecutar
 
-Necesitas un JDK **21 o superior** y conexión a Internet para la primera descarga de Maven y dependencias. El proyecto conserva `java.version=21`: puede compilarse con JDK 26 sin cambiar la versión objetivo. Bootstrap e iconos se cargan desde CDN.
+Necesitas un JDK **21 o superior**, **Docker** (para PostgreSQL) y conexión a Internet para la primera descarga de Maven y dependencias. El proyecto conserva `java.version=21`: puede compilarse con JDK 26 sin cambiar la versión objetivo. Bootstrap e iconos se cargan desde CDN.
 
 Desde la carpeta `Paway`, en PowerShell:
 
 ```powershell
+docker compose up -d          # PostgreSQL 16 en localhost:5440 (base, usuario y clave: paway)
 .\mvnw.cmd spring-boot:run
 ```
 
-Abre **http://localhost:8080**. En Linux/macOS usa `./mvnw spring-boot:run`.
+Al arrancar, Flyway crea las tablas (`V1`) y carga los datos de demostración (`V2`); Hibernate solo **valida** el esquema (`ddl-auto=validate`). `docker compose down` detiene la base y conserva los datos en el volumen `paway-postgres-data`; `docker compose down -v` los borra.
+
+| Variable | Valor por defecto | Uso |
+|---|---|---|
+| `PAWAY_DB_URL` | `jdbc:postgresql://localhost:5440/paway` | URL JDBC de PostgreSQL |
+| `PAWAY_DB_USER` | `paway` | Usuario |
+| `PAWAY_DB_PASSWORD` | `paway` | Contraseña (en producción, como secreto) |
+| `PORT` | `5000` | Puerto HTTP de la aplicación |
+
+Abre **http://localhost:5000** (o el puerto de `PORT`). En Linux/macOS usa `./mvnw spring-boot:run`.
 
 Si tu Java está instalado con NetBeans y no está en el PATH, puedes definirlo solo para esa terminal:
 
@@ -31,7 +41,7 @@ $env:JAVA_HOME = 'C:\Program Files\Apache NetBeans\jdk'
 6. Cotiza un envío y pulsa **Solicitar envío**. Los datos de cotización pasan al formulario del cliente, incluso si primero debes seleccionar su perfil.
 7. Prueba editar, filtrar y anular desde administración. La anulación conserva la guía y el historial; no permite modificar después el envío.
 
-Hay cuatro envíos iniciales, con guías `PW-<año actual>-0001` a `0004`, y dos clientes de demostración. Los registros y cambios se restablecen al reiniciar la aplicación. **El acceso selecciona un perfil en sesión; no autentica con usuario y contraseña.**
+Hay cuatro envíos iniciales, con guías `PW-<año>-0001` a `0004`, y dos clientes de demostración. El año es el de la fecha en que se aplicó la migración `V2`. Los registros y cambios **se conservan al reiniciar** la aplicación. **El acceso selecciona un perfil en sesión; no autentica con usuario y contraseña.**
 
 ## Docker, Coolify y PostgreSQL
 
@@ -39,12 +49,12 @@ Desde `Paway`, con Docker Desktop iniciado:
 
 ```powershell
 docker build -t paway:local .
-docker run --rm --name paway -p 8080:8080 paway:local
+docker run --rm --name paway -p 8080:8080 --add-host=host.docker.internal:host-gateway -e PAWAY_DB_URL=jdbc:postgresql://host.docker.internal:5440/paway paway:local
 ```
 
 Para Coolify: Build Pack **Dockerfile**, Base Directory **`/Paway`**, Dockerfile Location **`/Dockerfile`** y puerto **`8080`**. La ruta de salud es **`/actuator/health`**.
 
-La [guía de despliegue](docs/deployment.md) detalla la configuración y los pasos para integrar PostgreSQL. **La conexión a BD aún no está implementada**: requiere entidades, repositorios y migraciones, además de las variables de conexión.
+La [guía de despliegue](docs/deployment.md) detalla la configuración y la conexión con un recurso PostgreSQL de Coolify.
 
 ## Identidad visual
 
@@ -61,8 +71,11 @@ La portada incluye un banner ilustrado de ciudad y vehículos, accesos rojos par
 | Thymeleaf | Tablas, condiciones, formularios enlazados y fragmentos compartidos |
 | Bootstrap 5.3.2 | Navegación adaptable, tarjetas, tablas, formularios, indicadores y reportes |
 | REST y JavaScript | API JSON de distritos consumida al cambiar la provincia |
-| Validación | Restricciones de formularios y comprobación de catálogos en el servidor |
-| Pruebas | Cálculo de tarifas y recorridos completos mediante MockMvc |
+| ORM / Hibernate y Spring Data JPA | Entidades `CustomerEntity`, `AgencyEntity`, `ShipmentEntity`, `ShipmentEventEntity` y `ComplaintEntity`; repositorios y consultas con `Specification` |
+| Relaciones entre tablas | Cliente 1—N envío, agencia 1—N envío, envío 1—N evento de rastreo, con claves foráneas |
+| Validación | Restricciones en formularios y entidades (Bean Validation), repetidas como `CHECK` en la base de datos |
+| Transacciones y concurrencia | Servicios `@Transactional` y bloqueo optimista con `@Version` en el envío |
+| Pruebas | Tarifas, repositorios, servicios y recorridos MockMvc contra PostgreSQL real (Testcontainers) |
 
 ## Rutas principales
 
@@ -97,9 +110,12 @@ src/main/java/pe/edu/utp/Paway/
 ├── config/       # Acceso por perfil de demostración
 ├── controller/   # Rutas MVC, datos comunes y API de distritos
 ├── dto/          # Formularios y restricciones de entrada
-├── model/        # Cliente, envío, estados y eventos
-└── service/      # Cotización y datos compartidos en memoria
+├── entity/       # Entidades JPA (tablas de PostgreSQL)
+├── model/        # Objetos de vista: cliente, envío, estados y eventos
+├── repository/   # Repositorios Spring Data JPA
+└── service/      # Casos de uso transaccionales y cotización
 src/main/resources/
+├── db/migration/ # Migraciones Flyway: V1 esquema, V2 datos de demostración
 ├── templates/    # Vistas y fragmentos Thymeleaf
 └── static/       # CSS y JavaScript
 ```
@@ -112,4 +128,4 @@ Los módulos originales se encuentran en `../Avance del Proyecto/Avance1`. Esta 
 .\mvnw.cmd test
 ```
 
-Las pruebas comprueban las tarifas, validaciones, vistas, API, acceso por perfil, traslado de cotización, asociación del cliente, registro, edición, rastreo, actualización de estados, anulación y paginación.
+Las pruebas levantan su propio PostgreSQL con **Testcontainers**: solo necesitan Docker en ejecución, no la base de `compose.yaml`. Comprueban las migraciones sobre una base vacía, la unicidad de la guía, el orden del historial, las restricciones de validación y `CHECK`, el bloqueo optimista, el libro de reclamaciones, las tarifas, validaciones, vistas, API, acceso por perfil, traslado de cotización, asociación del cliente, registro, edición, rastreo, actualización de estados, anulación y paginación.

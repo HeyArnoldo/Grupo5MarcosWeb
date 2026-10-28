@@ -1,6 +1,6 @@
 # Desplegar Paway en Coolify
 
-Paway incluye un Dockerfile de dos etapas: compila y prueba con JDK 21, y ejecuta el JAR con JRE 21. La imagen usa un usuario no root y verifica la salud en `/actuator/health`.
+Paway incluye un Dockerfile de dos etapas: compila con JDK 21 y ejecuta el JAR con JRE 21. Las pruebas usan Testcontainers (necesitan Docker), por eso no se ejecutan dentro de la imagen: corre `./mvnw test` antes de desplegar. La imagen usa un usuario no root y verifica la salud en `/actuator/health`.
 
 ## Configuración en Coolify
 
@@ -35,7 +35,8 @@ Con Docker Desktop iniciado, desde `Paway`:
 
 ```powershell
 docker build -t paway:local .
-docker run --rm --name paway -p 8080:8080 paway:local
+docker compose up -d
+docker run --rm --name paway -p 8080:8080 --add-host=host.docker.internal:host-gateway -e PAWAY_DB_URL=jdbc:postgresql://host.docker.internal:5440/paway paway:local
 ```
 
 En otra terminal:
@@ -46,52 +47,33 @@ curl.exe --fail http://localhost:8080/actuator/health
 
 Abre `http://localhost:8080` para revisar la interfaz. El Java instalado en tu equipo no afecta a esta imagen: el build y el runtime usan Java 21 dentro de Docker.
 
-## PostgreSQL en Coolify: siguiente etapa
+## PostgreSQL en Coolify
 
-**El Dockerfile despliega la aplicación actual. Todavía no guarda en PostgreSQL.** Configurar una URL de base de datos no basta: `ShipmentService` sigue utilizando una colección en memoria.
+La aplicación guarda clientes, agencias, envíos, eventos de rastreo y hojas de reclamación en PostgreSQL. Flyway aplica `src/main/resources/db/migration` al arrancar (`V1` esquema, `V2` datos de demostración) y Hibernate solo valida el esquema (`ddl-auto=validate`); nunca lo crea ni lo modifica.
 
-Recomendamos PostgreSQL administrado como recurso separado en Coolify. Así puedes actualizar la aplicación sin reemplazar el contenedor de datos y usar las opciones de volumen persistente y respaldo de la BD. Una base incluida en un Docker Compose también funciona, pero acopla más su configuración al despliegue de la aplicación.
+Recomendamos PostgreSQL administrado como recurso separado en Coolify. Así puedes actualizar la aplicación sin reemplazar el contenedor de datos y usar las opciones de volumen persistente y respaldo de la BD.
 
 ### 1. Preparar la base de datos
 
-En el mismo servidor de Coolify, crea un recurso **PostgreSQL**, por ejemplo con base y usuario `paway`. Guarda la contraseña como variable secreta y confirma el volumen persistente. Mantén aplicación y BD en la misma red Docker; estar en el mismo proyecto visual no garantiza por sí solo esa conectividad.
+En el mismo servidor de Coolify, crea un recurso **PostgreSQL 16**, con base y usuario `paway`. Guarda la contraseña como variable secreta y confirma el volumen persistente. Mantén aplicación y BD en la misma red Docker; estar en el mismo proyecto visual no garantiza por sí solo esa conectividad.
 
 Usa el host y puerto de la **Internal URL** que muestra Coolify. Dentro del contenedor de Paway, `localhost` apunta a Paway, no a PostgreSQL. No necesitas publicar el puerto 5432 para que dos recursos conectados a la misma red se comuniquen.
 
-### 2. Implementar persistencia en Spring Boot
-
-| Trabajo | Resultado |
-|---|---|
-| Añadir `spring-boot-starter-data-jpa` y el driver `org.postgresql:postgresql` | Conexión JDBC y repositorios JPA |
-| Añadir `spring-boot-starter-flyway` y `org.flywaydb:flyway-database-postgresql` | Migraciones versionadas para PostgreSQL |
-| Crear entidades para clientes, agencias, envíos y eventos | Relaciones persistentes y claves foráneas |
-| Reemplazar el mapa de `ShipmentService` por repositorios | Los envíos sobreviven al reinicio y al redeploy |
-| Guardar el envío y sus eventos en una transacción | Historial e información del envío consistentes |
-| Usar una secuencia de BD y una restricción única para las guías | Evitar duplicados bajo concurrencia o varias instancias |
-| Migraciones iniciales y datos de prueba separados | No reinsertar ejemplos en cada arranque |
-| Prueba de persistencia contra PostgreSQL | Registrar, reiniciar y comprobar que los datos siguen ahí |
-
-Los `record` actuales pueden seguir siendo objetos de vista; las entidades JPA se agregan por separado. Las reglas de tarifas de `QuoteService` se pueden conservar en Java inicialmente. No es necesario cambiar el frontend para implementar la persistencia.
-
-### 3. Configurar variables de ejecución
-
-Después de implementar las dependencias, entidades y repositorios, configura en Coolify:
+### 2. Configurar variables de ejecución
 
 ```text
-SPRING_DATASOURCE_URL=jdbc:postgresql://<host-interno>:5432/paway
-SPRING_DATASOURCE_USERNAME=paway
-SPRING_DATASOURCE_PASSWORD=<contraseña-secreta>
-SPRING_JPA_HIBERNATE_DDL_AUTO=validate
-SPRING_JPA_OPEN_IN_VIEW=false
+PAWAY_DB_URL=jdbc:postgresql://<host-interno>:5432/paway
+PAWAY_DB_USER=paway
+PAWAY_DB_PASSWORD=<contraseña-secreta>
 ```
 
-Reemplaza el host y puerto por los de tu recurso real. Spring Boot espera una URL **JDBC**, no la URL `postgres://...` copiada literalmente de Coolify. Las credenciales van en sus variables, sin añadirlas a Git ni al Dockerfile.
+Spring Boot espera una URL **JDBC**, no la URL `postgres://...` copiada literalmente de Coolify. Las credenciales van en sus variables, sin añadirlas a Git ni al Dockerfile. `ddl-auto=validate` y `open-in-view=false` ya están en `application.properties`.
 
-Flyway aplicará las migraciones desde `src/main/resources/db/migration`; Hibernate validará el esquema sin recrearlo. Una vez integrada la BD, el indicador de salud de Actuator también comprobará su conexión.
+Con la BD conectada, `/actuator/health` también comprueba la conexión: si PostgreSQL no responde, la salud deja de ser `UP` y Coolify lo verá en el health check.
 
 ## Alcance actual del despliegue
 
-Los perfiles siguen siendo de demostración y los datos todavía se restablecen al reiniciar. Antes de utilizar cuentas reales, implementaremos autenticación y autorización con Spring Security; PostgreSQL por sí solo no convierte el selector de perfiles en un login.
+Los datos sobreviven a reinicios y redeploys. Los perfiles siguen siendo de demostración: antes de utilizar cuentas reales, implementaremos autenticación y autorización con Spring Security; PostgreSQL por sí solo no convierte el selector de perfiles en un login.
 
 ## Referencias
 
