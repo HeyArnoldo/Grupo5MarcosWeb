@@ -1,0 +1,25 @@
+🎭 Guion Corto: "Misión Clic Seguro" (Estilo Backyardigans)
+
+
+🎬 Inicio de la Obra
+
+(Austin está frente a su computadora. Pablo vigila la entrada. Tyrone revisa papeles en su cocina. Tasha sostiene un lienzo y Uniqua ordena cajas).
+👤 AUSTIN (Hombre 1 - Usuario):
+¡Hola, amigos! Voy a registrarme. El navegador genera una petición HTTP POST y mi localStorage adjunta el Token Bearer en las cabeceras. ¡Clic! (Le lanza un pase dorado a Pablo).
+🔒 PABLO (Hombre 2 - API / JWT Security):
+¡Alto ahí! Soy el filtro OncePerRequestFilter. Como somos stateless, debo inspeccionar cada cabecera. Verifico el Header, el Payload y... ¡Firma del JWT válida! ¡Pasa, amigo! (Le pasa el token a Tyrone).
+💻 TYRONE (Hombre 3 - Backend / Spring Boot):
+¡Recibido en el controlador con @RequestMapping! Ejecuto la lógica en @Service... pero antes, ¡activo el Spring Validator! (Mira con una lupa) ¡Un momento! El nombre viola la regla @Size. Detengo el flujo en el BindingResult. ¡Tasha, soluciona esto! (Le da tarjeta roja a Tasha).
+🎨 TASHA (Mujer 1 - Frontend / Thymeleaf):
+¡Ay, por todos los cielos! Yo hago Server-Side Rendering con Bootstrap 5 para que se vea hermoso. Pero gracias a las etiquetas th:field y th:errors de Thymeleaf, capturo tu error e inyecto feedback visual rojo en su pantalla. ¡Corrígelo, Austin! (Apunta a Austin).
+👤 AUSTIN (Hombre 1 - Usuario):
+¡Ups! Olvidé mi nombre completo. Lo corrijo en el formulario y cumplo las reglas. ¡Envío de nuevo! (Pasa el mensaje rápido. Pablo lo valida en un segundo y se lo da a Tyrone, quien hace sonido de "¡Ding!").
+💻 TYRONE (Hombre 3 - Backend / Spring Boot):
+¡Perfecto, BindingResult limpio! Activo la capa @Repository para guardar los datos. ¡Uniqua, asegura la misión! (Le lanza una carpeta a Uniqua).
+🗄️ UNIQUA (Mujer 2 - Base de Datos / JPA):
+¡Entendido! Con Spring Data JPA y el ORM Hibernate, no escribo SQL a mano. Traduzco esta clase @Entity directamente en filas de mis tablas relacionales. ¡Persistencia completada y datos a salvo! (Hace un pase de baile).
+*(Todos se congelan en su posición del mapa mental y apuntan al público).
+TODOS AL UNÍSONO:
+¡Misión cumplida en nuestro patio trasero!
+
+🎬 FIN DE LA OBRA
