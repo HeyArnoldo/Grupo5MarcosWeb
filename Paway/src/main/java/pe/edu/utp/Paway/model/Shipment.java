@@ -7,7 +7,7 @@ import java.util.List;
 public record Shipment(long id, String guide, long clientId, String recipient, String document,
         String origin, String province, String district, String category, BigDecimal weight,
         int quantity, BigDecimal total, ShipmentStatus status, String observation,
-        LocalDateTime createdAt, List<Event> events) {
+        LocalDateTime createdAt, List<Event> events, long version) {
 
     public Shipment {
         events = List.copyOf(events);

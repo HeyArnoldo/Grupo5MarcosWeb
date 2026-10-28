@@ -1,153 +1,119 @@
 package pe.edu.utp.Paway.service;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.Year;
-import java.util.ArrayList;
-import java.util.Comparator;
+import java.time.ZoneId;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import pe.edu.utp.Paway.dto.ShipmentForm;
+import pe.edu.utp.Paway.entity.AgencyEntity;
+import pe.edu.utp.Paway.entity.CustomerEntity;
+import pe.edu.utp.Paway.entity.ShipmentEntity;
 import pe.edu.utp.Paway.model.Client;
 import pe.edu.utp.Paway.model.Shipment;
 import pe.edu.utp.Paway.model.ShipmentStatus;
+import pe.edu.utp.Paway.repository.AgencyRepository;
+import pe.edu.utp.Paway.repository.CustomerRepository;
+import pe.edu.utp.Paway.repository.ShipmentRepository;
+import pe.edu.utp.Paway.repository.ShipmentSpecifications;
 
+import static pe.edu.utp.Paway.repository.ShipmentSpecifications.origin;
+import static pe.edu.utp.Paway.repository.ShipmentSpecifications.status;
+import static pe.edu.utp.Paway.repository.ShipmentSpecifications.text;
+
+/**
+ * Shipment use cases on top of PostgreSQL. Controllers and templates keep receiving the
+ * immutable {@link Shipment}/{@link Client} view records; JPA entities never leave this
+ * service, so lazy associations are always read inside a transaction (open-in-view is off).
+ */
 @Service
+@Transactional(readOnly = true)
 public class ShipmentService {
+    private static final ZoneId LIMA = ZoneId.of("America/Lima");
+
     private final QuoteService quotes;
-    private final Map<Long, Shipment> shipments = new LinkedHashMap<>();
-    private long sequence;
-    private final List<Client> clients = List.of(
-            new Client(1, "Brayan Lopez", "12345678", "brayan@example.com", "931989909"),
-            new Client(2, "María Quispe", "70123456", "maria@example.com", "987654321"));
-    private final Map<String, String> agencyDistricts = new LinkedHashMap<>();
+    private final ShipmentRepository shipments;
+    private final CustomerRepository customers;
+    private final AgencyRepository agencies;
 
-    public ShipmentService(QuoteService quotes) {
+    public ShipmentService(QuoteService quotes, ShipmentRepository shipments, CustomerRepository customers,
+            AgencyRepository agencies) {
         this.quotes = quotes;
-        agencyDistricts.put("Lima Centro", "Lima Centro");
-        agencyDistricts.put("Huaral Centro", "Huaral");
-        agencyDistricts.put("Matucana", "Matucana");
-        agencyDistricts.put("San Vicente", "San Vicente");
-        seed("Carlos Mendoza", "45678912", "huaral", "Chancay", 1, ShipmentStatus.TRANSIT);
-        seed("Lucía Ramos", "71234567", "canete", "Asia", 1, ShipmentStatus.DELIVERED);
-        seed("Diego Salas", "40987654", "huarochiri", "Matucana", 2, ShipmentStatus.INCIDENT);
-        seed("Ana Flores", "72345678", "lima", "Surco", 1, ShipmentStatus.REGISTERED);
+        this.shipments = shipments;
+        this.customers = customers;
+        this.agencies = agencies;
     }
 
-    private void seed(String recipient, String document, String province, String district,
-            long clientId, ShipmentStatus status) {
-        ShipmentForm form = new ShipmentForm();
-        form.setRecipient(recipient);
-        form.setDocument(document);
-        form.setProvince(province);
-        form.setDistrict(district);
-        form.setClientId(clientId);
-        Shipment shipment = create(form);
-        if (status != ShipmentStatus.REGISTERED) {
-            changeStatus(shipment.id(), status, "Estado inicial de demostración.");
-        }
+    public List<Client> clients() {
+        return customers.findAllByOrderByIdAsc().stream().map(ShipmentService::toView).toList();
     }
 
-    public List<Client> clients() { return clients; }
-    public List<String> agencies() { return List.copyOf(agencyDistricts.keySet()); }
+    public List<String> agencies() {
+        return agencies.findAllByOrderByIdAsc().stream().map(AgencyEntity::getName).toList();
+    }
 
     public Client client(long id) {
-        return clients.stream().filter(c -> c.id() == id).findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("El cliente no existe."));
+        return toView(customer(id));
     }
 
-    public synchronized Shipment get(long id) {
-        Shipment shipment = shipments.get(id);
-        if (shipment == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "El envío no existe.");
-        return shipment;
+    public Shipment get(long id) {
+        return toView(entity(id));
     }
 
-    public synchronized Optional<Shipment> track(String guide) {
-        String normalized = guide.strip().toUpperCase(Locale.ROOT);
-        return shipments.values().stream().filter(s -> s.guide().equals(normalized)).findFirst();
+    public Optional<Shipment> track(String guide) {
+        return shipments.findByGuide(guide.strip().toUpperCase(Locale.ROOT)).map(this::toView);
     }
 
-    public synchronized List<Shipment> search(String query, ShipmentStatus status, String origin) {
-        String text = query.strip().toLowerCase(Locale.ROOT);
-        return shipments.values().stream()
-                .filter(s -> text.isEmpty() || s.guide().toLowerCase(Locale.ROOT).contains(text)
-                        || s.recipient().toLowerCase(Locale.ROOT).contains(text))
-                .filter(s -> status == null || s.status() == status)
-                .filter(s -> origin.isBlank() || s.origin().equals(origin))
-                .sorted(Comparator.comparingLong(Shipment::id).reversed()).toList();
+    public List<Shipment> search(String query, ShipmentStatus status, String origin) {
+        return shipments.findAll(text(query).and(status(status)).and(origin(origin)), Sort.by(Sort.Direction.DESC, "id"))
+                .stream().map(this::toView).toList();
     }
 
-    public synchronized List<Shipment> forClient(long id) {
-        return search("", null, "").stream().filter(s -> s.clientId() == id).toList();
+    public List<Shipment> forClient(long id) {
+        return shipments.findAll(ShipmentSpecifications.customer(id), Sort.by(Sort.Direction.DESC, "id")).stream().map(this::toView).toList();
     }
 
-    public synchronized Shipment create(ShipmentForm form) {
-        validate(form);
-        long id = ++sequence;
-        String guide = "PW-%d-%04d".formatted(Year.now().getValue(), id);
-        LocalDateTime now = LocalDateTime.now();
-        Shipment shipment = build(id, guide, form, ShipmentStatus.REGISTERED, now,
-                List.of(new Shipment.Event(ShipmentStatus.REGISTERED, now, form.getObservation().strip())));
-        shipments.put(id, shipment);
-        return shipment;
+    @Transactional
+    public Shipment create(ShipmentForm form) {
+        CustomerEntity customer = customer(form.getClientId());
+        AgencyEntity origin = validate(form);
+        long id = shipments.nextId();
+        String guide = "PW-%d-%04d".formatted(Year.now(LIMA).getValue(), id);
+        ShipmentEntity shipment = ShipmentEntity.register(id, guide, customer, origin, details(form),
+                quotes.calculate(form).total(), Instant.now());
+        return toView(shipments.saveAndFlush(shipment));
     }
 
-    public synchronized Shipment update(long id, ShipmentForm form) {
-        Shipment existing = get(id);
-        requireActive(existing);
-        validate(form);
-        Shipment updated = build(id, existing.guide(), form, existing.status(), existing.createdAt(), existing.events());
-        shipments.put(id, updated);
-        return updated;
-    }
-
-    public synchronized void changeStatus(long id, ShipmentStatus status, String observation) {
-        Shipment existing = get(id);
-        requireActive(existing);
-        if (status == null || observation == null || observation.length() > 500) {
-            throw new IllegalArgumentException("Revisa el estado y la observación (máximo 500 caracteres).");
+    @Transactional
+    public Shipment update(long id, ShipmentForm form) {
+        ShipmentEntity shipment = entity(id);
+        if (form.getVersion() != null && !form.getVersion().equals(shipment.getVersion())) {
+            throw new ObjectOptimisticLockingFailureException(ShipmentEntity.class, id);
         }
-        if (existing.status() == status) return;
-        List<Shipment.Event> events = new ArrayList<>(existing.events());
-        events.add(new Shipment.Event(status, LocalDateTime.now(), observation.strip()));
-        shipments.put(id, new Shipment(existing.id(), existing.guide(), existing.clientId(), existing.recipient(),
-                existing.document(), existing.origin(), existing.province(), existing.district(), existing.category(),
-                existing.weight(), existing.quantity(), existing.total(), status, observation.strip(),
-                existing.createdAt(), events));
-    }
-
-    private void requireActive(Shipment shipment) {
-        if (shipment.status() == ShipmentStatus.CANCELLED) {
+        if (shipment.isCancelled()) {
             throw new IllegalArgumentException("Un envío anulado conserva su historial y no se puede modificar.");
         }
+        CustomerEntity customer = customer(form.getClientId());
+        AgencyEntity origin = validate(form);
+        shipment.update(customer, origin, details(form), quotes.calculate(form).total(), Instant.now());
+        return toView(shipments.saveAndFlush(shipment));
     }
 
-    private void validate(ShipmentForm form) {
-        client(form.getClientId());
-        if (!agencyDistricts.containsKey(form.getOrigin())) throw new IllegalArgumentException("La agencia no existe.");
-        if (agencyDistricts.get(form.getOrigin()).equals(form.getDistrict())) {
-            throw new IllegalArgumentException("El destino debe ser distinto de la agencia de origen.");
-        }
-        if (form.getRecipient() == null || form.getRecipient().isBlank() || form.getRecipient().length() > 100
-                || form.getDocument() == null || !form.getDocument().matches("[0-9]{8}")
-                || form.getObservation() == null || form.getObservation().length() > 500) {
-            throw new IllegalArgumentException("Revisa los datos del destinatario.");
-        }
-        quotes.calculate(form);
-    }
-
-    private Shipment build(long id, String guide, ShipmentForm form, ShipmentStatus status,
-            LocalDateTime createdAt, List<Shipment.Event> events) {
-        return new Shipment(id, guide, form.getClientId(), form.getRecipient().strip(), form.getDocument(),
-                form.getOrigin(), form.getProvince(), form.getDistrict(), form.getCategory(), form.getWeight(),
-                form.getQuantity(), quotes.calculate(form).total(), status, form.getObservation().strip(), createdAt, events);
+    @Transactional
+    public void changeStatus(long id, ShipmentStatus status, String observation) {
+        entity(id).changeStatus(status, observation, Instant.now());
     }
 
     public Map<ShipmentStatus, Long> statistics(List<Shipment> list) {
@@ -156,5 +122,52 @@ public class ShipmentService {
             counts.put(status, list.stream().filter(s -> s.status() == status).count());
         }
         return counts;
+    }
+
+    private ShipmentEntity entity(long id) {
+        return shipments.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "El envío no existe."));
+    }
+
+    private CustomerEntity customer(long id) {
+        return customers.findById(id).orElseThrow(() -> new IllegalArgumentException("El cliente no existe."));
+    }
+
+    /** Catalog and business checks that Bean Validation on the form cannot express. */
+    private AgencyEntity validate(ShipmentForm form) {
+        AgencyEntity origin = agencies.findByName(form.getOrigin() == null ? "" : form.getOrigin())
+                .orElseThrow(() -> new IllegalArgumentException("La agencia no existe."));
+        if (origin.getDistrict().equals(form.getDistrict())) {
+            throw new IllegalArgumentException("El destino debe ser distinto de la agencia de origen.");
+        }
+        if (form.getRecipient() == null || form.getRecipient().isBlank() || form.getRecipient().length() > 100
+                || form.getDocument() == null || !form.getDocument().matches("[0-9]{8}")
+                || form.getObservation() == null || form.getObservation().length() > 500) {
+            throw new IllegalArgumentException("Revisa los datos del destinatario.");
+        }
+        quotes.calculate(form);
+        return origin;
+    }
+
+    private static ShipmentEntity.Details details(ShipmentForm form) {
+        return new ShipmentEntity.Details(form.getRecipient(), form.getDocument(), form.getProvince(),
+                form.getDistrict(), form.getCategory(), form.getWeight(), form.getQuantity(), form.getObservation());
+    }
+
+    private Shipment toView(ShipmentEntity s) {
+        List<Shipment.Event> events = s.getEvents().stream()
+                .map(e -> new Shipment.Event(e.getStatus(), local(e.getOccurredAt()), e.getObservation())).toList();
+        return new Shipment(s.getId(), s.getGuide(), s.getCustomer().getId(), s.getRecipient(),
+                s.getRecipientDocument(), s.getOriginAgency().getName(), s.getProvince(), s.getDistrict(),
+                s.getCategory(), s.getWeightKg(), s.getQuantity(), s.getTotal(), s.getStatus(), s.getObservation(),
+                local(s.getCreatedAt()), events, s.getVersion());
+    }
+
+    private static Client toView(CustomerEntity c) {
+        return new Client(c.getId(), c.getFullName(), c.getDocument(), c.getEmail(), c.getPhone());
+    }
+
+    private static LocalDateTime local(Instant instant) {
+        return LocalDateTime.ofInstant(instant, LIMA);
     }
 }

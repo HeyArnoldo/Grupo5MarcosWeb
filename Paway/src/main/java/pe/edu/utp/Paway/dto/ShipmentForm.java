@@ -25,6 +25,8 @@ public class ShipmentForm extends QuoteForm {
     @NotNull
     @Size(max = 500, message = "La observación admite hasta 500 caracteres.")
     private String observation = "";
+    /** Version of the shipment when the edit form was opened (optimistic locking); null for new shipments. */
+    private Long version;
 
     public static ShipmentForm from(Shipment shipment) {
         ShipmentForm form = new ShipmentForm();
@@ -38,6 +40,7 @@ public class ShipmentForm extends QuoteForm {
         form.setWeight(shipment.weight());
         form.setQuantity(shipment.quantity());
         form.setObservation(shipment.observation());
+        form.setVersion(shipment.version());
         return form;
     }
 }

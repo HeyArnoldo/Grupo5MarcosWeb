@@ -1,12 +1,11 @@
 package pe.edu.utp.Paway.controller;
 
-import java.io.IOException;
-import java.nio.file.NoSuchFileException;
 import java.util.UUID;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -52,7 +51,7 @@ public class LegalController {
         try {
             complaints.register(form, submissionToken);
             return "redirect:/libro-de-reclamaciones/constancia/" + submissionToken;
-        } catch (IOException ex) {
+        } catch (DataAccessException ex) {
             errors.reject("complaint.save", "No pudimos guardar la hoja. Tus datos siguen aquí; vuelve a intentar el envío.");
             response.setStatus(503);
             return "complaints";
@@ -60,15 +59,14 @@ public class LegalController {
     }
 
     @GetMapping("/libro-de-reclamaciones/constancia/{token}")
-    public String receipt(@PathVariable String token, Model model, HttpServletResponse response) throws IOException {
+    public String receipt(@PathVariable String token, Model model, HttpServletResponse response) {
         privatePage(response);
-        try { model.addAttribute("sheet", complaints.get(token)); }
-        catch (NoSuchFileException | IllegalArgumentException ex) { throw new ResponseStatusException(HttpStatus.NOT_FOUND); }
+        model.addAttribute("sheet", complaints.get(token));
         return "complaint-receipt";
     }
 
     @GetMapping("/admin/reclamaciones")
-    public String administration(Model model, HttpSession session, HttpServletResponse response) throws IOException {
+    public String administration(Model model, HttpSession session, HttpServletResponse response) {
         privatePage(response);
         if (session.getAttribute("complaintAdminToken") == null) session.setAttribute("complaintAdminToken", UUID.randomUUID().toString());
         model.addAttribute("adminToken", session.getAttribute("complaintAdminToken"));
@@ -78,13 +76,12 @@ public class LegalController {
 
     @PostMapping("/admin/reclamaciones/{token}/respuesta")
     public String respond(@PathVariable String token, @RequestParam String answer, @RequestParam String delivery,
-            @RequestParam String adminToken, HttpSession session, RedirectAttributes redirect) throws IOException {
+            @RequestParam String adminToken, HttpSession session, RedirectAttributes redirect) {
         if (!adminToken.equals(session.getAttribute("complaintAdminToken"))) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         if (answer.isBlank() || answer.length() > 4000 || delivery.isBlank() || delivery.length() > 500) {
             redirect.addFlashAttribute("error", "Completa la respuesta (hasta 4000 caracteres) y la referencia de entrega (hasta 500).");
         } else {
-            try { complaints.respond(token, answer, delivery); }
-            catch (NoSuchFileException | IllegalArgumentException ex) { throw new ResponseStatusException(HttpStatus.NOT_FOUND); }
+            complaints.respond(token, answer, delivery);
             redirect.addFlashAttribute("message", "Respuesta y referencia de entrega registradas.");
         }
         return "redirect:/admin/reclamaciones";

@@ -1,92 +1,128 @@
 package pe.edu.utp.Paway.service;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
+import java.math.BigDecimal;
+import java.time.Instant;
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
-import org.springframework.beans.BeanWrapperImpl;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
+
 import pe.edu.utp.Paway.dto.ComplaintForm;
+import pe.edu.utp.Paway.entity.ComplaintEntity;
+import pe.edu.utp.Paway.repository.ComplaintRepository;
 
+/**
+ * Libro de Reclamaciones stored in PostgreSQL (table {@code complaint}). The printable receipt
+ * is still the HTML view {@code complaint-receipt} ("Imprimir / guardar PDF" in the browser),
+ * so no files are written by the application anymore.
+ */
 @Service
+@Transactional(readOnly = true)
 public class ComplaintService {
-    private static final List<String> FIELDS = List.of("name", "document", "address", "email", "phone",
-            "minor", "guardian", "guardianDocument", "guardianContact", "type", "itemType", "amount",
-            "guide", "description", "detail", "request", "responseChannel");
-    private final Path directory;
+    private static final ZoneId LIMA = ZoneId.of("America/Lima");
+    private static final DateTimeFormatter DATE = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss ' (Perú)'");
 
-    public ComplaintService(@Value("${paway.complaints.directory:./data/complaints}") String directory) {
-        this.directory = Path.of(directory);
+    private final ComplaintRepository complaints;
+
+    public ComplaintService(ComplaintRepository complaints) {
+        this.complaints = complaints;
     }
 
+    /** View of a sheet; {@code details} keeps the form field names used by the templates. */
     public record Sheet(String token, String number, String date, Map<String, String> details,
             String response, String responseDate, String delivery) {}
 
-    public synchronized Sheet register(ComplaintForm form, String token) throws IOException {
-        Path file = path(token);
-        if (Files.exists(file)) return get(token);
-        Files.createDirectories(directory);
-        long next = all().stream().mapToLong(s -> Long.parseLong(s.number().substring(7))).max().orElse(0) + 1;
-        Properties values = new Properties();
-        values.setProperty("number", "PW-WEB-" + String.format("%06d", next));
-        values.setProperty("date", now());
-        BeanWrapperImpl bean = new BeanWrapperImpl(form);
-        for (String field : FIELDS) values.setProperty(field, String.valueOf(bean.getPropertyValue(field)).strip());
-        save(file, values);
-        return get(token);
-    }
-
-    public synchronized Sheet get(String token) throws IOException {
-        Properties values = load(path(token));
-        Map<String, String> details = FIELDS.stream().collect(Collectors.toUnmodifiableMap(f -> f, f -> values.getProperty(f, "")));
-        return new Sheet(token, values.getProperty("number"), values.getProperty("date"), details,
-                values.getProperty("response", ""), values.getProperty("responseDate", ""), values.getProperty("delivery", ""));
-    }
-
-    public synchronized List<Sheet> all() throws IOException {
-        if (!Files.exists(directory)) return List.of();
-        try (var files = Files.list(directory)) {
-            List<Path> paths = files.filter(p -> p.getFileName().toString().endsWith(".xml")).toList();
-            var sheets = new java.util.ArrayList<Sheet>();
-            for (Path file : paths) sheets.add(get(file.getFileName().toString().replace(".xml", "")));
-            return sheets.stream().sorted(Comparator.comparing(Sheet::number).reversed()).toList();
+    /**
+     * Registers the sheet once per submission token. A repeated submit (double click, refresh)
+     * returns the existing sheet; the unique constraint on {@code token} settles concurrent ones.
+     * Not transactional on purpose: each repository call runs in its own transaction, so a
+     * duplicate-token failure can be recovered by reading the sheet that won.
+     */
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
+    public Sheet register(ComplaintForm form, String token) {
+        UUID id = parse(token);
+        var existing = complaints.findByToken(id);
+        if (existing.isPresent()) return toView(existing.get());
+        ComplaintEntity sheet = new ComplaintEntity(id, "PW-WEB-%06d".formatted(complaints.nextSheetNumber()),
+                Instant.now());
+        sheet.fill(strip(form.getName()), strip(form.getDocument()), strip(form.getAddress()), strip(form.getEmail()),
+                strip(form.getPhone()), form.isMinor(), strip(form.getGuardian()), strip(form.getGuardianDocument()),
+                strip(form.getGuardianContact()));
+        String amount = strip(form.getAmount());
+        sheet.describe(strip(form.getType()), strip(form.getItemType()), amount.isEmpty() ? null : new BigDecimal(amount).setScale(2),
+                strip(form.getGuide()), strip(form.getDescription()), strip(form.getDetail()), strip(form.getRequest()),
+                strip(form.getResponseChannel()));
+        try {
+            return toView(complaints.saveAndFlush(sheet));
+        } catch (DataIntegrityViolationException duplicate) {
+            return complaints.findByToken(id).map(this::toView).orElseThrow(() -> duplicate);
         }
     }
 
-    public synchronized void respond(String token, String response, String delivery) throws IOException {
-        Path file = path(token);
-        Properties values = load(file);
-        values.setProperty("response", response.strip());
-        values.setProperty("delivery", delivery.strip());
-        values.setProperty("responseDate", now());
-        save(file, values);
+    public Sheet get(String token) {
+        return toView(entity(token));
     }
 
-    private Path path(String token) { return directory.resolve(UUID.fromString(token) + ".xml"); }
-    private String now() {
-        return ZonedDateTime.now(ZoneId.of("America/Lima")).format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss ' (Perú)'"));
+    public List<Sheet> all() {
+        return complaints.findAllByOrderBySheetNumberDesc().stream().map(this::toView).toList();
     }
-    private Properties load(Path file) throws IOException {
-        Properties values = new Properties();
-        try (var input = Files.newInputStream(file)) { values.loadFromXML(input); }
-        return values;
+
+    @Transactional
+    public void respond(String token, String response, String delivery) {
+        entity(token).respond(response.strip(), delivery.strip(), Instant.now());
     }
-    private void save(Path file, Properties values) throws IOException {
-        Path temporary = Files.createTempFile(directory, "sheet-", ".tmp");
+
+    private ComplaintEntity entity(String token) {
+        return complaints.findByToken(parse(token))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "La hoja no existe."));
+    }
+
+    private static UUID parse(String token) {
         try {
-            try (var output = Files.newOutputStream(temporary)) { values.storeToXML(output, "Paway - Hoja de reclamación", "UTF-8"); }
-            Files.move(temporary, file, StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING);
-        } finally { Files.deleteIfExists(temporary); }
+            return UUID.fromString(token);
+        } catch (IllegalArgumentException | NullPointerException ex) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "La hoja no existe.");
+        }
+    }
+
+    private Sheet toView(ComplaintEntity c) {
+        Map<String, String> details = new LinkedHashMap<>();
+        details.put("name", c.getConsumerName());
+        details.put("document", c.getConsumerDocument());
+        details.put("address", c.getAddress());
+        details.put("email", c.getEmail());
+        details.put("phone", c.getPhone());
+        details.put("minor", String.valueOf(c.isMinor()));
+        details.put("guardian", c.getGuardianName());
+        details.put("guardianDocument", c.getGuardianDocument());
+        details.put("guardianContact", c.getGuardianContact());
+        details.put("type", c.getComplaintType());
+        details.put("itemType", c.getItemType());
+        details.put("amount", c.getAmount() == null ? "" : c.getAmount().toPlainString());
+        details.put("guide", c.getGuide());
+        details.put("description", c.getDescription());
+        details.put("detail", c.getDetail());
+        details.put("request", c.getRequest());
+        details.put("responseChannel", c.getResponseChannel());
+        return new Sheet(c.getToken().toString(), c.getSheetNumber(), format(c.getCreatedAt()), Map.copyOf(details),
+                c.getResponse() == null ? "" : c.getResponse(), format(c.getRespondedAt()),
+                c.getResponseDelivery() == null ? "" : c.getResponseDelivery());
+    }
+
+    private static String format(Instant instant) {
+        return instant == null ? "" : instant.atZone(LIMA).format(DATE);
+    }
+
+    private static String strip(String value) {
+        return value == null ? "" : value.strip();
     }
 }

@@ -1,7 +1,5 @@
 package pe.edu.utp.Paway.controller;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,8 +7,7 @@ import org.springframework.context.annotation.Import;
 import pe.edu.utp.Paway.support.PostgresTestConfiguration;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.mock.web.MockHttpSession;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import pe.edu.utp.Paway.service.ComplaintService;
@@ -23,17 +20,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Import(PostgresTestConfiguration.class)
 @AutoConfigureMockMvc
 class LegalFlowTests {
-    private static final Path STORAGE;
-    static {
-        try { STORAGE = Files.createTempDirectory("paway-complaints-test-"); }
-        catch (java.io.IOException ex) { throw new ExceptionInInitializerError(ex); }
-    }
-    @DynamicPropertySource
-    static void properties(DynamicPropertyRegistry registry) {
-        registry.add("paway.complaints.directory", () -> STORAGE.toString());
-    }
     @Autowired MockMvc mvc;
     @Autowired ComplaintService complaints;
+    @Autowired JdbcTemplate jdbc;
+
+    private String storedColumn(String column, String token) {
+        return jdbc.queryForObject("select " + column + " from complaint where token = ?::uuid", String.class, token);
+    }
 
     private MockHttpServletRequestBuilder submission(MockHttpSession session) {
         return post("/libro-de-reclamaciones").session(session)
@@ -57,8 +50,7 @@ class LegalFlowTests {
         mvc.perform(submission(session)).andExpect(redirectedUrl(receipt));
         mvc.perform(submission(session)).andExpect(redirectedUrl(receipt));
         assertThat(complaints.all()).hasSize(count + 1);
-        ComplaintService reopened = new ComplaintService(STORAGE.toString());
-        assertThat(reopened.get(token).details().get("detail")).isEqualTo("El paquete llegó con daños.");
+        assertThat(storedColumn("detail", token)).isEqualTo("El paquete llegó con daños.");
         mvc.perform(get(receipt)).andExpect(status().isOk())
                 .andExpect(header().string("Cache-Control", "no-store"))
                 .andExpect(content().string(containsString("Imprimir / guardar PDF")))
@@ -72,7 +64,7 @@ class LegalFlowTests {
                 .param("answer", "Se realizará la devolución.").param("delivery", "Correo enviado, referencia 123"))
                 .andExpect(redirectedUrl("/admin/reclamaciones"));
         mvc.perform(get(receipt)).andExpect(content().string(containsString("Se realizará la devolución.")));
-        assertThat(reopened.get(token).delivery()).contains("referencia 123");
+        assertThat(storedColumn("response_delivery", token)).contains("referencia 123");
     }
 
     @Test
