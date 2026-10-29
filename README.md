@@ -50,5 +50,5 @@ Repositorio del Grupo 5 para los trabajos y laboratorios del curso de desarrollo
 | Yeira Nikole Chambi Rios | MushuIsHere |
 | Brayan Jesus Lopez Sacha | MrHuntersini |
 
+https://canva.link/t5hanyyqxkhnq44V 
 
-https://canva.link/t4zavg8bjk3b86d 
