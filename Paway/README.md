@@ -6,7 +6,7 @@ El [Capítulo III del Avance 3](docs/avance3/README.md) presenta el diagrama rel
 
 ## Ejecutar
 
-Necesitas un JDK **21 o superior**, **Docker** (para PostgreSQL) y conexión a Internet para la primera descarga de Maven y dependencias. El proyecto conserva `java.version=21`: puede compilarse con JDK 26 sin cambiar la versión objetivo. Bootstrap e iconos se cargan desde CDN.
+Necesitas un JDK **21 o superior** y conexión a Internet para la primera descarga de Maven y dependencias. Para el modo PostgreSQL necesitas Docker; el modo local usa H2 en memoria y no requiere Docker. El proyecto conserva `java.version=21`: puede compilarse con JDK 26 sin cambiar la versión objetivo. Bootstrap e iconos se cargan desde CDN.
 
 Desde la carpeta `Paway`, en PowerShell:
 
@@ -64,6 +64,16 @@ Hay cuatro envíos iniciales, con guías `PW-<año>-0001` a `0004`, y dos client
 - `/admin/**` exige la cuenta `ADMIN` y `/cliente/**` una cuenta `CLIENT`. Un cliente solo crea envíos a su nombre: el remitente sale de la sesión, no del formulario.
 - La cookie de sesión es `HttpOnly` y `SameSite=Lax` (la protección CSRF de la aplicación, que no usa tokens CSRF).
 - Pendiente: no hay límite de intentos de inicio de sesión, recuperación de contraseña ni verificación del correo.
+
+## Ejecutar sin Docker
+
+Para iniciar rápidamente la aplicación sin instalar PostgreSQL, usa el perfil local:
+
+```powershell
+.\mvnw.cmd -Dspring-boot.run.profiles=local spring-boot:run
+```
+
+Este perfil usa H2 en memoria, crea el esquema desde las entidades y carga los datos de demostración. Los cambios se restablecen al cerrar la aplicación. PostgreSQL sigue siendo el modo persistente recomendado para despliegues.
 
 ## Docker, Coolify y PostgreSQL
 
