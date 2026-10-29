@@ -3,6 +3,8 @@ package pe.edu.utp.Paway.repository;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.Year;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ import org.testcontainers.postgresql.PostgreSQLContainer;
 import pe.edu.utp.Paway.support.PostgresTestConfiguration;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /** Runs the real migrations on a brand-new, empty PostgreSQL (no Spring involved). */
 @Testcontainers
@@ -33,7 +36,7 @@ class FlywayMigrationTests {
 
         MigrateResult result = flyway.migrate();
         assertThat(result.success).isTrue();
-        assertThat(result.migrations).extracting(m -> m.version).containsExactly("1", "2");
+        assertThat(result.migrations).extracting(m -> m.version).containsExactly("1", "2", "3");
         assertThat(flyway.validateWithResult().validationSuccessful).isTrue();
         assertThat(flyway.migrate().migrationsExecuted).isZero();
 
@@ -45,6 +48,22 @@ class FlywayMigrationTests {
             String year = String.valueOf(Year.now(ZoneId.of("America/Lima")).getValue());
             assertThat(guides).containsExactly("PW-" + year + "-0001", "PW-" + year + "-0002",
                     "PW-" + year + "-0003", "PW-" + year + "-0004");
+        }
+
+        try (Connection connection = DriverManager.getConnection(EMPTY.getJdbcUrl(), EMPTY.getUsername(),
+                EMPTY.getPassword()); Statement sql = connection.createStatement()) {
+            // V2 demo customers have no account; the role/customer pairing and lower(email) are enforced.
+            try (ResultSet rows = sql.executeQuery("select count(*) from account")) {
+                rows.next();
+                assertThat(rows.getInt(1)).isZero();
+            }
+            assertThatThrownBy(() -> sql.execute("insert into account (customer_id, email, password_hash, role) "
+                    + "values (null, 'c@x.pe', 'h', 'CLIENT')")).isInstanceOf(SQLException.class);
+            assertThatThrownBy(() -> sql.execute("insert into account (customer_id, email, password_hash, role) "
+                    + "values (1, 'a@x.pe', 'h', 'ADMIN')")).isInstanceOf(SQLException.class);
+            sql.execute("insert into account (customer_id, email, password_hash, role) values (1, 'u@x.pe', 'h', 'CLIENT')");
+            assertThatThrownBy(() -> sql.execute("insert into account (customer_id, email, password_hash, role) "
+                    + "values (null, 'U@X.pe', 'h', 'ADMIN')")).isInstanceOf(SQLException.class);
         }
     }
 }

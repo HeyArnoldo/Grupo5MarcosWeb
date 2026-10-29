@@ -2,6 +2,7 @@ package pe.edu.utp.Paway.controller;
 
 import java.util.List;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.dao.OptimisticLockingFailureException;
@@ -17,10 +18,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import pe.edu.utp.Paway.config.AccountSession;
 import pe.edu.utp.Paway.dto.QuoteForm;
 import pe.edu.utp.Paway.dto.ShipmentForm;
 import pe.edu.utp.Paway.model.Shipment;
 import pe.edu.utp.Paway.model.ShipmentStatus;
+import pe.edu.utp.Paway.service.AccountService;
 import pe.edu.utp.Paway.service.QuoteService;
 import pe.edu.utp.Paway.service.ShipmentService;
 
@@ -31,10 +34,12 @@ public class PanelController {
             + "Vuelve a abrirlo para ver los datos actuales.";
     private final ShipmentService shipments;
     private final QuoteService quotes;
+    private final AccountService accounts;
 
-    public PanelController(ShipmentService shipments, QuoteService quotes) {
+    public PanelController(ShipmentService shipments, QuoteService quotes, AccountService accounts) {
         this.shipments = shipments;
         this.quotes = quotes;
+        this.accounts = accounts;
     }
 
     @GetMapping("/admin")
@@ -62,8 +67,8 @@ public class PanelController {
     }
 
     @GetMapping("/cliente")
-    public String client(HttpSession session, Model model) {
-        long clientId = clientId(session);
+    public String client(HttpServletRequest request, Model model) {
+        long clientId = clientId(request);
         List<Shipment> list = shipments.forClient(clientId);
         model.addAttribute("client", shipments.client(clientId));
         model.addAttribute("shipments", list);
@@ -78,9 +83,9 @@ public class PanelController {
     }
 
     @GetMapping("/cliente/envios/nuevo")
-    public String newClient(HttpSession session, Model model) {
+    public String newClient(HttpServletRequest request, HttpSession session, Model model) {
         ShipmentForm form = new ShipmentForm();
-        form.setClientId(clientId(session));
+        form.setClientId(clientId(request));
         if (session.getAttribute("pendingQuote") instanceof QuoteForm quote) {
             form.setProvince(quote.getProvince());
             form.setDistrict(quote.getDistrict());
@@ -100,8 +105,9 @@ public class PanelController {
 
     @PostMapping("/cliente/envios")
     public String createClient(@Valid @ModelAttribute("shipmentForm") ShipmentForm form, BindingResult errors,
-            HttpSession session, Model model, RedirectAttributes redirect) {
-        form.setClientId(clientId(session));
+            HttpServletRequest request, HttpSession session, Model model, RedirectAttributes redirect) {
+        // The sender is always the signed-in customer; a clientId sent in the form is ignored.
+        form.setClientId(clientId(request));
         String result = save(form, errors, false, null, model, redirect);
         if (result.startsWith("redirect:")) session.removeAttribute("pendingQuote");
         return result;
@@ -146,7 +152,8 @@ public class PanelController {
         model.addAttribute("adminForm", admin);
         model.addAttribute("editing", id != null);
         model.addAttribute("formAction", admin ? (id == null ? "/admin/envios" : "/admin/envios/" + id) : "/cliente/envios");
-        model.addAttribute("clients", shipments.clients());
+        // Only the admin chooses the sender; clients never receive the customer list.
+        if (admin) model.addAttribute("clients", shipments.clients());
         model.addAttribute("districts", quotes.destinations().stream()
                 .filter(d -> d.code().equals(form.getProvince())).findFirst()
                 .map(QuoteService.Destination::districts).orElse(List.of()));
@@ -188,8 +195,10 @@ public class PanelController {
         return "redirect:/admin";
     }
 
-    private long clientId(HttpSession session) {
-        return "client2".equals(session.getAttribute("profile")) ? 2L : 1L;
+    /** The customer of the signed-in CLIENT account (the access interceptor guarantees one). */
+    private long clientId(HttpServletRequest request) {
+        return AccountSession.current(request, accounts).map(AccountService.SignedIn::customerId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN));
     }
 
     public record AgencyCount(String name, long count) { }

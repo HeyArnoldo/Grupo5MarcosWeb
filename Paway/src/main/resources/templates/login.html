@@ -1,38 +1,35 @@
 <!doctype html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: page('Bienvenido', 'login', ~{::main})}">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: page('Iniciar sesión', 'login', ~{::main})}">
 <body>
 <main id="contenido" class="container py-5">
     <div class="login-shell row g-0 mx-auto">
         <div class="col-lg-5 login-welcome">
-            <img class="login-logo" th:src="@{/images/logo-paway.jpg}" alt="Logo de Paway" width="107" height="120">
+            <img class="login-logo" th:src="@{/images/logo-paway.svg}" alt="Paway" width="220" height="73">
             <p class="section-eyebrow mt-4">Qué bueno tenerte aquí</p>
             <h1 class="h2 fw-bold">Tu próximo envío<br>empieza contigo.</h1>
             <p class="text-body-secondary mt-3">Cotiza, consulta tus paquetes y encuentra todos tus envíos en un solo lugar.</p>
-            <div class="login-benefit"><i class="bi bi-check-circle" aria-hidden="true"></i>Un perfil, todos tus envíos</div>
+            <div class="login-benefit"><i class="bi bi-check-circle" aria-hidden="true"></i>Una cuenta, todos tus envíos</div>
             <div class="login-benefit"><i class="bi bi-check-circle" aria-hidden="true"></i>Historial y estados a la mano</div>
         </div>
         <div class="col-lg-7 p-4 p-md-5">
-            <h2 class="h4 fw-bold">Elige tu espacio</h2>
-            <p class="text-body-secondary">¿Con qué perfil quieres continuar?</p>
-            <p th:if="${session.pendingQuote != null}" class="alert alert-info">Tu cotización está lista. Selecciona un cliente para completar el envío.</p>
-            <form method="post" th:action="@{/login}">
-                <fieldset><legend class="visually-hidden">Perfil de demostración</legend>
-                    <label class="profile-option" th:each="client : ${clients}">
-                        <input type="radio" name="profile" th:value="'client' + ${client.id}" required>
-                        <span class="profile-avatar"><i class="bi bi-person" aria-hidden="true"></i></span>
-                        <span class="profile-copy"><strong th:text="${client.name}"></strong><small>Cliente · Consulta y solicita envíos</small></span>
-                        <i class="bi bi-check-circle profile-check" aria-hidden="true"></i>
-                    </label>
-                    <label class="profile-option">
-                        <input type="radio" name="profile" value="admin" required>
-                        <span class="profile-avatar"><i class="bi bi-grid" aria-hidden="true"></i></span>
-                        <span class="profile-copy"><strong>Administrador</strong><small>Gestiona envíos y sus estados</small></span>
-                        <i class="bi bi-check-circle profile-check" aria-hidden="true"></i>
-                    </label>
-                </fieldset>
-                <button class="btn btn-paway w-100 mt-3" type="submit">Continuar <i class="bi bi-arrow-right ms-2" aria-hidden="true"></i></button>
+            <h2 class="h4 fw-bold">Inicia sesión</h2>
+            <p class="text-body-secondary">Ingresa con el correo y la contraseña de tu cuenta.</p>
+            <p th:if="${session.pendingQuote != null}" class="alert alert-info">Tu cotización está lista. Inicia sesión o crea una cuenta para completar el envío.</p>
+            <div aria-live="assertive">
+                <p th:if="${loginError}" class="alert alert-danger" role="alert" th:text="${loginError}">Correo o contraseña incorrectos.</p>
+            </div>
+            <form method="post" th:action="@{/login}" class="auth-form">
+                <div class="mb-3">
+                    <label class="form-label" for="email">Correo electrónico</label>
+                    <input class="form-control" id="email" name="email" type="email" th:value="${loginEmail}" autocomplete="email" maxlength="150" required autofocus>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="password">Contraseña</label>
+                    <input class="form-control" id="password" name="password" type="password" autocomplete="current-password" maxlength="72" required>
+                </div>
+                <button class="btn btn-paway w-100 mt-2" type="submit">Entrar <i class="bi bi-arrow-right ms-2" aria-hidden="true"></i></button>
             </form>
-            <p class="demo-access-note mt-3 mb-0"><i class="bi bi-info-circle me-1" aria-hidden="true"></i>Acceso de demostración: selecciona un perfil sin usuario ni contraseña.</p>
+            <p class="auth-switch mt-4 mb-0">¿Aún no tienes cuenta? <a th:href="@{/registro}">Crear cuenta</a></p>
         </div>
     </div>
 </main>

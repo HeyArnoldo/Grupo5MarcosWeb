@@ -6,7 +6,9 @@ La portada sigue la referencia visual del proyecto: ciudad al atardecer, vehícu
 
 | Archivo en `static/images` | Procedencia y uso |
 |---|---|
-| `logo-paway.jpg` | Logo original de `Avance del Proyecto/Avance1/assets` |
+| `isotipo.svg` | Llama sola en rojo; se usa de lejos, en celular y como favicon |
+| `logo-paway.svg` | Llama y nombre en rojo (texto convertido a trazos); se usa de cerca |
+| `logo-paway.png`, `icon-32.png`, `apple-touch-icon.png` | Versiones raster para metadatos, pestaña e ícono de iOS |
 | `paway-city-banner.svg` | Ilustración vectorial creada para el banner de Paway |
 | `paway-courier.svg` | Ilustración vectorial creada para el cotizador |
 | `warehouse-stock.jpg` | Fotografía de stock de Unsplash: almacén y paquetes |

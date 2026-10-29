@@ -2,10 +2,13 @@ package pe.edu.utp.Paway.controller;
 
 import java.util.List;
 
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import pe.edu.utp.Paway.config.AccountSession;
+import pe.edu.utp.Paway.entity.AccountEntity.Role;
 import pe.edu.utp.Paway.model.ShipmentStatus;
+import pe.edu.utp.Paway.service.AccountService;
 import pe.edu.utp.Paway.service.QuoteService;
 import pe.edu.utp.Paway.service.ShipmentService;
 
@@ -13,10 +16,12 @@ import pe.edu.utp.Paway.service.ShipmentService;
 public class ViewData {
     private final QuoteService quotes;
     private final ShipmentService shipments;
+    private final AccountService accounts;
 
-    public ViewData(QuoteService quotes, ShipmentService shipments) {
+    public ViewData(QuoteService quotes, ShipmentService shipments, AccountService accounts) {
         this.quotes = quotes;
         this.shipments = shipments;
+        this.accounts = accounts;
     }
 
     @ModelAttribute("destinations")
@@ -27,18 +32,14 @@ public class ViewData {
     public List<String> agencies() { return shipments.agencies(); }
     @ModelAttribute("statuses")
     public ShipmentStatus[] statuses() { return ShipmentStatus.values(); }
+    /** "" when anonymous, "admin" for the ADMIN account and "client" for a CLIENT account. */
     @ModelAttribute("profile")
-    public String profile(HttpSession session) {
-        Object profile = session.getAttribute("profile");
-        return profile == null ? "" : profile.toString();
+    public String profile(HttpServletRequest request) {
+        return AccountSession.current(request, accounts)
+                .map(account -> account.role() == Role.ADMIN ? "admin" : "client").orElse("");
     }
     @ModelAttribute("profileName")
-    public String profileName(HttpSession session) {
-        Object profile = session.getAttribute("profile");
-        if (profile == null) return "";
-        if ("admin".equals(profile)) return "Administrador";
-        if ("client1".equals(profile)) return shipments.client(1L).name();
-        if ("client2".equals(profile)) return shipments.client(2L).name();
-        return "";
+    public String profileName(HttpServletRequest request) {
+        return AccountSession.current(request, accounts).map(AccountService.SignedIn::displayName).orElse("");
     }
 }

@@ -35,7 +35,7 @@
               "@id": "https://paway.groowtech.com/#organization",
               "name": "Paway",
               "url": "https://paway.groowtech.com/",
-              "logo": "https://paway.groowtech.com/images/logo-paway.jpg"
+              "logo": "https://paway.groowtech.com/images/logo-paway.png"
             },
             {
               "@type": "WebSite",
@@ -49,7 +49,9 @@
         }
         </script>
     </th:block>
-    <link rel="icon" type="image/jpeg" th:href="@{/images/logo-paway.jpg}">
+    <link rel="icon" type="image/svg+xml" th:href="@{/images/isotipo.svg}">
+    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/images/icon-32.png}">
+    <link rel="apple-touch-icon" th:href="@{/images/apple-touch-icon.png}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
@@ -68,8 +70,8 @@
     <nav class="navbar navbar-expand-lg paway-navbar" aria-label="Navegación principal">
         <div class="container">
             <a class="navbar-brand paway-brand" th:href="@{/}" aria-label="Paway, ir al inicio">
-                <img class="brand-logo" th:src="@{/images/logo-paway.jpg}" alt="Logo de Paway" width="107" height="120">
-                <span class="brand-wordmark"><strong>Paway<span class="brand-dot">.</span></strong><small>Envíos que conectan</small></span>
+                <img class="brand-isotype d-md-none" th:src="@{/images/isotipo.svg}" alt="Paway" width="36" height="60">
+                <img class="brand-logo d-none d-md-block" th:src="@{/images/logo-paway.svg}" alt="Paway" width="150" height="48">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
                     aria-controls="mainNav" aria-expanded="false" aria-label="Abrir menú">
@@ -103,8 +105,8 @@
     <div class="container py-5">
         <div class="row g-4 footer-main">
             <div class="col-md-6 col-lg-3 footer-column">
-                <a class="footer-brand" th:href="@{/}"><img th:src="@{/images/logo-paway.jpg}" alt="Paway" width="54" height="60"><span>Paway<span class="brand-dot">.</span></span></a>
-                <p class="footer-description">Cada envío tiene una historia. En esta demostración puedes cotizar, registrar envíos y consultar sus estados.</p>
+                <a class="footer-brand" th:href="@{/}"><img th:src="@{/images/isotipo.svg}" alt="Paway" width="32" height="54"><span>Paway<span class="brand-dot">.</span></span></a>
+                <p class="footer-description">Cada envío tiene una historia. Crea tu cuenta para cotizar, registrar envíos y consultar sus estados. Sitio académico: no se recogen ni entregan paquetes reales.</p>
             </div>
             <div class="col-md-6 col-lg-3 footer-column">
                 <p class="footer-heading">Tu envío, a un clic</p>

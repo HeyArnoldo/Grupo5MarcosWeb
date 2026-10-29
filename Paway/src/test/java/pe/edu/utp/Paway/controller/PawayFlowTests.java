@@ -13,9 +13,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
+import pe.edu.utp.Paway.dto.RegisterForm;
 import pe.edu.utp.Paway.model.Shipment;
 import pe.edu.utp.Paway.model.ShipmentStatus;
 import pe.edu.utp.Paway.service.ShipmentService;
+import pe.edu.utp.Paway.support.TestAccounts;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
@@ -31,15 +33,36 @@ class PawayFlowTests {
     @Autowired private ShipmentService shipments;
     @Autowired private JdbcTemplate jdbc;
 
-    private MockHttpSession profile(String profile) throws Exception {
+    /** Signs in as the admin configured in src/test/resources/config/application.properties. */
+    private MockHttpSession admin() throws Exception {
         MockHttpSession session = new MockHttpSession();
-        mvc.perform(post("/login").session(session).param("profile", profile))
-                .andExpect(status().is3xxRedirection());
+        mvc.perform(post("/login").session(session).param("email", "admin@paway.test")
+                .param("password", "admin-test-password")).andExpect(redirectedUrl("/admin"));
         return session;
     }
 
+    /** Registers a brand-new customer account through /registro and returns its signed-in session. */
+    private MockHttpSession client(RegisterForm form) throws Exception {
+        MockHttpSession session = new MockHttpSession();
+        mvc.perform(AccountFlowTests.registration(session, form)).andExpect(redirectedUrl("/cliente"));
+        return session;
+    }
+
+    private MockHttpSession client() throws Exception {
+        return client(TestAccounts.form());
+    }
+
+    private long customerId(RegisterForm form) {
+        return jdbc.queryForObject("select customer_id from account where email = ?", Long.class, form.getEmail());
+    }
+
     private MockHttpServletRequestBuilder shipmentPost(String path, MockHttpSession session, String recipient) {
-        return post(path).session(session).param("clientId", "1")
+        return shipmentPost(path, session, recipient, "1");
+    }
+
+    static MockHttpServletRequestBuilder shipmentPost(String path, MockHttpSession session, String recipient,
+            String clientId) {
+        return post(path).session(session).param("clientId", clientId)
                 .param("recipient", recipient).param("document", "12345678")
                 .param("origin", "Lima Centro").param("province", "lima")
                 .param("district", "Miraflores").param("category", "tecnologia")
@@ -57,7 +80,7 @@ class PawayFlowTests {
 
     @Test
     void databaseConstraintFailureRendersConflictWithoutChangingStoredRows() throws Exception {
-        MockHttpSession admin = profile("admin");
+        MockHttpSession admin = admin();
         String before = storedRows();
         // A database-only constraint simulates a real integrity rejection after form validation.
         jdbc.execute("alter table shipment add constraint ck_shipment_advice_probe "
@@ -90,11 +113,11 @@ class PawayFlowTests {
             mvc.perform(get(route)).andExpect(status().isOk())
                     .andExpect(content().string(containsString("/css/paway.css")));
         }
-        MockHttpSession admin = profile("admin");
+        MockHttpSession admin = admin();
         for (String route : new String[]{"/admin", "/admin/envios/nuevo", "/admin/envios/1", "/admin/envios/1/editar"}) {
             mvc.perform(get(route).session(admin)).andExpect(status().isOk());
         }
-        MockHttpSession client = profile("client1");
+        MockHttpSession client = client();
         mvc.perform(get("/cliente").session(client)).andExpect(status().isOk());
         mvc.perform(get("/cliente/envios/nuevo").session(client)).andExpect(status().isOk());
         mvc.perform(get("/css/paway.css")).andExpect(status().isOk());
@@ -103,14 +126,17 @@ class PawayFlowTests {
 
     @Test
     void createsEditsTracksAndCancelsTheSameShipment() throws Exception {
-        MockHttpSession admin = profile("admin");
-        mvc.perform(shipmentPost("/admin/envios", admin, "Flujo integrado"))
+        MockHttpSession admin = admin();
+        RegisterForm owner = TestAccounts.form();
+        MockHttpSession ownerSession = client(owner);
+        String ownerId = String.valueOf(customerId(owner));
+        mvc.perform(shipmentPost("/admin/envios", admin, "Flujo integrado", ownerId))
                 .andExpect(redirectedUrl("/admin"));
         Shipment shipment = shipments.search("Flujo integrado", null, "").getFirst();
         assertThat(shipment.total()).isEqualByComparingTo("49.50");
         assertThat(shipment.guide()).startsWith("PW-" + Year.now().getValue() + "-");
 
-        mvc.perform(shipmentPost("/admin/envios/" + shipment.id(), admin, "Destinatario actualizado"))
+        mvc.perform(shipmentPost("/admin/envios/" + shipment.id(), admin, "Destinatario actualizado", ownerId))
                 .andExpect(redirectedUrl("/admin"));
         assertThat(shipments.get(shipment.id()).guide()).isEqualTo(shipment.guide());
         assertThat(shipments.get(shipment.id()).recipient()).isEqualTo("Destinatario actualizado");
@@ -121,8 +147,11 @@ class PawayFlowTests {
         mvc.perform(get("/rastrear").param("guide", " " + shipment.guide().toLowerCase() + " "))
                 .andExpect(status().isOk()).andExpect(content().string(containsString("En tránsito")))
                 .andExpect(content().string(containsString("Salida a destino.")));
-        mvc.perform(get("/cliente").session(profile("client1")))
-                .andExpect(content().string(containsString(shipment.guide())));
+        mvc.perform(get("/cliente").session(ownerSession))
+                .andExpect(content().string(containsString(shipment.guide())))
+                .andExpect(content().string(containsString(owner.getFullName())));
+        mvc.perform(get("/cliente").session(client()))
+                .andExpect(content().string(org.hamcrest.Matchers.not(containsString(shipment.guide()))));
 
         mvc.perform(post("/admin/envios/" + shipment.id() + "/anular").session(admin))
                 .andExpect(redirectedUrl("/admin"));
@@ -139,7 +168,7 @@ class PawayFlowTests {
 
     @Test
     void rejectsAnEditFormOpenedBeforeAnotherChange() throws Exception {
-        MockHttpSession admin = profile("admin");
+        MockHttpSession admin = admin();
         mvc.perform(shipmentPost("/admin/envios", admin, "Edición concurrente")).andExpect(redirectedUrl("/admin"));
         Shipment shipment = shipments.search("Edición concurrente", null, "").getFirst();
         mvc.perform(get("/admin/envios/" + shipment.id() + "/editar").session(admin))
@@ -157,27 +186,28 @@ class PawayFlowTests {
     }
 
     @Test
-    void retainsQuoteAcrossDemoLoginAndUsesTheSessionClient() throws Exception {
+    void retainsQuoteAcrossSignUpAndUsesTheSessionClient() throws Exception {
         MockHttpSession session = new MockHttpSession();
+        RegisterForm form = TestAccounts.form();
         mvc.perform(post("/cotizar").session(session).param("province", "canete").param("district", "Asia")
                 .param("category", "joyeria").param("weight", "1").param("quantity", "2")
                 .param("requestShipment", "true")).andExpect(redirectedUrl("/login"));
-        mvc.perform(post("/login").session(session).param("profile", "client2"))
+        mvc.perform(AccountFlowTests.registration(session, form))
                 .andExpect(redirectedUrl("/cliente/envios/nuevo"));
         mvc.perform(get("/cliente/envios/nuevo").session(session))
                 .andExpect(status().isOk()).andExpect(content().string(containsString("value=\"Asia\" selected=\"selected\"")));
         mvc.perform(shipmentPost("/cliente/envios", session, "Cliente de la sesión"))
                 .andExpect(redirectedUrl("/cliente"));
         Shipment created = shipments.search("Cliente de la sesión", null, "").getFirst();
-        assertThat(created.clientId()).isEqualTo(2);
+        assertThat(created.clientId()).isEqualTo(customerId(form));
         assertThat(session.getAttribute("pendingQuote")).isNull();
-        mvc.perform(get("/cliente").session(profile("client1")))
+        mvc.perform(get("/cliente").session(client()))
                 .andExpect(content().string(org.hamcrest.Matchers.not(containsString(created.guide()))));
     }
 
     @Test
     void validatesOnServerAndDoesNotCreateInvalidShipments() throws Exception {
-        MockHttpSession admin = profile("admin");
+        MockHttpSession admin = admin();
         int before = shipments.search("", null, "").size();
         mvc.perform(shipmentPost("/admin/envios", admin, "Invalid weight").with(request -> {
             request.setParameter("weight", "-1");
@@ -196,16 +226,20 @@ class PawayFlowTests {
     }
 
     @Test
-    void restrictsPanelsToTheirDemoProfileAndLogsOut() throws Exception {
+    void restrictsPanelsToTheirAccountRoleAndLogsOut() throws Exception {
         mvc.perform(get("/admin")).andExpect(redirectedUrl("/login"));
-        MockHttpSession client = profile("client1");
+        mvc.perform(get("/cliente")).andExpect(redirectedUrl("/login"));
+        mvc.perform(get("/cliente/envios/nuevo")).andExpect(redirectedUrl("/login"));
+        MockHttpSession client = client();
         mvc.perform(get("/admin").session(client)).andExpect(redirectedUrl("/login"));
         mvc.perform(shipmentPost("/admin/envios", client, "Not allowed"))
                 .andExpect(redirectedUrl("/login"));
-        mvc.perform(get("/cliente").session(profile("admin"))).andExpect(redirectedUrl("/login"));
+        mvc.perform(get("/cliente").session(admin())).andExpect(redirectedUrl("/login"));
+        mvc.perform(get("/cliente/envios/nuevo").session(admin())).andExpect(redirectedUrl("/login"));
         mvc.perform(post("/logout").session(client)).andExpect(redirectedUrl("/"));
         assertThat(client.isInvalid()).isTrue();
-        mvc.perform(post("/login").param("profile", "unknown")).andExpect(flash().attributeExists("error"));
+        mvc.perform(post("/login").param("profile", "admin")).andExpect(status().isOk())
+                .andExpect(model().attribute("loginError", "Correo o contraseña incorrectos."));
     }
 
     @Test
@@ -216,7 +250,7 @@ class PawayFlowTests {
         mvc.perform(get("/api/v1/destinos/huaral/distritos"))
                 .andExpect(status().isOk()).andExpect(jsonPath("$[1]").value("Chancay"));
         mvc.perform(get("/api/v1/destinos/unknown/distritos")).andExpect(status().isNotFound());
-        mvc.perform(get("/admin/envios/999999").session(profile("admin"))).andExpect(status().isNotFound());
+        mvc.perform(get("/admin/envios/999999").session(admin())).andExpect(status().isNotFound());
     }
 
     @Test
@@ -235,7 +269,7 @@ class PawayFlowTests {
 
     @Test
     void filtersAndPaginatesAdministrativeResults() throws Exception {
-        MockHttpSession admin = profile("admin");
+        MockHttpSession admin = admin();
         for (int i = 0; i < 6; i++) {
             mvc.perform(shipmentPost("/admin/envios", admin, "Paginación " + i)).andExpect(redirectedUrl("/admin"));
         }

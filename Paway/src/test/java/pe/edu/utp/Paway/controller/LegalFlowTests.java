@@ -57,7 +57,8 @@ class LegalFlowTests {
                 .andExpect(content().string(containsString("Pendiente de atención")));
         mvc.perform(get("/admin/reclamaciones")).andExpect(redirectedUrl("/login"));
         MockHttpSession admin = new MockHttpSession();
-        mvc.perform(post("/login").session(admin).param("profile", "admin"));
+        mvc.perform(post("/login").session(admin).param("email", "admin@paway.test")
+                .param("password", "admin-test-password")).andExpect(redirectedUrl("/admin"));
         mvc.perform(get("/admin/reclamaciones").session(admin)).andExpect(status().isOk());
         mvc.perform(post("/admin/reclamaciones/" + token + "/respuesta").session(admin)
                 .param("adminToken", (String) admin.getAttribute("complaintAdminToken"))

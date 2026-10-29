@@ -1,5 +1,8 @@
 # Local PostgreSQL for Paway. Start with `docker compose up -d` from the Paway folder.
 # The host port is 5440 (not 5432) to avoid clashing with other local databases.
+# The app itself runs outside compose. To get an admin account, export before starting it:
+#   PAWAY_ADMIN_EMAIL=admin@paway.local PAWAY_ADMIN_PASSWORD=<your-password> sh ./mvnw spring-boot:run
+# There is no default admin password; without both variables the app starts with no admin.
 services:
   postgres:
     image: postgres:16-alpine
