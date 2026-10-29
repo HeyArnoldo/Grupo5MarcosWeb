@@ -51,5 +51,5 @@ Repositorio del Grupo 5 para los trabajos y laboratorios del curso de desarrollo
 | Brayan Jesus Lopez Sacha | MrHuntersini |
 
 
-https://canva.link/t5hanyyqxkhnq44 
+Link de la presentación: https://canva.link/t5hanyyqxkhnq44 
 
