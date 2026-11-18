@@ -14,7 +14,7 @@ import pe.edu.utp.techlab_web.dto.CourseInputDto;
 import pe.edu.utp.techlab_web.exception.CategoryNotFoundException;
 import pe.edu.utp.techlab_web.service.CourseService;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
 class CourseCrudIntegrationTests {
 
