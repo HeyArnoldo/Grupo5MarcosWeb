@@ -19,8 +19,8 @@ import pe.edu.utp.techlab_web.service.CourseService;
 @WebMvcTest(CourseController.class)
 @Import(SecurityConfig.class)
 @TestPropertySource(properties = {
-    "app.security.demo-username=docente",
-    "app.security.demo-password=Laboratorio-S13-Temporal!"
+        "app.security.demo-username=docente",
+        "app.security.demo-password=Laboratorio-S13-Temporal!"
 })
 class ApiSecurityTests {
 

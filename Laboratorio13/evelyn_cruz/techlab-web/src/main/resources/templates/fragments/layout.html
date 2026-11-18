@@ -27,6 +27,7 @@
                 href="/login" th:href="@{/login}">Iniciar sesión</a>
 
             <div th:if="${security != null and security.authenticated}" class="d-flex align-items-center gap-3">
+                <a class="link-body-emphasis text-decoration-none" href="/perfil" th:href="@{/perfil}">Mi sesión</a>
                 <span class="small text-body-secondary">
                     Sesión de <strong th:text="${security.username}">docente</strong>
                 </span>
@@ -38,9 +39,7 @@
     </header>
 
     <footer th:fragment="pie" class="border-top bg-white mt-auto">
-        <div class="container py-3 small text-body-secondary">
-            TechLab Web · Marcos de Desarrollo Web · 2026
-        </div>
+        <div class="container py-3 small text-body-secondary"> TechLab Web · Marcos de Desarrollo Web · 2026</div>
         <script src="../static/js/site.js" th:src="@{/js/site.js}" defer></script>
     </footer>
 </body>
