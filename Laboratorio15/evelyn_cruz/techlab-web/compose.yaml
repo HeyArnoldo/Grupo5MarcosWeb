@@ -1,0 +1,23 @@
+services:
+  mysql:
+    image: mysql:8.4.12
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: techlab
+      MYSQL_USER: ${DB_USER:?Defina DB_USER en .env}
+      MYSQL_PASSWORD: ${DB_PASSWORD:?Defina DB_PASSWORD en .env}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?Defina MYSQL_ROOT_PASSWORD en .env}
+    ports:
+      - "127.0.0.1:3307:3306"
+    volumes:
+      - techlab_mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -p$${MYSQL_ROOT_PASSWORD} --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  techlab_mysql_data:
+    name: techlab_mysql_data
