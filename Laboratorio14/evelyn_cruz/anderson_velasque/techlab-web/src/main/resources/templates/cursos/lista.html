@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout:: head('Catálogo de cursos')}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Catálogo de cursos</title>
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+    <a class="visually-hidden-focusable position-absolute p-2 bg-white" href="#contenido">Saltar al contenido</a>
+    <header th:replace="~{fragments/layout:: cabecera}">
+        <nav><a href="/cursos">TechLab Web</a></nav>
+    </header>
+    <main id="contenido" class="container py-4">
+        <div class="row g-3 align-items-end mb-4">
+            <div class="col-lg-8">
+                <p class="text-primary fw-semibold mb-2">Semana 11</p>
+                <h1 class="display-6 fw-bold">Catálogo de cursos</h1>
+                <p class="lead mb-0">
+                    Cursos validados y relacionados con categorías.
+                </p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <a class="btn btn-primary" th:href="@{/cursos/nuevo}">Nuevo curso</a>
+            </div>
+        </div>
+        <div class="alert alert-success" role="status" th:if="${mensaje}" th:text="${mensaje}">
+            Operación completada
+        </div>
+        <form class="row g-3 align-items-end mb-4" method="get" th:action="@{/cursos}">
+            <div class="col-md-8">
+                <label class="form-label" for="q">Buscar cursos</label>
+                <input class="form-control" id="q" name="q" type="search" maxlength="60" th:value="${q}"
+                    placeholder="Ejemplo: Spring">
+            </div>
+            <div class="col-md-4 d-flex gap-2">
+                <button class="btn btn-primary" type="submit">Buscar</button>
+                <a class="btn btn-outline-secondary" th:if="${!#strings.isEmpty(q)}" th:href="@{/cursos}">Limpiar</a>
+            </div>
+        </form>
+        <p class="text-body-secondary" th:text="|${#lists.size(cursos)} curso(s) encontrado(s)|">
+            3 curso(s) encontrado(s)
+        </p>
+        <div class="alert alert-info" role="status" th:if="${#lists.isEmpty(cursos)}">
+            No se encontraron cursos. Pruebe con otro término.
+        </div>
+        <div class="row g-4" th:unless="${#lists.isEmpty(cursos)}">
+            <div class="col-md-6 col-xl-4" th:each="curso : ${cursos}">
+                <article class="card course-card h-100 shadow-sm">
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between gap-2 mb-2">
+                            <span class="text-body-secondary">
+                                Código <span th:text="${curso.id}">1</span>
+                            </span>
+                            <span class="badge text-bg-secondary" th:text="${curso.categoriaNombre}">Front-end</span>
+                        </div>
+                        <h2 class="h4 card-title" th:text="${curso.titulo}">
+                            HTML y CSS
+                        </h2>
+                        <p class="card-text">
+                            <span th:text="${curso.horas}">12</span> horas
+                        </p>
+                        <div class="d-flex flex-wrap gap-2 mt-auto">
+                            <a class="btn btn-outline-primary" th:href="@{/cursos/{id}(id=${curso.id})}">Ver</a>
+                            <a class="btn btn-outline-secondary"
+                                th:href="@{/cursos/{id}/editar(id=${curso.id})}">Editar</a>
+                            <form method="post" th:action="@{/cursos/{id}/eliminar(id=${curso.id})}">
+                                <button class="btn btn-outline-danger" type="submit">Eliminar</button>
+                            </form>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </main>
+    <footer th:replace="~{fragments/layout:: pie}">
+        <p>TechLab Web 2026</p>
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head('Mi sesión')}">
+    <meta charset="UTF-8">
+    <title>Mi sesión</title>
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+    <header th:replace="~{fragments/layout :: cabecera}"></header>
+
+    <main id="contenido" class="container py-5">
+        <section aria-labelledby="perfil-title">
+            <h1 id="perfil-title" class="display-6 fw-bold">Mi sesión</h1>
+            <p class="lead">
+                Sesión iniciada como <strong th:text="${security.username}">docente</strong>.
+            </p>
+            <p class="text-body-secondary">
+                Este nombre proviene del SecurityContext de Spring Security, que guarda
+                la identidad autenticada mientras dura la sesión.
+            </p>
+        </section>
+    </main>
+
+    <footer th:replace="~{fragments/layout :: pie}"></footer>
+</body>
+
+</html>

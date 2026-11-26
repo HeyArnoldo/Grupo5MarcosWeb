@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Iniciar sesión · TechLab Web</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/site.css}">
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+    <main id="contenido" class="container py-5">
+        <section class="login-panel mx-auto" aria-labelledby="login-title">
+            <p class="text-primary fw-semibold mb-2">Semana 13</p>
+            <h1 id="login-title" class="display-6 fw-bold">Iniciar sesión</h1>
+            <p class="text-body-secondary">
+                Use la cuenta temporal configurada para el laboratorio.
+            </p>
+
+            <div class="alert alert-danger" role="alert" th:if="${param.error}">
+                El usuario o la contraseña no son correctos.
+            </div>
+            <div class="alert alert-success" role="status" th:if="${param.logout}">
+                La sesión se cerró correctamente.
+            </div>
+
+            <form method="post" th:action="@{/login}" novalidate>
+                <div class="mb-3">
+                    <label class="form-label" for="username">Usuario</label>
+                    <input class="form-control" id="username" name="username" type="text" autocomplete="username"
+                        required autofocus>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label" for="password">Contraseña</label>
+                    <input class="form-control" id="password" name="password" type="password"
+                        autocomplete="current-password" required>
+                </div>
+                <button class="btn btn-primary w-100" type="submit">Ingresar</button>
+            </form>
+
+            <a class="d-inline-block mt-3" th:href="@{/cursos}">Volver al catálogo público</a>
+        </section>
+    </main>
+</body>
+
+</html>

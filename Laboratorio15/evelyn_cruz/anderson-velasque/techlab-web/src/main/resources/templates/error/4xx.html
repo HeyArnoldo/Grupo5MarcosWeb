@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Solicitud no válida')}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Solicitud no válida</title>
+    <link rel="stylesheet" href="../../static/css/site.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+<a class="visually-hidden-focusable position-absolute p-2 bg-white"
+   href="#contenido">Saltar al contenido</a>
+<header th:replace="~{fragments/layout :: cabecera}">
+    <nav><a href="/cursos">TechLab Web</a></nav>
+</header>
+<main id="contenido" class="container py-5">
+    <section class="mx-auto detail-panel" aria-labelledby="error-title">
+        <p class="display-4 fw-bold text-primary mb-2"
+           th:text="${status}">4xx</p>
+        <h1 id="error-title" class="h2">No se pudo completar la solicitud</h1>
+        <p>Revise la dirección o los datos enviados e inténtelo nuevamente.</p>
+        <p class="small text-body-secondary">
+            Ruta: <code th:text="${path}">/cursos/999</code>
+        </p>
+        <a class="btn btn-primary" th:href="@{/cursos}" href="/cursos">
+            Volver al catálogo
+        </a>
+    </section>
+</main>
+<footer th:replace="~{fragments/layout :: pie}">
+    <p>TechLab Web 2026</p>
+</footer>
+</body>
+</html>
